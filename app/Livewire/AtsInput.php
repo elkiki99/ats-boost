@@ -3,9 +3,9 @@
 namespace App\Livewire;
 
 use Livewire\Component;
-use App\Services\CvTailorService;
-use Livewire\Attributes\Validate;
 use Livewire\WithFileUploads;
+use Livewire\Attributes\Validate;
+use App\Services\CvTailorService;
 use Smalot\PdfParser\Parser;
 use Barryvdh\DomPDF\Facade\Pdf;
 
@@ -19,8 +19,7 @@ class AtsInput extends Component
     #[Validate('required|string|min:50')]
     public $description = '';
 
-    public $tailored = null;
-    public $pdfPath = null;
+    public $tailored = ''; // ← ÚNICO TEXTO FINAL
 
     public function uploadResume($resume)
     {
@@ -31,41 +30,63 @@ class AtsInput extends Component
     {
         $this->validate();
 
+        // 1. Convert PDF to text
         $path = $this->resume->getRealPath();
-
         $cvText = $this->extractPdf($path);
 
         if (!$cvText) {
-            $this->addError('resume', 'No se pudo leer el PDF.');
-            $this->modal('tailoring-in-progress')->show();
+            $this->addError('resume', 'We were not able to read your PDF.');
             return;
         }
 
         $service = app(CvTailorService::class);
-        $result = $service->tailor($cvText, $this->description);
 
-        $this->modal('tailoring-in-progress')->close();
+        // 2. Extract job requirements
+        $requirements = $service->extractRequirements($this->description);
 
-        $this->tailorFinished($result);
-    }
+        // 3. Tailor CV using: CV TEXT + JOB OFFER + extracted requirements
+        $this->tailored = $service->tailor(
+            $cvText,
+            $this->description,
+            $requirements
+        );
 
-    public function tailorFinished($result)
-    {
-        $this->tailored = $result;
-        $this->pdfPath = null;
-
+        // 4. Show result modal
         $this->modal('tailoring-result')->show();
     }
-    
+
     public function downloadPdf()
     {
-        $pdf = Pdf::loadHTML(nl2br(e($this->tailored)));
+        $html = $this->tailored; // YA ES HTML PERFECTO
 
-        return response()->streamDownload(function () use ($pdf) {
-            echo $pdf->output();
-        }, 'tailored-cv.pdf');
+        $pdf = Pdf::loadHTML("
+            <html>
+                <head>
+                    // <style>
+                    //     body {
+                    //         font-family: 'Times New Roman', serif;
+                    //         font-size: 12px;
+                    //         line-height: 1.4;
+                    //         margin: 40px;
+                    //     }
+                    //     h1 { font-size: 26px; margin-bottom: 10px; }
+                    //     h2 { font-size: 16px; margin-top: 24px; margin-bottom: 8px; }
+                    //     p { margin-bottom: 6px; }
+                    //     ul { margin-left: 20px; margin-bottom: 10px; }
+                    //     li { margin-bottom: 4px; }
+                    // </style>
+                </head>
+                <body>
+                    $html
+                </body>
+            </html>
+        ");
+
+        return response()->streamDownload(
+            fn() => print($pdf->output()),
+            'cv.pdf'
+        );
     }
-
     private function extractPdf($path)
     {
         try {

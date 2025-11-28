@@ -48,10 +48,9 @@ The right candidate must be..." />
                 We optimized your CV based on the job description while keeping your original content intact.
             </flux:subheading>
 
-            <flux:textarea rows="10" wire:model.live="tailored">
-                {{ $tailored }}
-            </flux:textarea>
-
+            <flux:editor wire:model.live="tailored" label="Your Tailored CV (editable)"
+                toolbar="heading | bold italic underline | bullet ordered | align ~ undo redo"
+                class="**:data-[slot=content]:min-h-[350px]!" />
             <div class="flex justify-end">
                 <flux:button variant="primary" icon="arrow-down-tray" wire:click="downloadPdf">
                     Download tailored PDF
