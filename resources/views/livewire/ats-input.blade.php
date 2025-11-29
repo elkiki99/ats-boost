@@ -21,8 +21,8 @@
             placeholder="We are looking for a Software Developer to join our company.
 
 The right candidate must be..." />
-        <flux:button x-on:click="$flux.modal('tailoring-in-progress').show()" wire:click="tailorResume" icon="sparkles"
-            class="mt-4 w-full" variant="primary">
+
+        <flux:button x-on:click="$wire.startTailoring()" icon="sparkles" class="mt-4 w-full" variant="primary">
             Tailor my CV
         </flux:button>
     </div>
@@ -48,9 +48,10 @@ The right candidate must be..." />
                 We optimized your CV based on the job description while keeping your original content intact.
             </flux:subheading>
 
-            <flux:editor wire:model.live="tailored" label="Your Tailored CV (editable)"
+            <flux:editor wire:model.live="tailored"
                 toolbar="heading | bold italic underline | bullet ordered | align ~ undo redo"
-                class="**:data-[slot=content]:min-h-[350px]!" />
+                placeholder="Edit your tailored CV..." class="[&_ [data-slot=content]]:min-h-[350px]!" />
+                
             <div class="flex justify-end">
                 <flux:button variant="primary" icon="arrow-down-tray" wire:click="downloadPdf">
                     Download tailored PDF
@@ -59,3 +60,21 @@ The right candidate must be..." />
         </div>
     </flux:modal>
 </div>
+
+@script
+    <script>
+        document.addEventListener('livewire:initialized', () => {
+            Livewire.on('tailoring-started', async () => {
+
+                // 1. Mostrar modal
+                $flux.modal('tailoring-in-progress').show();
+
+                // 2. Esperar un frame para dejar al navegador dibujar
+                await new Promise(resolve => requestAnimationFrame(resolve));
+
+                // 3. Ejecutar el proceso pesado recién AHORA
+                Livewire.first().call('tailorResume');
+            });
+        });
+    </script>
+@endscript

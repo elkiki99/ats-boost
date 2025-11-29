@@ -65,24 +65,48 @@ class CvTailorService
             - Rewriting sentences for clarity
             - Reordering sections
             - Emphasizing info aligned with the requirements
+            - Changing bullet points to match required skills if you can infer them from the CV
             - Inferring skills that are implicitly present
               (e.g., 'built a website with Laravel' → Laravel, PHP, APIs)
 
             FORBIDDEN:
             - Inventing information not present in the CV
             - Adding tools or jobs the person never used
+            - Adding more than 5 bullet points per job experience
 
             LANGUAGE RULE:
             - Detect the language of the job description.
-            - Rewrite the whole CV in the SAME language.
+            - The CV should be in the language of the job description, not the language of the CV neccesarily.
 
             FORMAT RULES (IMPORTANT):
             - Return ONLY clean HTML.
+            - The persons name must ALWAYS be an <h1> on top of the page.
             - Section titles must be capitalized like:
               Education, Experience, Skills, Projects, Certifications, Languages.
             - No uppercase titles like EXPERIENCE.
             - Use <h1>, <h2>, <p>, <ul>, <li>.
+            - Section titles must be <h2> with bold text: <h2><strong>Education</strong></h2>
+            - Job titles, companies and study institutions MUST be bold inside <p>
+            Example:
+            <p><strong>Software Developer – Company Name</strong></p>
+            <p>City, Country — 2023–Present</p>
             - Keep a professional clean layout.
+
+            EXPERIENCE BULLET RULES (CRITICAL):
+            - The job title, company, location and dates MUST NOT be bullets.
+            - They must appear as normal paragraphs (<p>), never inside <ul>.
+            - ONLY the action items / responsibilities must use <ul><li>.
+
+            PERSONAL INFO RULE (CRITICAL):
+            - The contact information line must ALWAYS be rendered inside a single <span>.
+            - It must ALWAYS be on one line.
+            - The model must NEVER break this line into multiple lines.
+            - The items must be separated by • (middle dot).
+
+            HTML SANITATION RULE:
+            - Output ONLY the following HTML tags: h1, h2, h3, p, ul, li, strong, em, u, span, br.
+            - DO NOT use div, section, article, style or inline CSS except the contact <span>.
+            - No inline margin or padding inside the content.
 
             USE THESE REQUIREMENTS TO TAILOR:
             " . json_encode($req, JSON_PRETTY_PRINT) . "

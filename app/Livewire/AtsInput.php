@@ -19,11 +19,19 @@ class AtsInput extends Component
     #[Validate('required|string|min:50')]
     public $description = '';
 
-    public $tailored = ''; // ← ÚNICO TEXTO FINAL
+    public $tailored = '';
 
     public function uploadResume($resume)
     {
         $this->resume = $resume;
+    }
+
+    public function startTailoring()
+    {
+        $this->validate();
+
+        // disparar evento global
+        $this->dispatch('tailoring-started');
     }
 
     public function tailorResume()
@@ -51,7 +59,10 @@ class AtsInput extends Component
             $requirements
         );
 
-        // 4. Show result modal
+        // 4. Close in-progress modal
+        $this->modal('tailoring-in-progress')->close();
+        
+        // 5. Show result modal
         $this->modal('tailoring-result')->show();
     }
 
@@ -62,19 +73,62 @@ class AtsInput extends Component
         $pdf = Pdf::loadHTML("
             <html>
                 <head>
-                    // <style>
-                    //     body {
-                    //         font-family: 'Times New Roman', serif;
-                    //         font-size: 12px;
-                    //         line-height: 1.4;
-                    //         margin: 40px;
-                    //     }
-                    //     h1 { font-size: 26px; margin-bottom: 10px; }
-                    //     h2 { font-size: 16px; margin-top: 24px; margin-bottom: 8px; }
-                    //     p { margin-bottom: 6px; }
-                    //     ul { margin-left: 20px; margin-bottom: 10px; }
-                    //     li { margin-bottom: 4px; }
-                    // </style>
+                    <style>
+                        body {
+                            font-family: 'Calibri', sans-serif;
+                            font-size: 11px; /* normal text */
+                            font-weight: normal;
+                            line-height: 1.4;
+                            margin: 30px;
+                        }
+
+                        h1 {
+                            font-family: 'Calibri', sans-serif;
+                            font-size: 14px; /* Calibri bold 14 */
+                            font-weight: bold;
+                            margin-bottom: 4px;
+                            text-align: center;
+                            border-bottom: 1px solid #000;
+                            padding-bottom: 4px;
+                        }
+
+                        h2, h3, h4, h5, h6 {
+                            font-family: 'Calibri', sans-serif;
+                            font-size: 11px; /* headings 11 */
+                            font-weight: bold; /* bold for all subheadings */
+                            margin-top: 16px;
+                            margin-bottom: 4px;
+                            border-bottom: 1px solid #000;
+                            padding-bottom: 4px;
+                        }
+
+                        span {
+                            font-family: 'Calibri', sans-serif;
+                            font-size: 11px;
+                            text-align: center;
+                        }
+
+                        p {
+                            margin-top: 0px;
+                            padding-top: 0px;
+                            margin-bottom: 0px;
+                            padding-bottom: 0px;
+                        }
+
+                        ul {
+                            margin-top: 0px;
+                            padding-top: 0px;
+                            margin-bottom: 0px;
+                            padding-bottom: 0px;
+                        }
+
+                        li {
+                            margin-top: 0px;
+                            padding-top: 0px;
+                            margin-bottom: 0px;
+                            padding-bottom: 0px;
+                        }
+                    </style>
                 </head>
                 <body>
                     $html
@@ -87,6 +141,7 @@ class AtsInput extends Component
             'cv.pdf'
         );
     }
+
     private function extractPdf($path)
     {
         try {
