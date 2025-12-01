@@ -65,18 +65,26 @@ class CvTailorService
             - Rewriting sentences for clarity
             - Reordering sections
             - Emphasizing info aligned with the requirements
-            - Changing bullet points to match required skills if you can infer them from the CV
+            - Deleting irrelevant info
+            - You ARE allowed to rewrite, merge, remove, or replace existing bullet points.
+            - You ARE allowed to create new bullet points ONLY if they are logically supported by facts in the CV.
+            - If a bullet is irrelevant to the job requirements, replace it with another bullet that is supported by the CV.
+            - Reformulate bullets to match the tone, keywords, and focus of the job requirements.
+            - Maximum 5 bullets per job, but they can be completely different from the original ones.
             - Inferring skills that are implicitly present
               (e.g., 'built a website with Laravel' → Laravel, PHP, APIs)
 
             FORBIDDEN:
-            - Inventing information not present in the CV
+            - Make up information not present in the CV
             - Adding tools or jobs the person never used
             - Adding more than 5 bullet points per job experience
+            - Using another language other than the job description's language
 
             LANGUAGE RULE:
-            - Detect the language of the job description.
-            - The CV should be in the language of the job description, not the language of the CV neccesarily.
+            - ALWAYS write the tailored CV in the SAME language as the job description.
+            - DO NOT translate the job description.
+            - DO NOT translate the CV unless necessary to match the job description’s language.
+            - If the job description is in English, the CV MUST be in English.
 
             FORMAT RULES (IMPORTANT):
             - Return ONLY clean HTML.

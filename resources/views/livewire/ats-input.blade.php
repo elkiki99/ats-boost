@@ -27,9 +27,8 @@ The right candidate must be..." />
         </flux:button>
     </div>
 
-
     <!-- Progress modal -->
-    <flux:modal name="tailoring-in-progress" :closeable="false">
+    <flux:modal name="tailoring-in-progress" :dismissible="false" :closable="false">
         <div class="flex flex-col items-center gap-4 p-6">
             <flux:heading size="lg" class="text-center text-lg font-medium">Tailoring your CV, please wait...
             </flux:heading>
@@ -66,13 +65,8 @@ The right candidate must be..." />
         document.addEventListener('livewire:initialized', () => {
             Livewire.on('tailoring-started', async () => {
 
-                // 1. Mostrar modal
                 $flux.modal('tailoring-in-progress').show();
-
-                // 2. Esperar un frame para dejar al navegador dibujar
                 await new Promise(resolve => requestAnimationFrame(resolve));
-
-                // 3. Ejecutar el proceso pesado recién AHORA
                 Livewire.first().call('tailorResume');
             });
         });

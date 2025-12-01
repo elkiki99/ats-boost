@@ -61,7 +61,7 @@ class AtsInput extends Component
 
         // 4. Close in-progress modal
         $this->modal('tailoring-in-progress')->close();
-        
+
         // 5. Show result modal
         $this->modal('tailoring-result')->show();
     }
@@ -105,6 +105,7 @@ class AtsInput extends Component
                         span {
                             font-family: 'Calibri', sans-serif;
                             font-size: 11px;
+                            display: block;
                             text-align: center;
                         }
 
