@@ -20,6 +20,8 @@ class AtsInput extends Component
     public $description = '';
 
     public $tailored = '';
+    public $role = '';
+    public $candidateName = '';
 
     public function uploadResume($resume)
     {
@@ -49,26 +51,34 @@ class AtsInput extends Component
 
         $service = app(CvTailorService::class);
 
-        // 2. Extract job requirements
+        // Extract name from CV
+        $name = app(CvTailorService::class)->extractNameFromCv($cvText);
+        $this->candidateName = $name;
+
+        // Extract role from job offer
+        $role = $service->extractRole($this->description);
+        $this->role = $role;
+
+        // Extract job requirements
         $requirements = $service->extractRequirements($this->description);
 
-        // 3. Tailor CV using: CV TEXT + JOB OFFER + extracted requirements
+        // Tailor CV using: CV TEXT + JOB OFFER + extracted requirements
         $this->tailored = $service->tailor(
             $cvText,
             $this->description,
             $requirements
         );
 
-        // 4. Close in-progress modal
+        // Close in-progress modal
         $this->modal('tailoring-in-progress')->close();
 
-        // 5. Show result modal
+        // Show result modal
         $this->modal('tailoring-result')->show();
     }
 
     public function downloadPdf()
     {
-        $html = $this->tailored; // YA ES HTML PERFECTO
+        $html = $this->tailored;
 
         $pdf = Pdf::loadHTML("
             <html>
@@ -76,7 +86,7 @@ class AtsInput extends Component
                     <style>
                         body {
                             font-family: 'Calibri', sans-serif;
-                            font-size: 11px; /* normal text */
+                            font-size: 14px; /* normal text */
                             font-weight: normal;
                             line-height: 1.4;
                             margin: 30px;
@@ -84,7 +94,7 @@ class AtsInput extends Component
 
                         h1 {
                             font-family: 'Calibri', sans-serif;
-                            font-size: 14px; /* Calibri bold 14 */
+                            font-size: 18px; /* Calibri bold 14 */
                             font-weight: bold;
                             margin-bottom: 4px;
                             text-align: center;
@@ -94,7 +104,7 @@ class AtsInput extends Component
 
                         h2, h3, h4, h5, h6 {
                             font-family: 'Calibri', sans-serif;
-                            font-size: 11px; /* headings 11 */
+                            font-size: 14px; /* headings 11 */
                             font-weight: bold; /* bold for all subheadings */
                             margin-top: 16px;
                             margin-bottom: 4px;
@@ -104,7 +114,7 @@ class AtsInput extends Component
 
                         span {
                             font-family: 'Calibri', sans-serif;
-                            font-size: 11px;
+                            font-size: 14px;
                             display: block;
                             text-align: center;
                         }
@@ -137,9 +147,14 @@ class AtsInput extends Component
             </html>
         ");
 
+        $userName = $this->candidateName ?: 'Candidato';
+        $role = $this->role ?: 'Rol Desconocido';
+
+        $fileName = "{$userName} - {$role}.pdf";
+
         return response()->streamDownload(
             fn() => print($pdf->output()),
-            'cv.pdf'
+            $fileName
         );
     }
 

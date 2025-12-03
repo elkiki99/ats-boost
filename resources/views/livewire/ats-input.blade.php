@@ -28,16 +28,16 @@ The right candidate must be..." />
     </div>
 
     <!-- Progress modal -->
-    <flux:modal name="tailoring-in-progress" :dismissible="false" :closable="false">
+    <flux:modal name="tailoring-in-progress" :dismissible="false" :closable="false" variant="floating">
         <div class="flex flex-col items-center gap-4 p-6">
             <flux:heading size="lg" class="text-center text-lg font-medium">Tailoring your CV, please wait...
             </flux:heading>
             <flux:icon.loading />
         </div>
-    </flux:modal>
+    </flux:modal>   
 
     <!-- Result modal -->
-    <flux:modal name="tailoring-result" size="2xl">
+    <flux:modal name="tailoring-result" :dismissible="false" variant="floating" class="w-full! max-w-3xl">
         <div class="space-y-6">
             <flux:heading size="lg">
                 Your tailored CV is ready ✨

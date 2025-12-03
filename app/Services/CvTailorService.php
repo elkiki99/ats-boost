@@ -49,6 +49,60 @@ class CvTailorService
         return json_decode($response->choices[0]->message->content, true);
     }
 
+    public function extractNameFromCv(string $cvText): string
+    {
+        $prompt = "
+            You are an expert at reading resumes (CVs).
+            TASK:
+            From the following CV text (in any language), identify the full name of the candidate.
+            RETURN:
+            Return ONLY the full name. Do not add extra text or punctuation.
+            If you cannot reliably identify a name, return \"Unknown\".
+
+            --- CV TEXT ---
+            $cvText
+        ";
+
+        $response = OpenAI::chat()->create([
+            'model' => 'gpt-4.1',
+            'messages' => [
+                ['role' => 'user', 'content' => $prompt],
+            ],
+        ]);
+
+        return trim($response->choices[0]->message->content);
+    }
+
+    public function extractRole(string $jobOffer): string
+    {
+        $prompt = "
+            You are an HR expert with ATS experience.
+
+            TASK:
+            Extract ONLY the job title / role being offered.
+
+            RULES:
+            - Output ONLY the job title.
+            - Do NOT add explanations.
+            - Detect the language and output the role in the SAME LANGUAGE.
+            - If multiple titles appear, choose the main/primary one.
+            - Never invent a role.
+            - If no clear role is found, answer: \"Unknown\".
+
+            --- JOB DESCRIPTION ---
+            $jobOffer
+        ";
+
+        $response = OpenAI::chat()->create([
+            'model' => 'gpt-4.1',
+            'messages' => [
+                ['role' => 'user', 'content' => $prompt],
+            ],
+        ]);
+
+        return trim($response->choices[0]->message->content);
+    }
+
     /**
      * Tailor CV to match job requirements and return HTML
      */
@@ -90,8 +144,8 @@ class CvTailorService
             - Return ONLY clean HTML.
             - The persons name must ALWAYS be an <h1> on top of the page.
             - Section titles must be capitalized like:
-              Education, Experience, Skills, Projects, Certifications, Languages.
-            - No uppercase titles like EXPERIENCE.
+              Education, Educación, Etc...
+            - No uppercase titles like EXPERIENCE, EXPERIENCIA, ETC.
             - Use <h1>, <h2>, <p>, <ul>, <li>.
             - Section titles must be <h2> with bold text: <h2><strong>Education</strong></h2>
             - Job titles, companies and study institutions MUST be bold inside <p>
@@ -106,7 +160,7 @@ class CvTailorService
             - ONLY the action items / responsibilities must use <ul><li>.
 
             PERSONAL INFO RULE (CRITICAL):
-            - The contact information line must ALWAYS be rendered inside a single <span>.
+            - The contact information line must ALWAYS be rendered inside a single <span>.  
             - It must ALWAYS be on one line.
             - The model must NEVER break this line into multiple lines.
             - The items must be separated by • (middle dot).
