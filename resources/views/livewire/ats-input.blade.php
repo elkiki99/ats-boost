@@ -15,7 +15,7 @@
             @endif
         </div>
     </div>
-
+    
     <div class="w-full">
         <flux:textarea wire:model="description" rows="10" label="Job description"
             placeholder="We are looking for a Software Developer to join our company.
@@ -34,7 +34,7 @@ The right candidate must be..." />
             </flux:heading>
             <flux:icon.loading />
         </div>
-    </flux:modal>   
+    </flux:modal>
 
     <!-- Result modal -->
     <flux:modal name="tailoring-result" :dismissible="false" variant="floating" class="w-full! max-w-3xl">
@@ -50,11 +50,26 @@ The right candidate must be..." />
             <flux:editor wire:model.live="tailored"
                 toolbar="heading | bold italic underline | bullet ordered | align ~ undo redo"
                 placeholder="Edit your tailored CV..." class="[&_ [data-slot=content]]:min-h-[350px]!" />
-                
+
             <div class="flex justify-end">
                 <flux:button variant="primary" icon="arrow-down-tray" wire:click="downloadPdf">
                     Download tailored PDF
                 </flux:button>
+            </div>
+        </div>
+    </flux:modal>
+
+    <flux:modal name="limit-modal" variant="floating">
+        <div class="space-y-4 p-6 text-center">
+            <flux:heading size="lg">Limit reached 🚀</flux:heading>
+
+            <flux:subheading>
+                You've reached the free limit. Create an account or upgrade to continue.
+            </flux:subheading>
+
+            <div class="flex justify-center gap-2 mt-4">
+                <flux:button variant="primary" href="/register">Create account</flux:button>
+                <flux:button href="/pricing">See premium plans</flux:button>
             </div>
         </div>
     </flux:modal>
@@ -67,7 +82,7 @@ The right candidate must be..." />
 
                 $flux.modal('tailoring-in-progress').show();
                 await new Promise(resolve => requestAnimationFrame(resolve));
-                Livewire.first().call('tailorResume');
+                $wire.call('tailorResume');
             });
         });
     </script>

@@ -3,11 +3,12 @@
 namespace App\Livewire;
 
 use Livewire\Component;
-use Livewire\WithFileUploads;
+use Illuminate\Support\Facades\Auth;
 use Livewire\Attributes\Validate;
 use App\Services\CvTailorService;
-use Smalot\PdfParser\Parser;
 use Barryvdh\DomPDF\Facade\Pdf;
+use Livewire\WithFileUploads;
+use Smalot\PdfParser\Parser;
 
 class AtsInput extends Component
 {
@@ -19,9 +20,16 @@ class AtsInput extends Component
     #[Validate('required|string|min:50')]
     public $description = '';
 
+    public int $usageCount = 0;
+
     public $tailored = '';
     public $role = '';
     public $candidateName = '';
+
+    public function mount()
+    {
+        $this->usageCount = session('cv_usage_count', 0);
+    }
 
     public function uploadResume($resume)
     {
@@ -30,17 +38,21 @@ class AtsInput extends Component
 
     public function startTailoring()
     {
+        if (!Auth::user() && $this->usageCount >= 3) {
+            $this->modal('limit-modal')->show();
+            return;
+        }
+
         $this->validate();
 
-        // disparar evento global
+        $this->usageCount++;
+        session(['cv_usage_count' => $this->usageCount]);
+
         $this->dispatch('tailoring-started');
     }
 
     public function tailorResume()
     {
-        $this->validate();
-
-        // 1. Convert PDF to text
         $path = $this->resume->getRealPath();
         $cvText = $this->extractPdf($path);
 
@@ -51,28 +63,22 @@ class AtsInput extends Component
 
         $service = app(CvTailorService::class);
 
-        // Extract name from CV
         $name = app(CvTailorService::class)->extractNameFromCv($cvText);
         $this->candidateName = $name;
 
-        // Extract role from job offer
         $role = $service->extractRole($this->description);
         $this->role = $role;
 
-        // Extract job requirements
         $requirements = $service->extractRequirements($this->description);
 
-        // Tailor CV using: CV TEXT + JOB OFFER + extracted requirements
         $this->tailored = $service->tailor(
             $cvText,
             $this->description,
             $requirements
         );
 
-        // Close in-progress modal
         $this->modal('tailoring-in-progress')->close();
 
-        // Show result modal
         $this->modal('tailoring-result')->show();
     }
 
@@ -86,7 +92,7 @@ class AtsInput extends Component
                     <style>
                         body {
                             font-family: 'Calibri', sans-serif;
-                            font-size: 14px; /* normal text */
+                            font-size: 12px; /* normal text */
                             font-weight: normal;
                             line-height: 1.4;
                             margin: 30px;
@@ -94,7 +100,7 @@ class AtsInput extends Component
 
                         h1 {
                             font-family: 'Calibri', sans-serif;
-                            font-size: 18px; /* Calibri bold 14 */
+                            font-size: 14px; /* Calibri bold 14 */
                             font-weight: bold;
                             margin-bottom: 4px;
                             text-align: center;
@@ -104,9 +110,9 @@ class AtsInput extends Component
 
                         h2, h3, h4, h5, h6 {
                             font-family: 'Calibri', sans-serif;
-                            font-size: 14px; /* headings 11 */
+                            font-size: 12px; /* headings 11 */
                             font-weight: bold; /* bold for all subheadings */
-                            margin-top: 16px;
+                            margin-top: 15px;
                             margin-bottom: 4px;
                             border-bottom: 1px solid #000;
                             padding-bottom: 4px;
@@ -114,7 +120,7 @@ class AtsInput extends Component
 
                         span {
                             font-family: 'Calibri', sans-serif;
-                            font-size: 14px;
+                            font-size: 12px;
                             display: block;
                             text-align: center;
                         }
@@ -147,8 +153,8 @@ class AtsInput extends Component
             </html>
         ");
 
-        $userName = $this->candidateName ?: 'Candidato';
-        $role = $this->role ?: 'Rol Desconocido';
+        $userName = preg_replace('/[\/\\\\]/', '-', $this->candidateName ?: 'Name');
+        $role = preg_replace('/[\/\\\\]/', '-', $this->role ?: 'Role');
 
         $fileName = "{$userName} - {$role}.pdf";
 

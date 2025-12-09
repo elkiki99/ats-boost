@@ -35,4 +35,10 @@ return [
         ],
     ],
 
+    'lemonsqueezy' => [
+        'key' => env('LEMON_API_KEY'),
+        'store' => env('LEMON_STORE_ID'),
+        'webhook_secret' => env('LEMON_WEBHOOK_SECRET')
+    ],
+
 ];
