@@ -16,7 +16,7 @@ Route::get('/', function () {
 Route::view('dashboard', 'dashboard')
     ->middleware(['auth', 'verified'])
     ->name('dashboard');
-    
+
 Route::view('customers', 'homepages.customers')
     ->name('customers');
 
@@ -25,6 +25,13 @@ Route::view('features', 'homepages.features')
 
 Route::view('pricing', 'homepages.pricing')
     ->name('pricing');
+
+Route::view('privacy', 'homepages.privacy')
+    ->name('privacy');
+    
+Route::view('terms', 'homepages.terms')
+    ->name('terms');
+
 
 Route::get('/checkout/{variant}', [LemonCheckoutController::class, 'create'])
     ->middleware('auth')

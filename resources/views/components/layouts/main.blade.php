@@ -12,6 +12,8 @@
         {{ $slot }}
     </flux:main>
 
+    @include('components.footer')
+
     @fluxScripts
 </body>
 

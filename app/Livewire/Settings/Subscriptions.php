@@ -8,23 +8,23 @@ use Illuminate\Support\Facades\Auth;
 
 class Subscriptions extends Component
 {
-    public array $subscriptions = [];
+    public $subscription;
 
     public function mount(LemonSqueezyService $lemon)
     {
         $user = Auth::user();
-        $this->subscriptions = $lemon->getSubscriptionsByEmail($user->email);
+        $this->subscription = $lemon->getActualSubscription($user->email);
     }
 
     // public function updateSubscription(LemonSqueezyService $lemon) {}
 
-    public function cancelSubscription(string $subscriptionId, LemonSqueezyService $lemon)
-    {
-        $user = Auth::user();
-        $lemon->cancelSubscription($subscriptionId);
+    // public function cancelSubscription(string $subscriptionId, LemonSqueezyService $lemon)
+    // {
+    //     $user = Auth::user();
+    //     $lemon->cancelSubscription($subscriptionId);
 
-        $subscriptions = $lemon->getSubscriptionsByEmail($user->email);
+    //     $this->subscription = $lemon->getActualSubscription($user->email);
 
-        // Flux::modal();
-    }
+    //     // Flux::modal();
+    // }
 }
