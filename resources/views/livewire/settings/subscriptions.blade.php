@@ -5,26 +5,31 @@
         @if ($subscription)
             <flux:card class="p-6 space-y-6">
                 <flux:heading>
-                    ATS Boost {{ $subscription['attributes']['variant_name'] }}
+                    ATS Boost {{ $subscription->variant_name }}
                 </flux:heading>
 
                 @php
-                    $status = match ($subscription['attributes']['status']) {
+                    $status = match ($subscription->status) {
                         'on_trial' => 'Trial',
                         'active' => 'Active',
-                        default => ucfirst($subscription['attributes']['status']),
+                        default => ucfirst($subscription->status),
                     };
                 @endphp
 
                 <flux:subheading>Status: {{ $status }}</flux:subheading>
-                
-                <flux:button href="{{ $subscription['attributes']['urls']['customer_portal'] }}" variant="filled"
-                    class="w-full">
+
+                <flux:button href="{{ $subscription->customer_portal_url }}" variant="filled" class="w-full">
                     Manage Subscription
                 </flux:button>
             </flux:card>
         @else
-            <flux:text class="text-gray-500">No active subscription found.</flux:text>
+            <flux:callout icon="shield-check" color="blue" inline>
+                <flux:callout.heading>You don't have an active subscription yet</flux:callout.heading>
+                <flux:callout.text>Get access to all of our premium features and benefits.</flux:callout.text>
+                <x-slot name="actions" class="@md:h-full m-0!">
+                    <flux:button href="{{ route('pricing') }}" wire:navigate>Upgrade to Pro -></flux:button>
+                </x-slot>
+            </flux:callout>
         @endif
     </x-settings.layout>
 </section>

@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\LemonCheckoutController;
+use App\Livewire\Dashboard\ResumeBuilder;
 use App\Livewire\Settings\Subscriptions;
 use Illuminate\Support\Facades\Route;
 use App\Livewire\Settings\Appearance;
@@ -28,10 +29,9 @@ Route::view('pricing', 'homepages.pricing')
 
 Route::view('privacy', 'homepages.privacy')
     ->name('privacy');
-    
+
 Route::view('terms', 'homepages.terms')
     ->name('terms');
-
 
 Route::get('/checkout/{variant}', [LemonCheckoutController::class, 'create'])
     ->middleware('auth')
@@ -56,3 +56,10 @@ Route::middleware(['auth'])->group(function () {
         )
         ->name('two-factor.show');
 });
+
+Route::middleware(['auth', 'subscribed'])->group(function () {
+    Route::get('dashboard/resume-builder', ResumeBuilder::class)->name('dashboard.resume-builder');
+    Route::get('dashboard/resume-tailor', ResumeBuilder::class)->name('dashboard.resume-tailor');
+    Route::get('dashboard/resume-analyzer', ResumeBuilder::class)->name('dashboard.resume-analyzer');
+});
+

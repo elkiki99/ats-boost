@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Validation\Rule;
 use Livewire\Component;
+use Flux\Flux;
 
 class Profile extends Component
 {
@@ -33,25 +34,32 @@ class Profile extends Component
         $validated = $this->validate([
             'name' => ['required', 'string', 'max:255'],
 
-            'email' => [
-                'required',
-                'string',
-                'lowercase',
-                'email',
-                'max:255',
-                Rule::unique(User::class)->ignore($user->id),
-            ],
+            // 'email' => [
+            //     'required',
+            //     'string',
+            //     'lowercase',
+            //     'email',
+            //     'max:255',
+            //     Rule::unique(User::class)->ignore($user->id),
+            // ],
         ]);
 
-        $user->fill($validated);
+        // $user->fill($validated);
 
-        if ($user->isDirty('email')) {
-            $user->email_verified_at = null;
-        }
+        // if ($user->isDirty('email')) {
+        //     $user->email_verified_at = null;
+        // }
 
-        $user->save();
+        // $user->save();
 
-        $this->dispatch('profile-updated', name: $user->name);
+        $user->update($validated);
+
+        // $this->dispatch('profile-updated', name: $user->name);
+        Flux::toast(
+            heading: 'Profile updated',
+            text: 'Your profile has been updated successfully.',
+            variant: 'success',
+        );
     }
 
     /**

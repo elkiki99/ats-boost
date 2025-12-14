@@ -10,10 +10,9 @@ class Subscriptions extends Component
 {
     public $subscription;
 
-    public function mount(LemonSqueezyService $lemon)
+    public function mount()
     {
-        $user = Auth::user();
-        $this->subscription = $lemon->getActualSubscription($user->email);
+        $this->subscription = Auth::user()->subscriber;
     }
 
     // public function updateSubscription(LemonSqueezyService $lemon) {}
