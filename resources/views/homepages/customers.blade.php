@@ -7,15 +7,14 @@
         </div>
 
         <flux:heading level="1"
-            class="!text-5xl md:!text-6xl font-black max-w-4xl mx-auto lg:mx-0 lg:max-w-full text-center lg:text-start">
+            class="!text-5xl !mb-6 md:!text-6xl font-black max-w-4xl mx-auto lg:mx-0 lg:max-w-full text-center lg:text-start">
             See why professionals trust us<br class="hidden lg:block">
             to elevate <span
                 class="text-5xl font-black text-transparent md:text-6xl dark:from-blue-500 dark:via-blue-300 dark:to-blue-600 bg-gradient-to-r from-blue-600 via-blue-400 to-blue-700 bg-clip-text">
                 their resumes</span>
         </flux:heading>
 
-        <flux:subheading level="2"
-            class="max-w-xl mx-auto text-sm text-center md:text-base lg:text-start lg:mx-0">
+        <flux:subheading level="2" class="max-w-xl mx-auto text-sm text-center md:text-base lg:text-start lg:mx-0">
             Real users. Real results. Discover how ATS Boost improves clarity, impact, and job-winning performance in
             every resume.
         </flux:subheading>
@@ -91,6 +90,7 @@
                     <div class="break-inside-avoid">
                         <flux:card size="sm"
                             class="relative overflow-hidden
+        p-6
         backdrop-blur-sm
         transition-all duration-300
 
@@ -102,9 +102,14 @@
 
 
         rounded-xl">
-                            <flux:text variant="strong" size="lg">
-                                {{ $t['text'] }}
-                            </flux:text>
+
+                            <blockquote class="italic font-medium">
+                                {{-- <p> --}}
+                                    <flux:text variant="strong" size="lg">
+                                        "{{ $t['text'] }}"
+                                    </flux:text>
+                                {{-- </p> --}}
+                            </blockquote>
 
                             <div class="mt-6 flex items-center gap-4">
                                 <flux:avatar size="lg" src="https://unavatar.io/x/{{ $t['img'] }}" />

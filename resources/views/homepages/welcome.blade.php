@@ -8,7 +8,7 @@
 
         <div>
             <flux:heading level="1"
-                class="!text-5xl md:!text-6xl font-black max-w-4xl mx-auto lg:mx-0 lg:max-w-full text-center lg:text-start">
+                class="!text-5xl !mb-6 md:!text-6xl font-black max-w-4xl mx-auto lg:mx-0 lg:max-w-full text-center lg:text-start">
                 Struggling to get hired? Tailor your<br class="hidden lg:block">
                 resume and
                 <span

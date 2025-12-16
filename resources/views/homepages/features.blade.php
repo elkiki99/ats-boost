@@ -7,7 +7,7 @@
         </div>
 
         <flux:heading level="1"
-            class="!text-5xl md:!text-6xl font-black max-w-4xl mx-auto lg:mx-0 lg:max-w-full text-center lg:text-start">
+            class="!text-5xl !mb-6 md:!text-6xl font-black max-w-4xl mx-auto lg:mx-0 lg:max-w-full text-center lg:text-start">
             Built to give you an unfair advantage
             <br class="hidden lg:block">in the<span
                 class="!text-5xl font-black text-transparent md:!text-6xl bg-gradient-to-r from-blue-600 via-blue-300 to-blue-500 bg-clip-text">
@@ -33,126 +33,35 @@
 
     <!-- Features -->
     <section class="py-12 space-y-6">
-        <div class="grid grid-cols-1 gap-4 py-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3">
-            <flux:card size="sm"
-                class="
-        relative overflow-hidden
-        backdrop-blur-sm
-        transition-all duration-300
+        <div class="grid grid-cols-1 gap-4 py-6 sm:grid-cols-2 md:grid-cols-3">
 
-        hover:-translate-y-[2px]
+            <x-feature-card icon="fire" icon-color="text-orange-600 dark:text-orange-400"
+                title="Unlimited tailored resumes">
+                Generate as many resumes as you want, instantly personalized for each job.
+            </x-feature-card>
 
-        hover:shadow-md dark:hover:shadow-none
-        hover:shadow-blue-500/5
+            <x-feature-card icon="sparkles" icon-color="text-green-600 dark:text-green-400"
+                title="ATS keyword optimization">
+                Ensure your CV passes applicant tracking systems with AI-recommended keywords.
+            </x-feature-card>
 
-        rounded-xl
-    ">
-                <!-- Soft background glow -->
-                <div class="absolute inset-0 pointer-events-none opacity-0 hover:opacity-100 transition duration-500">
-                    <div
-                        class="absolute -inset-10 bg-gradient-to-br from-blue-500/10 via-blue-300/5 to-blue-600/10 blur-2xl">
-                    </div>
-                </div>
+            <x-feature-card icon="language" icon-color="text-indigo-600 dark:text-indigo-400" title="Grammar & clarity">
+                Improve readability, tone and structure for maximum impact.
+            </x-feature-card>
 
-                <flux:icon.fire class="mb-3 text-blue-600 dark:text-blue-400" variant="solid" />
+            <x-feature-card icon="document-text" icon-color="text-sky-600 dark:text-sky-400"
+                title="Professional formatting">
+                Use clean, modern templates that hiring managers love.
+            </x-feature-card>
 
-                <flux:heading level="3">Unlimited tailored resumes</flux:heading>
+            <x-feature-card icon="pencil-square" icon-color="text-purple-600 dark:text-purple-400"
+                title="Cover letter generator">
+                Create tailored cover letters with one click.
+            </x-feature-card>
 
-                <flux:subheading>
-                    Generate as many resumes as you want, instantly personalized for each job.
-                </flux:subheading>
-            </flux:card>
-
-            <flux:card size="sm"
-                class="
-        relative overflow-hidden
-        backdrop-blur-sm
-        transition-all duration-300
-
-        hover:-translate-y-[2px]
-
-        hover:shadow-md dark:hover:shadow-none
-        hover:shadow-blue-500/5
-
-        rounded-xl
-    ">
-                <flux:icon.check-circle class="mb-3 text-green-600 dark:text-green-400" variant="solid" />
-                <flux:heading level="3">ATS keyword optimization</flux:heading>
-                <flux:subheading>Ensure your CV passes applicant tracking systems with AI-recommended keywords.
-                </flux:subheading>
-            </flux:card>
-
-            <flux:card size="sm"
-                class="
-        relative overflow-hidden
-        backdrop-blur-sm
-        transition-all duration-300
-
-        hover:-translate-y-[2px]
-
-        hover:shadow-md dark:hover:shadow-none
-        hover:shadow-blue-500/5
-
-        rounded-xl
-    ">
-                <flux:icon.check-circle class="mb-3 text-green-600 dark:text-green-400" variant="solid" />
-                <flux:heading level="3">Grammar & clarity</flux:heading>
-                <flux:subheading>Improve readability, tone and structure for maximum impact.</flux:subheading>
-            </flux:card>
-
-            <flux:card size="sm"
-                class="
-        relative overflow-hidden
-        backdrop-blur-sm
-        transition-all duration-300
-
-        hover:-translate-y-[2px]
-
-        hover:shadow-md dark:hover:shadow-none
-        hover:shadow-blue-500/5
-
-        rounded-xl
-    ">
-                <flux:icon.check-circle class="mb-3 text-green-600 dark:text-green-400" variant="solid" />
-                <flux:heading level="3">Professional formatting</flux:heading>
-                <flux:subheading>Use clean, modern templates that hiring managers love.</flux:subheading>
-            </flux:card>
-
-            <flux:card size="sm"
-                class="
-        relative overflow-hidden
-        backdrop-blur-sm
-        transition-all duration-300
-
-        hover:-translate-y-[2px]
-
-        hover:shadow-md dark:hover:shadow-none
-        hover:shadow-blue-500/5
-
-        rounded-xl
-    ">
-                <flux:icon.check-circle class="mb-3 text-green-600 dark:text-green-400" variant="solid" />
-                <flux:heading level="3">Cover letter generator</flux:heading>
-                <flux:subheading>Create tailored cover letters with one click.</flux:subheading>
-            </flux:card>
-
-            <flux:card size="sm"
-                class="
-        relative overflow-hidden
-        backdrop-blur-sm
-        transition-all duration-300
-
-        hover:-translate-y-[2px]
-
-        hover:shadow-md dark:hover:shadow-none
-        hover:shadow-blue-500/5
-
-        rounded-xl
-    ">
-                <flux:icon.bolt class="mb-3 text-blue-600 dark:text-blue-400" variant="solid" />
-                <flux:heading level="3">Priority delivery</flux:heading>
-                <flux:subheading>Get resume versions generated instantly during peak hours.</flux:subheading>
-            </flux:card>
+            <x-feature-card icon="bolt" icon-color="text-yellow-600 dark:text-yellow-400" title="Priority delivery">
+                Get resume versions generated instantly during peak hours.
+            </x-feature-card>
 
         </div>
 
@@ -164,12 +73,18 @@
     </section>
 
     <!-- FAQs -->
-    <section class="py-6 space-y-6">
+    <section class="py-6 space-y-6 max-w-4xl mx-auto">
+        <div class="!text-center">
+            <flux:badge color="blue" icon="sparkles" size="sm" variant="pill">
+                FAQs
+            </flux:badge>
+        </div>
+
         <flux:heading level="2" class="font-bold text-center !text-4xl lg:!text-5xl py-6">
             Frequently asked questions
         </flux:heading>
 
-        <flux:accordion exclusive transition class="w-full py-6 lg:col-span-2">
+        <flux:accordion variant="reverse" exclusive transition class="w-full py-6 lg:col-span-2">
             <flux:accordion.item expanded>
                 <flux:accordion.heading level="3">Is it compatible with ATS?</flux:accordion.heading>
                 <flux:accordion.content>
