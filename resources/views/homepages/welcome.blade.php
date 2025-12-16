@@ -2,7 +2,7 @@
     <section class="space-y-6">
         <div class="!text-center lg:!text-start">
             <flux:badge color="blue" icon="sparkles" size="sm" variant="pill">
-                Try our demo for free
+                Try our demo
             </flux:badge>
         </div>
 

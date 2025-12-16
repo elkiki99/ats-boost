@@ -8,13 +8,10 @@
 
         <flux:subheading class="text-center md:text-right">
             <div class="flex gap-4">
-                <flux:link wire:navigate href="/terms" class="text-center max-md:mb-1 !text-sm md:text-left">Terms
-                    of
-                    service
+                <flux:link wire:navigate href="/terms" class="text-center max-md:mb-1 !text-sm md:text-left">Terms & Conditions
                 </flux:link>
                 <flux:link wire:navigate href="/privacy" class="text-center max-md:mb-1 !text-sm md:text-left">
-                    Privacy
-                    policy
+                    Privacy Policy
                 </flux:link>
             </div>
         </flux:subheading>

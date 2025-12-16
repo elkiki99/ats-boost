@@ -1,7 +1,7 @@
 <x-layouts.main title="Features • ATS Boost">
     <section class="space-y-6">
         <div class="!text-center lg:!text-start">
-            <flux:badge color="blue" icon="sparkles" size="sm" variant="pill">
+            <flux:badge color="blue" icon="cpu-chip" size="sm" variant="pill">
                 AI-powered resume builder
             </flux:badge>
         </div>
@@ -65,11 +65,11 @@
 
         </div>
 
-        <div class="flex justify-end">
+        {{-- <div class="flex justify-end">
             <flux:button as="link" variant="ghost" wire:navigate href="/pricing" icon-trailing="arrow-up-right">
                 View pricing
             </flux:button>
-        </div>
+        </div> --}}
     </section>
 
     <!-- FAQs -->
@@ -184,14 +184,9 @@
             </flux:accordion.item>
         </flux:accordion>
 
-
-
-        {{-- <a href="https://www.lemonsqueezy.com/why-did-lemon-squeeezy-charge-me">Lemon Squeezy Charge<a> --}}
-
-
         <div class="flex justify-end">
-            <flux:button as="link" variant="ghost" wire:navigate href="/customers" icon-trailing="arrow-up-right">
-                Customers
+            <flux:button as="link" variant="ghost" wire:navigate href="/pricing" icon-trailing="arrow-up-right">
+                Pricing
             </flux:button>
         </div>
     </section>

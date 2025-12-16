@@ -1,11 +1,12 @@
 <x-layouts.app :title="__('Dashboard')">
     <div class="flex h-full w-full flex-1 flex-col gap-4 rounded-xl">
-        <div class="grid auto-rows-min gap-4 md:grid-cols-3">
+        <div class="grid gap-4 md:grid-cols-3 items-stretch">
 
             {{-- Resume Builder --}}
             <a href="{{ route('dashboard.resume-builder') }}" wire:navigate>
                 <flux:card
-                    class="group cursor-pointer transition hover:border-neutral-300 dark:hover:border-neutral-600">
+                    class="h-full group cursor-pointer transition hover:border-neutral-300 dark:hover:border-neutral-600">
+
                     <div class="mb-2 flex items-center">
                         <flux:heading>Resume builder</flux:heading>
                         <flux:spacer />
@@ -22,7 +23,8 @@
             {{-- Tailor Your Resume (core feature) --}}
             <a href="{{ route('dashboard.resume-tailor') }}" wire:navigate>
                 <flux:card
-                    class="group cursor-pointer transition hover:border-neutral-300 dark:hover:border-neutral-600">
+                    class="h-full group cursor-pointer transition hover:border-neutral-300 dark:hover:border-neutral-600">
+
                     <div class="mb-2 flex items-center">
                         <flux:heading>Tailor your resume</flux:heading>
                         <flux:spacer />
@@ -39,7 +41,8 @@
             {{-- Resume Analyzer --}}
             <a href="{{ route('dashboard.resume-analyzer') }}" wire:navigate>
                 <flux:card
-                    class="group cursor-pointer transition hover:border-neutral-300 dark:hover:border-neutral-600">
+                    class="h-full group cursor-pointer transition hover:border-neutral-300 dark:hover:border-neutral-600">
+
                     <div class="mb-2 flex items-center">
                         <flux:heading>Resume analyzer</flux:heading>
                         <flux:spacer />
