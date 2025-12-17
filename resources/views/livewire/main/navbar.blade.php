@@ -5,7 +5,7 @@
                 <x-app-logo-icon class="size-7 text-blue-600/90 dark:text-white" />
             </span>
             <flux:text size="lg" class="text-blue-600/90 dark:text-white">
-                ATS Boost
+                ATS <span class="font-bold">Boost</span>
             </flux:text>
         </a>
     </div>
@@ -43,11 +43,11 @@
                         <x-app-logo-icon class="size-7 text-blue-600/90 dark:text-white" />
                     </span>
                     <flux:text size="lg" class="text-blue-600/90 dark:text-white">
-                        ATS Boost
+                        ATS <span class="font-bold">Boost</span>
                     </flux:text>
                 </a>
                 {{-- <flux:sidebar.collapse class="lg:hidden" /> --}}
-            <flux:sidebar.toggle class="lg:hidden" icon="x-mark" />
+                <flux:sidebar.toggle class="lg:hidden" icon="x-mark" />
 
             </flux:sidebar.header>
 
