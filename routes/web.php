@@ -1,7 +1,10 @@
 <?php
 
 use App\Http\Controllers\LemonCheckoutController;
-use App\Livewire\Dashboard\ResumeBuilder;
+use App\Livewire\Resume\CoverLetter;
+use App\Livewire\Resume\ResumeAnalyzer;
+use App\Livewire\Resume\ResumeBuilder;
+use App\Livewire\Resume\ResumeTailor;
 use App\Livewire\Settings\Subscriptions;
 use Illuminate\Support\Facades\Route;
 use App\Livewire\Settings\Appearance;
@@ -58,8 +61,9 @@ Route::middleware(['auth'])->group(function () {
 });
 
 Route::middleware(['auth', 'subscribed'])->group(function () {
-    Route::get('dashboard/resume-builder', ResumeBuilder::class)->name('dashboard.resume-builder');
-    Route::get('dashboard/resume-tailor', ResumeBuilder::class)->name('dashboard.resume-tailor');
-    Route::get('dashboard/resume-analyzer', ResumeBuilder::class)->name('dashboard.resume-analyzer');
+    Route::get('dashboard/resume-builder', ResumeBuilder::class)->name('resume.resume-builder');
+    Route::get('dashboard/resume-tailor', ResumeTailor::class)->name('resume.resume-tailor');
+    Route::get('dashboard/resume-analyzer', ResumeAnalyzer::class)->name('resume.resume-analyzer');
+    Route::get('dashboard/cover-letter', CoverLetter::class)->name('resume.cover-letter');
 });
 

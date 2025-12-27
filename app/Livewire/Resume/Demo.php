@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Livewire;
+namespace App\Livewire\Resume;
 
 use Livewire\Component;
 use Illuminate\Support\Facades\Auth;
@@ -10,7 +10,7 @@ use Barryvdh\DomPDF\Facade\Pdf;
 use Livewire\WithFileUploads;
 use Smalot\PdfParser\Parser;
 
-class AtsInput extends Component
+class Demo extends Component
 {
     use WithFileUploads;
 
@@ -38,7 +38,7 @@ class AtsInput extends Component
 
     public function startTailoring()
     {
-        if (!Auth::user() && $this->usageCount >= 3) {
+        if ((!Auth::user() || !Auth::user()->isSubscribed()) && $this->usageCount >= 3) {
             $this->modal('limit-modal')->show();
             return;
         }
@@ -48,10 +48,10 @@ class AtsInput extends Component
         $this->usageCount++;
         session(['cv_usage_count' => $this->usageCount]);
 
-        $this->dispatch('tailoring-started');
+        $this->dispatch('tailoring-demo-started');
     }
 
-    public function tailorResume()
+    public function tailorResumeDemo()
     {
         $path = $this->resume->getRealPath();
         $cvText = $this->extractPdf($path);
@@ -77,9 +77,9 @@ class AtsInput extends Component
             $requirements
         );
 
-        $this->modal('tailoring-in-progress')->close();
+        $this->modal('tailoring-demo-in-progress')->close();
 
-        $this->modal('tailoring-result')->show();
+        $this->modal('tailoring-demo-result')->show();
     }
 
     public function downloadPdf()
@@ -177,6 +177,6 @@ class AtsInput extends Component
 
     public function render()
     {
-        return view('livewire.ats-input');
+        return view('livewire.resume.demo');
     }
 }

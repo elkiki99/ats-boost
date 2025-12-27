@@ -14,11 +14,9 @@ class LemonCheckoutController extends Controller
         $checkoutUrl = $lemon->createCheckout($variantId, $user->email);
 
         if (!$checkoutUrl) {
-            // Redirige a pricing si hay error
             return redirect()->route('pricing');
         }
 
-        // Redirige al checkout de Lemon Squeezy
         return redirect()->away($checkoutUrl);
     }
 }

@@ -7,13 +7,16 @@
         </div>
 
         <flux:heading level="1"
-            class="!text-5xl !mb-6 md:!text-6xl font-black max-w-4xl mx-auto lg:mx-0 lg:max-w-full text-center lg:text-start">
+            class="!text-5xl !mb-6 md:!text-6xl font-black max-w-4xl mx-auto lg:mx-0 lg:max-w-full text-center lg:text-start hidden md:block">
             Built to give you an unfair advantage
             <br class="hidden lg:block">in the<span
                 class="!text-5xl font-black text-transparent md:!text-6xl bg-gradient-to-r from-blue-600 via-blue-300 to-blue-500 bg-clip-text">
                 job market
             </span>
         </flux:heading>
+        
+        <!-- Mobile -->
+        <flux:heading level="1" class="md:hidden !text-5xl text-center">Built to give you an unfair advantage</flux:heading>
 
         <flux:subheading level="2" class="max-w-xl mx-auto text-sm text-center md:text-base lg:text-start lg:mx-0">
             Generate tailored resumes, optimize keywords, and boost your chances
@@ -34,42 +37,34 @@
     <!-- Features -->
     <section class="py-12 space-y-6">
         <div class="grid grid-cols-1 gap-4 py-6 sm:grid-cols-2 md:grid-cols-3">
-
-            <x-feature-card icon="fire" icon-color="text-orange-600 dark:text-orange-400"
+            <x-feature-card icon="fire" color="text-orange-600 dark:text-orange-400"
                 title="Unlimited tailored resumes">
                 Generate as many resumes as you want, instantly personalized for each job.
             </x-feature-card>
 
-            <x-feature-card icon="sparkles" icon-color="text-green-600 dark:text-green-400"
+            <x-feature-card icon="sparkles" color="text-green-600 dark:text-green-400"
                 title="ATS keyword optimization">
                 Ensure your CV passes applicant tracking systems with AI-recommended keywords.
             </x-feature-card>
 
-            <x-feature-card icon="language" icon-color="text-indigo-600 dark:text-indigo-400" title="Grammar & clarity">
+            <x-feature-card icon="language" color="text-indigo-600 dark:text-indigo-400" title="Grammar & clarity">
                 Improve readability, tone and structure for maximum impact.
             </x-feature-card>
 
-            <x-feature-card icon="document-text" icon-color="text-sky-600 dark:text-sky-400"
+            <x-feature-card icon="document-text" color="text-sky-600 dark:text-sky-400"
                 title="Professional formatting">
                 Use clean, modern templates that hiring managers love.
             </x-feature-card>
 
-            <x-feature-card icon="pencil-square" icon-color="text-purple-600 dark:text-purple-400"
+            <x-feature-card icon="pencil-square" color="text-purple-600 dark:text-purple-400"
                 title="Cover letter generator">
                 Create tailored cover letters with one click.
             </x-feature-card>
 
-            <x-feature-card icon="bolt" icon-color="text-yellow-600 dark:text-yellow-400" title="Priority delivery">
+            <x-feature-card icon="bolt" color="text-yellow-600 dark:text-yellow-400" title="Priority delivery">
                 Get resume versions generated instantly during peak hours.
             </x-feature-card>
-
         </div>
-
-        {{-- <div class="flex justify-end">
-            <flux:button as="link" variant="ghost" wire:navigate href="/pricing" icon-trailing="arrow-up-right">
-                View pricing
-            </flux:button>
-        </div> --}}
     </section>
 
     <!-- FAQs -->

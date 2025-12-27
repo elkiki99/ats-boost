@@ -1,4 +1,4 @@
-@props(['icon', 'iconColor' => 'text-blue-600 dark:text-blue-400', 'title'])
+@props(['icon', 'color' => 'text-blue-600 dark:text-blue-400', 'title'])
 
 <flux:card size="sm"
     class="
@@ -18,7 +18,7 @@
     </div>
 
     {{-- Icon --}}
-    <flux:icon :name="$icon" variant="solid" class="mb-3 {{ $iconColor }}" />
+    <flux:icon :name="$icon" variant="solid" class="mb-3 {{ $color }}" />
 
     {{-- Title --}}
     <flux:heading size="lg" level="3">

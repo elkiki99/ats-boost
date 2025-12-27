@@ -23,7 +23,7 @@
             </flux:subheading>
         </div>
 
-        <livewire:ats-input />
+        <livewire:resume.demo />
 
         <flux:subheading level="2" class="max-w-xl mx-auto text-sm text-center md:text-base lg:text-start lg:mx-0">
             The template follows a refined Harvard-style layout, crafted to help you<br> look

@@ -206,7 +206,7 @@
 
             <flux:separator variant="subtle" />
 
-            <div class="flex items-center justify-center gap-2">
+            <div class="flex items-center justify-center gap-2 text-center">
                 <flux:subheading>Still not sure? Check out what our happy <flux:link class="!text-sm" wire:navigate
                         href="/customers">customers</flux:link> are saying.</flux:subheading>
             </div>

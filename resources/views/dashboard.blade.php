@@ -1,9 +1,8 @@
-<x-layouts.app :title="__('Dashboard')">
+<x-layouts.app :title="__('Dashboard • ATS Boost')">
     <div class="flex h-full w-full flex-1 flex-col gap-4 rounded-xl">
         <div class="grid gap-4 md:grid-cols-3 items-stretch">
-
             {{-- Resume Builder --}}
-            <a href="{{ route('dashboard.resume-builder') }}" wire:navigate>
+            <a href="{{ route('resume.resume-builder') }}" wire:navigate>
                 <flux:card
                     class="h-full group cursor-pointer transition hover:border-neutral-300 dark:hover:border-neutral-600">
 
@@ -21,7 +20,7 @@
             </a>
 
             {{-- Tailor Your Resume (core feature) --}}
-            <a href="{{ route('dashboard.resume-tailor') }}" wire:navigate>
+            <a href="{{ route('resume.resume-tailor') }}" wire:navigate>
                 <flux:card
                     class="h-full group cursor-pointer transition hover:border-neutral-300 dark:hover:border-neutral-600">
 
@@ -39,7 +38,7 @@
             </a>
 
             {{-- Resume Analyzer --}}
-            <a href="{{ route('dashboard.resume-analyzer') }}" wire:navigate>
+            <a href="{{ route('resume.resume-analyzer') }}" wire:navigate>
                 <flux:card
                     class="h-full group cursor-pointer transition hover:border-neutral-300 dark:hover:border-neutral-600">
 

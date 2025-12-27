@@ -28,7 +28,7 @@
                 Log in
             </flux:navbar.item>
 
-            <flux:button variant="primary" as="link" href="/register" wire:navigate>
+            <flux:button variant="primary" size="sm" as="link" href="/register" wire:navigate>
                 Register
             </flux:button>
         @endif

@@ -15,7 +15,7 @@ class SubscribedMiddleware
      */
     public function handle(Request $request, Closure $next): Response
     {
-        if (! $request->user()?->isSubscribed()) {
+        if (!$request->user()?->isSubscribed()) {
             return redirect('pricing');
         }
 

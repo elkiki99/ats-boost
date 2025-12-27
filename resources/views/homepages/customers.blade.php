@@ -7,12 +7,15 @@
         </div>
 
         <flux:heading level="1"
-            class="!text-5xl !mb-6 md:!text-6xl font-black max-w-4xl mx-auto lg:max-w-full text-center">
+            class="!text-5xl !mb-6 md:!text-6xl font-black max-w-4xl mx-auto lg:max-w-full text-center hidden md:block">
             See why professionals trust us<br class="hidden lg:block">
             to elevate <span
                 class="text-5xl font-black text-transparent md:text-6xl dark:from-blue-500 dark:via-blue-300 dark:to-blue-600 bg-gradient-to-r from-blue-600 via-blue-400 to-blue-700 bg-clip-text">
                 their resumes</span>
         </flux:heading>
+
+        <!-- Mobile -->
+        <flux:heading level="1" class="md:hidden !text-5xl text-center">See why professionals trust us</flux:heading>
 
         <flux:subheading level="2" class="max-w-xl mx-auto text-sm text-center md:text-base">
             Real users. Real results. Discover how ATS Boost improves clarity, impact, and job-winning performance in
