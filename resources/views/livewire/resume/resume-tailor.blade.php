@@ -1,5 +1,42 @@
-{{-- <x-layouts.app :title="__('Resume Tailor • ATS Boost')"> --}}
 <div>
+    <!-- Progress modal -->
+    <flux:modal class="!max-w-sm flex flex-col items-center space-y-6 p-4" name="tailoring-in-progress"
+        :dismissible="false" :closable="false" variant="floating">
+        <div>
+            <flux:heading size="lg" class="text-center">
+                Tailoring your CV
+            </flux:heading>
+            <flux:subheading class="text-center">
+                Matching your experience to the job description while preserving your original voice.
+            </flux:subheading>
+        </div>
+
+        <flux:icon.loading />
+    </flux:modal>
+
+    <!-- Result modal -->
+    <flux:modal name="tailoring-result" :dismissible="false" variant="floating" class="w-full! max-w-3xl space-y-6 p-4">
+        <div>
+            <flux:heading size="lg">
+                Your tailored CV is ready
+            </flux:heading>
+
+            <flux:subheading>
+                We optimized your CV based on the job description while keeping your original content intact.
+            </flux:subheading>
+        </div>
+
+        <flux:editor wire:model.live="tailored"
+            toolbar="heading | bold italic underline | bullet ordered | align ~ undo redo"
+            placeholder="Edit your tailored CV..." class="[&_ [data-slot=content]]:min-h-[350px]!" />
+
+        <div class="flex justify-end">
+            <flux:button variant="primary" icon="arrow-down-tray" wire:click="downloadPdf">
+                Download tailored PDF
+            </flux:button>
+        </div>
+    </flux:modal>
+
     <div class="relative mb-6 w-full">
         <flux:heading size="xl" level="1">{{ __('Resume tailor') }}</flux:heading>
         <flux:subheading size="lg" class="mb-6">{{ __('Tailor your resume to match any job description') }}
@@ -37,47 +74,7 @@ The right candidate must be..." />
                 </flux:button>
             </div>
         </div>
-
-        <!-- Progress modal -->
-        <flux:modal class="!max-w-sm flex flex-col items-center space-y-6 p-4" name="tailoring-in-progress"
-            :dismissible="false" :closable="false" variant="floating">
-            <div>
-                <flux:heading size="lg" class="text-center">
-                    Tailoring your CV
-                </flux:heading>
-                <flux:subheading class="text-center">
-                    Matching your experience to the job description while preserving your original voice.
-                </flux:subheading>
-            </div>
-
-            <flux:icon.loading />
-        </flux:modal>
-
-        <!-- Result modal -->
-        <flux:modal name="tailoring-result" :dismissible="false" variant="floating"
-            class="w-full! max-w-3xl space-y-6 p-4">
-            <div>
-                <flux:heading size="lg">
-                    Your tailored CV is ready
-                </flux:heading>
-
-                <flux:subheading>
-                    We optimized your CV based on the job description while keeping your original content intact.
-                </flux:subheading>
-            </div>
-
-            <flux:editor wire:model.live="tailored"
-                toolbar="heading | bold italic underline | bullet ordered | align ~ undo redo"
-                placeholder="Edit your tailored CV..." class="[&_ [data-slot=content]]:min-h-[350px]!" />
-
-            <div class="flex justify-end">
-                <flux:button variant="primary" icon="arrow-down-tray" wire:click="downloadPdf">
-                    Download tailored PDF
-                </flux:button>
-            </div>
-        </flux:modal>
     </div>
-    {{-- </x-layouts.app> --}}
 </div>
 
 @script

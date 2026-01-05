@@ -1,26 +1,8 @@
 <x-layouts.app :title="__('Dashboard • ATS Boost')">
     <div class="flex h-full w-full flex-1 flex-col gap-4 rounded-xl">
         <div class="grid gap-4 md:grid-cols-3 items-stretch">
-            {{-- Resume Builder --}}
-            <a href="{{ route('resume.resume-builder') }}" wire:navigate>
-                <flux:card
-                    class="h-full group cursor-pointer transition hover:border-neutral-300 dark:hover:border-neutral-600">
-
-                    <div class="mb-2 flex items-center">
-                        <flux:heading>Resume builder</flux:heading>
-                        <flux:spacer />
-                        <flux:icon.arrow-right variant="micro"
-                            class="text-zinc-500 dark:text-zinc-300 transition-transform duration-300 group-hover:translate-x-1" />
-                    </div>
-
-                    <flux:subheading>
-                        Build a professional resume from scratch using clean layouts and smart suggestions.
-                    </flux:subheading>
-                </flux:card>
-            </a>
-
             {{-- Tailor Your Resume (core feature) --}}
-            <a href="{{ route('resume.resume-tailor') }}" wire:navigate>
+            <a href="{{ route('resume.resume-tailor') }}">
                 <flux:card
                     class="h-full group cursor-pointer transition hover:border-neutral-300 dark:hover:border-neutral-600">
 
@@ -37,8 +19,26 @@
                 </flux:card>
             </a>
 
+            {{-- Resume Builder --}}
+            {{-- <a href="{{ route('resume.resume-builder') }}">
+                <flux:card
+                    class="h-full group cursor-pointer transition hover:border-neutral-300 dark:hover:border-neutral-600">
+
+                    <div class="mb-2 flex items-center">
+                        <flux:heading>Resume builder</flux:heading>
+                        <flux:spacer />
+                        <flux:icon.arrow-right variant="micro"
+                            class="text-zinc-500 dark:text-zinc-300 transition-transform duration-300 group-hover:translate-x-1" />
+                    </div>
+
+                    <flux:subheading>
+                        Build a professional resume from scratch using clean layouts and smart suggestions.
+                    </flux:subheading>
+                </flux:card>
+            </a> --}}
+
             {{-- Resume Analyzer --}}
-            <a href="{{ route('resume.resume-analyzer') }}" wire:navigate>
+            <a href="{{ route('resume.resume-analyzer') }}">
                 <flux:card
                     class="h-full group cursor-pointer transition hover:border-neutral-300 dark:hover:border-neutral-600">
 
@@ -51,6 +51,24 @@
 
                     <flux:subheading>
                         Get instant feedback, ATS score and actionable improvements for your resume.
+                    </flux:subheading>
+                </flux:card>
+            </a>
+
+            {{-- Cover Letter --}}
+            <a href="{{ route('resume.cover-letter') }}">
+                <flux:card
+                    class="h-full group cursor-pointer transition hover:border-neutral-300 dark:hover:border-neutral-600">
+
+                    <div class="mb-2 flex items-center">
+                        <flux:heading>Cover letter</flux:heading>
+                        <flux:spacer />
+                        <flux:icon.arrow-right variant="micro"
+                            class="text-zinc-500 dark:text-zinc-300 transition-transform duration-300 group-hover:translate-x-1" />
+                    </div>
+
+                    <flux:subheading>
+                        Generate a cover letter built on proven professional writing standards.
                     </flux:subheading>
                 </flux:card>
             </a>

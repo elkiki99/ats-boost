@@ -17,13 +17,19 @@
                 </span>
             </flux:heading>
 
-            <flux:subheading level="2" class="max-w-xl mx-auto text-sm text-center md:text-base lg:text-start lg:mx-0">
+            <flux:subheading level="2"
+                class="max-w-xl mx-auto text-sm text-center md:text-base lg:text-start lg:mx-0">
                 Paste the job offer, upload your resume, and download a tailored CV. Our <br>engine reshapes what’s
                 in your resume to better match the role.<br>
             </flux:subheading>
         </div>
 
         <livewire:resume.demo />
+
+        {{-- <video width="320" height="240" autoplay muted>
+            <source src="demo.mp4" type="video/mp4">
+            Your browser does not support the video tag.
+        </video> --}}
 
         <flux:subheading level="2" class="max-w-xl mx-auto text-sm text-center md:text-base lg:text-start lg:mx-0">
             The template follows a refined Harvard-style layout, crafted to help you<br> look

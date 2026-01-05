@@ -61,7 +61,7 @@ Route::middleware(['auth'])->group(function () {
 });
 
 Route::middleware(['auth', 'subscribed'])->group(function () {
-    Route::get('dashboard/resume-builder', ResumeBuilder::class)->name('resume.resume-builder');
+    // Route::get('dashboard/resume-builder', ResumeBuilder::class)->name('resume.resume-builder');
     Route::get('dashboard/resume-tailor', ResumeTailor::class)->name('resume.resume-tailor');
     Route::get('dashboard/resume-analyzer', ResumeAnalyzer::class)->name('resume.resume-analyzer');
     Route::get('dashboard/cover-letter', CoverLetter::class)->name('resume.cover-letter');

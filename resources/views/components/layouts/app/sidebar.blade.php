@@ -6,7 +6,7 @@
 </head>
 
 <body class="min-h-screen bg-white dark:bg-zinc-800">
-    <flux:sidebar sticky collapsible="mobile" class="border-e border-zinc-200 bg-zinc-50 dark:border-zinc-700 dark:bg-zinc-900 sm:w-auto w-full !h-full">
+    <flux:sidebar sticky collapsible="mobile" class="border-e border-zinc-200 bg-zinc-50 dark:border-zinc-700 dark:bg-zinc-900 sm:w-auto w-full">
         <flux:sidebar.toggle class="lg:hidden" icon="x-mark" />
 
         <a href="{{ route('dashboard') }}" class="me-5 flex items-center space-x-2 rtl:space-x-reverse" wire:navigate>
@@ -23,16 +23,16 @@
         <flux:navlist variant="outline">
             <flux:navlist.group :heading="__('Resume')" class="grid">
                 <flux:navlist.item icon="scissors" :href="route('resume.resume-tailor')"
-                    :current="request()->routeIs('resume.resume-tailor')" wire:navigate>{{ __('Tailor') }}
+                    :current="request()->routeIs('resume.resume-tailor')">{{ __('Tailor') }}
                 </flux:navlist.item>
-                <flux:navlist.item icon="briefcase" :href="route('resume.resume-builder')"
-                    :current="request()->routeIs('resume.resume-builder')" wire:navigate>{{ __('Builder') }}
-                </flux:navlist.item>
+                {{-- <flux:navlist.item icon="briefcase" :href="route('resume.resume-builder')"
+                    :current="request()->routeIs('resume.resume-builder')">{{ __('Builder') }}
+                </flux:navlist.item> --}}
                 <flux:navlist.item icon="chart-bar" :href="route('resume.resume-analyzer')"
-                    :current="request()->routeIs('resume.resume-analyzer')" wire:navigate>
+                    :current="request()->routeIs('resume.resume-analyzer')">
                     {{ __('Analyzer') }}</flux:navlist.item>
                 <flux:navlist.item icon="envelope-open" :href="route('resume.cover-letter')"
-                    :current="request()->routeIs('resume.cover-letter')" wire:navigate>
+                    :current="request()->routeIs('resume.cover-letter')">
                     {{ __('Cover letter') }}</flux:navlist.item>
             </flux:navlist.group>
         </flux:navlist>
