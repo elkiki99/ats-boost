@@ -17,9 +17,9 @@ class ResumeTailor extends Component
     #[Validate('required|string|min:50')]
     public string $description = '';
 
+    public string $candidateName = '';
     public string $tailored = '';
     public string $cvText = '';
-
 
     /**
      * Step 1: validate + open progress modal
@@ -35,10 +35,14 @@ class ResumeTailor extends Component
      */
     public function tailorResume(CvTailorService $service)
     {
-        $this->tailored = $service->tailorResume(
+        $result = $service->tailorResume(
             resumePath: $this->resume->getRealPath(),
             jobDescription: $this->description
         );
+
+        $this->tailored = $result['html'];
+        $this->cvText = $result['cvText'];
+        $this->candidateName = $result['name'];
 
         $this->modal('tailoring-in-progress')->close();
         $this->modal('tailoring-result')->show();
@@ -53,11 +57,10 @@ class ResumeTailor extends Component
 
         return $service->downloadPdf(
             $this->tailored,
-            $this->cvText,
+            $this->candidateName,
             $this->description
         );
     }
-
 
     public function render()
     {
