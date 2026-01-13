@@ -79,7 +79,7 @@ The right candidate must be..." />
         </div>
     </div>
 
-    <flux:button x-on:click="$wire.startGeneratingCoverLetter()" icon="sparkles" class="mt-4 w-full" variant="primary">
+    <flux:button x-on:click="$wire.startGeneratingCoverLetter()" icon="pencil-square" class="mt-4 w-full" variant="primary">
         Generate cover letter
     </flux:button>
 </div>

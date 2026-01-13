@@ -2,11 +2,12 @@
 
 namespace App\Livewire\Resume;
 
-use Livewire\Component;
 use Illuminate\Support\Facades\Auth;
 use Livewire\Attributes\Validate;
 use App\Services\CvTailorService;
 use Livewire\WithFileUploads;
+use Livewire\Component;
+use Flux\Flux;
 
 class Demo extends Component
 {
@@ -68,6 +69,12 @@ class Demo extends Component
     public function downloadPdf(CvTailorService $service)
     {
         $this->validate();
+
+        Flux::toast(
+            heading: 'Pdf ready!',
+            text: 'Your tailored resume was downloaded successfully.',
+            variant: 'success',
+        );
 
         return $service->downloadPdf(
             $this->tailored,

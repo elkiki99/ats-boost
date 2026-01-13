@@ -219,20 +219,31 @@ class CvTailorService
     private function extractRequirements(string $jobOffer): array
     {
         $prompt = "
-            Extract key job requirements.
-            Respond ONLY with valid JSON.
+        Extract key job requirements.
+        Respond ONLY with valid JSON.
+        Return an array. If none are found, return [].
 
-            --- JOB DESCRIPTION ---
-            {$jobOffer}
-        ";
+        --- JOB DESCRIPTION ---
+        {$jobOffer}
+    ";
 
-        return json_decode(
-            OpenAI::chat()->create([
-                'model' => 'gpt-4.1',
-                'messages' => [['role' => 'user', 'content' => $prompt]],
-            ])->choices[0]->message->content,
-            true
-        );
+        $response = OpenAI::chat()->create([
+            'model' => 'gpt-4.1',
+            'messages' => [['role' => 'user', 'content' => $prompt]],
+        ])->choices[0]->message->content ?? '';
+
+        // Limpieza básica por si vienen fences ```json
+        $response = trim($response);
+        $response = preg_replace('/^```json|```$/i', '', $response);
+
+        $decoded = json_decode($response, true);
+
+        // 🔐 Fallback absoluto
+        if (!is_array($decoded)) {
+            return [];
+        }
+
+        return $decoded;
     }
 
     private function extractContactLine(string $cvText): ?string
@@ -392,7 +403,6 @@ class CvTailorService
             --- JOB DESCRIPTION ---
             {$jobOffer}
         ";
-
 
         return trim(
             OpenAI::chat()->create([

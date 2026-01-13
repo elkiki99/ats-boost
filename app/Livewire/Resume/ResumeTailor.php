@@ -2,10 +2,11 @@
 
 namespace App\Livewire\Resume;
 
-use Livewire\Component;
 use Livewire\Attributes\Validate;
-use Livewire\WithFileUploads;
 use App\Services\CvTailorService;
+use Livewire\WithFileUploads;
+use Livewire\Component;
+use Flux\Flux;
 
 class ResumeTailor extends Component
 {
@@ -44,7 +45,7 @@ class ResumeTailor extends Component
         $this->cvText = $result['cvText'];
         $this->candidateName = $result['name'];
 
-        $this->modal('tailoring-in-progress')->close();
+        $this->modal('analyzing-in-progress')->close();
         $this->modal('tailoring-result')->show();
     }
 
@@ -54,6 +55,12 @@ class ResumeTailor extends Component
     public function downloadPdf(CvTailorService $service)
     {
         $this->validate();
+
+        Flux::toast(
+            heading: 'Pdf ready!',
+            text: 'Your tailored resume was downloaded successfully.',
+            variant: 'success',
+        );
 
         return $service->downloadPdf(
             $this->tailored,

@@ -6,6 +6,7 @@ use App\Services\CoverLetterService;
 use Livewire\Attributes\Validate;
 use Livewire\WithFileUploads;
 use Livewire\Component;
+use Flux\Flux;
 
 class CoverLetter extends Component
 {
@@ -66,15 +67,21 @@ class CoverLetter extends Component
         );
 
         $profile = $service->inferCandidateProfile($cvText);
-        
+
         $fileName = $service->buildFileName(
             name: $profile['name'] ?? null,
             role: $profile['role'] ?? null,
             company: $this->company
         );
 
+        Flux::toast(
+            heading: 'Pdf ready!',
+            text: 'Your cover letter was downloaded successfully.',
+            variant: 'success',
+        );
+
         return response()->streamDownload(
-            fn () => print($pdfContent),
+            fn() => print($pdfContent),
             $fileName
         );
     }

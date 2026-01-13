@@ -19,24 +19,6 @@
                 </flux:card>
             </a>
 
-            {{-- Resume Builder --}}
-            {{-- <a href="{{ route('resume.resume-builder') }}">
-                <flux:card
-                    class="h-full group cursor-pointer transition hover:border-neutral-300 dark:hover:border-neutral-600">
-
-                    <div class="mb-2 flex items-center">
-                        <flux:heading>Resume builder</flux:heading>
-                        <flux:spacer />
-                        <flux:icon.arrow-right variant="micro"
-                            class="text-zinc-500 dark:text-zinc-300 transition-transform duration-300 group-hover:translate-x-1" />
-                    </div>
-
-                    <flux:subheading>
-                        Build a professional resume from scratch using clean layouts and smart suggestions.
-                    </flux:subheading>
-                </flux:card>
-            </a> --}}
-
             {{-- Resume Analyzer --}}
             <a href="{{ route('resume.resume-analyzer') }}">
                 <flux:card
@@ -74,7 +56,6 @@
             </a>
         </div>
 
-        {{-- Future / analytics / activity --}}
         <div
             class="relative h-full flex-1 overflow-hidden rounded-xl border border-neutral-200 dark:border-neutral-700">
             <x-placeholder-pattern class="absolute inset-0 size-full stroke-gray-900/20 dark:stroke-neutral-100/20" />
