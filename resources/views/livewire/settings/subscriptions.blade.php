@@ -8,15 +8,9 @@
                     ATS Boost {{ $subscription->variant_name }}
                 </flux:heading>
 
-                @php
-                    $status = match ($subscription->status) {
-                        'on_trial' => 'Trial',
-                        'active' => 'Active',
-                        default => ucfirst($subscription->status),
-                    };
-                @endphp
-
-                <flux:subheading>Status: {{ $status }}</flux:subheading>
+                <flux:subheading>
+                    Status: {{ $subscription->active ? 'Active' : 'Inactive' }}
+                </flux:subheading>
 
                 <flux:button href="{{ $subscription->customer_portal_url }}" variant="filled" class="w-full">
                     Manage Subscription

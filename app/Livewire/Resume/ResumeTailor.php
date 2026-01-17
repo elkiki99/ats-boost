@@ -6,7 +6,7 @@ use Livewire\Attributes\Validate;
 use App\Services\CvTailorService;
 use Livewire\WithFileUploads;
 use Livewire\Component;
-use Flux\Flux;
+use Flux\Flux;  
 
 class ResumeTailor extends Component
 {

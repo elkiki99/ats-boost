@@ -75,7 +75,7 @@
                                 </div>
 
                             </div>
-                            <flux:button class="w-full" as="link" href="{{ route('checkout', 1139077) }}"
+                            <flux:button class="w-full" as="link" href="{{ route('checkout.start', 1227622) }}"
                                 variant="filled" icon-trailing="chevron-right">
                                 Try for free
                             </flux:button>
@@ -136,7 +136,7 @@
                                 </div>
                             </div>
 
-                            <flux:button class="w-full" as="link" href="{{ route('checkout', 1139017) }}"
+                            <flux:button class="w-full" as="link" href="{{ route('checkout.start', 1227617) }}"
                                 variant="primary" icon-trailing="chevron-right">
                                 Try for free
                             </flux:button>
@@ -195,7 +195,7 @@
                                 </div>
 
                             </div>
-                            <flux:button class="w-full" as="link" href="{{ route('checkout', 1139078) }}"
+                            <flux:button class="w-full" as="link" href="{{ route('checkout.start', 1227623) }}"
                                 variant="filled" icon-trailing="chevron-right">
                                 Try for free
                             </flux:button>

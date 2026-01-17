@@ -3,7 +3,6 @@
 use App\Http\Controllers\LemonCheckoutController;
 use App\Livewire\Resume\CoverLetter;
 use App\Livewire\Resume\ResumeAnalyzer;
-use App\Livewire\Resume\ResumeBuilder;
 use App\Livewire\Resume\ResumeTailor;
 use App\Livewire\Settings\Subscriptions;
 use Illuminate\Support\Facades\Route;
@@ -36,6 +35,14 @@ Route::view('privacy', 'homepages.privacy')
 Route::view('terms', 'homepages.terms')
     ->name('terms');
 
+Route::get('/checkout/start/{variant}', function ($variant) {
+    session(['checkout_variant' => $variant]);
+
+    return auth()->check()
+        ? redirect()->route('checkout', $variant)
+        : redirect()->route('login');
+})->name('checkout.start');
+
 Route::get('/checkout/{variant}', [LemonCheckoutController::class, 'create'])
     ->middleware('auth')
     ->name('checkout');
@@ -61,9 +68,7 @@ Route::middleware(['auth'])->group(function () {
 });
 
 Route::middleware(['auth', 'subscribed'])->group(function () {
-    // Route::get('dashboard/resume-builder', ResumeBuilder::class)->name('resume.resume-builder');
     Route::get('dashboard/resume-tailor', ResumeTailor::class)->name('resume.resume-tailor');
     Route::get('dashboard/resume-analyzer', ResumeAnalyzer::class)->name('resume.resume-analyzer');
     Route::get('dashboard/cover-letter', CoverLetter::class)->name('resume.cover-letter');
 });
-

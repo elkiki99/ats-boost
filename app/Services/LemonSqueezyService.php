@@ -50,7 +50,7 @@ class LemonSqueezyService
 
         $data = $response->json();
 
-        // Si algo falla, retornamos null
+        // Si algo falla, retornamos error
         if ($response->failed() || empty($data['data']['attributes']['url'])) {
             return null;
         }
@@ -58,7 +58,6 @@ class LemonSqueezyService
         // Retornamos la URL del checkout
         return $data['data']['attributes']['url'];
     }
-
 
     public function getSubscriptionsByEmail(string $email)
     {

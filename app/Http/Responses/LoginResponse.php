@@ -2,9 +2,9 @@
 
 namespace App\Http\Responses;
 
-use Laravel\Fortify\Contracts\RegisterResponse as RegisterResponseContract;
+use Laravel\Fortify\Contracts\LoginResponse as LoginResponseContract;
 
-class RegisterResponse implements RegisterResponseContract
+class LoginResponse implements LoginResponseContract
 {
     public function toResponse($request)
     {
@@ -12,6 +12,6 @@ class RegisterResponse implements RegisterResponseContract
             return redirect()->route('checkout', $variant);
         }
 
-        return redirect(config('fortify.home'));
+        return redirect()->intended(config('fortify.home'));
     }
 }
