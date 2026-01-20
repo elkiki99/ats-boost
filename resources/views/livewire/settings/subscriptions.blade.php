@@ -4,13 +4,23 @@
     <x-settings.layout :heading="__('Subscriptions')" :subheading="__('Manage your account subscription')">
         @if ($subscription)
             <flux:card class="p-6 space-y-6">
-                <flux:heading>
-                    ATS Boost {{ $subscription->variant_name }}
-                </flux:heading>
+                <div class ="flex items-center gap-2">
+                    <flux:heading>
+                        @php
+                            $planName = match ($subscription->lemon_variant_id) {
+                                '1227617' => 'Monthly',
+                                '1227622' => 'Weekly',
+                                '1227623' => 'Yearly',
+                                default => '',
+                            };
+                        @endphp
+                        ATS Boost {{ $planName }} Plan
+                    </flux:heading>
 
-                <flux:subheading>
-                    Status: {{ $subscription->active ? 'Active' : 'Inactive' }}
-                </flux:subheading>
+                    <flux:badge size="sm" color="{{ $subscription->active ? 'green' : 'red' }}">
+                        {{ $subscription->active ? 'Active' : 'Inactive' }}
+                    </flux:badge>
+                </div>
 
                 <flux:button href="{{ $subscription->customer_portal_url }}" variant="filled" class="w-full">
                     Manage Subscription
