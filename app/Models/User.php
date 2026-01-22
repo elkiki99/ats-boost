@@ -69,8 +69,8 @@ class User extends Authenticatable
         return $this->hasOne(Subscriber::class);
     }
 
-    public function isSubscribed(): bool
-    {
-        return $this->subscriber?->active === true;
-    }
+    // public function isSubscribed(): bool
+    // {
+    //     return $this->subscriber?->active === true;
+    // }
 }

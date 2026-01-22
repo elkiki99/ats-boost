@@ -143,7 +143,7 @@
             <flux:accordion.item>
                 <flux:accordion.heading level="3">What formats can I upload?</flux:accordion.heading>
                 <flux:accordion.content>
-                    PDF works best, but most text-based resumes can be parsed without issues.
+                    We currently only accept PDF files, with support for more formats coming soon.
                 </flux:accordion.content>
             </flux:accordion.item>
 

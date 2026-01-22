@@ -59,55 +59,38 @@ class LemonSqueezyService
         return $data['data']['attributes']['url'];
     }
 
-    public function getSubscriptionsByEmail(string $email)
-    {
-        $response = Http::withHeaders([
-            'Accept'        => 'application/vnd.api+json',
-            'Content-Type'  => 'application/vnd.api+json',
-            'Authorization' => 'Bearer ' . $this->apiKey,
-        ])->get("{$this->apiUrl}/subscriptions");
+    public function changePlan(
+        string $subscriptionId,
+        string $variantId,
+        bool $invoiceImmediately = false,
+        bool $disableProrations = false
+    ): void {
+        $attributes = [
+            'variant_id' => (int) $variantId,
+        ];
 
-        if ($response->failed()) {
-            return [];
+        if ($invoiceImmediately) {
+            $attributes['invoice_immediately'] = true;
         }
 
-        $allSubscriptions = $response->json()['data'] ?? [];
+        if ($disableProrations) {
+            $attributes['disable_prorations'] = true;
+        }
 
-        return collect($allSubscriptions)
-            ->filter(fn($sub) => $sub['attributes']['user_email'] === $email)
-            ->values()
-            ->all();
+        Http::withHeaders([
+            'Authorization' => 'Bearer ' . $this->apiKey,
+            'Accept' => 'application/vnd.api+json',
+            'Content-Type' => 'application/vnd.api+json',
+        ])->patch("{$this->apiUrl}/subscriptions/{$subscriptionId}", [
+            'data' => [
+                'type' => 'subscriptions',
+                'id' => $subscriptionId,
+                'attributes' => $attributes,
+            ],
+        ]);
     }
 
-    public function getActualSubscription(string $email)
-    {
-        return cache()->remember("subsription_{$email}", now()->addMinutes(10), function () use ($email) {
-            $response = Http::withHeaders([
-                'Accept'        => 'application/vnd.api+json',
-                'Content-Type'  => 'application/vnd.api+json',
-                'Authorization' => 'Bearer ' . $this->apiKey,
-            ])->get("{$this->apiUrl}/subscriptions");
-
-            if ($response->failed()) {
-                return null;
-            }
-
-            $allSubscriptions = $response->json()['data'] ?? [];
-
-            $validStatuses = ['on_trial', 'active', 'past_due'];
-
-            return collect($allSubscriptions)
-                ->filter(
-                    fn($sub) =>
-                    $sub['attributes']['user_email'] === $email &&
-                        in_array($sub['attributes']['status'], $validStatuses)
-                )
-                ->sortByDesc(fn($sub) => $sub['attributes']['created_at'])
-                ->first(); // 👈 devuelve una sola
-        });
-    }
-
-    public function cancelSubscription(string $subscriptionId)
+    public function cancelSubscription(string $subscriptionId): array
     {
         $response = Http::withHeaders([
             'Accept' => 'application/vnd.api+json',
@@ -119,6 +102,29 @@ class LemonSqueezyService
             throw new \Exception('Unable to cancel subscription');
         }
 
-        return $response->json()['data'] ?? [];
+        return $response->json();
+    }
+
+    public function resumeSubscription(string $subscriptionId): array
+    {
+        $response = Http::withHeaders([
+            'Authorization' => 'Bearer ' . $this->apiKey,
+            'Accept' => 'application/vnd.api+json',
+            'Content-Type' => 'application/vnd.api+json',
+        ])->patch("{$this->apiUrl}/subscriptions/{$subscriptionId}", [
+            'data' => [
+                'type' => 'subscriptions',
+                'id' => $subscriptionId,
+                'attributes' => [
+                    'cancelled' => false,
+                ],
+            ],
+        ]);
+
+        if ($response->failed()) {
+            throw new \Exception('Unable to resume subscription');
+        }
+
+        return $response->json();
     }
 }

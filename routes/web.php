@@ -38,9 +38,17 @@ Route::view('terms', 'homepages.terms')
 Route::get('/checkout/start/{variant}', function ($variant) {
     session(['checkout_variant' => $variant]);
 
-    return auth()->check()
-        ? redirect()->route('checkout', $variant)
-        : redirect()->route('login');
+    if (auth()->check()) {
+        $user = auth()->user();
+
+        if ($user->subscriber?->hasAccess()) {
+            return redirect()->route('subscriptions.edit');
+        }
+
+        return redirect()->route('checkout', $variant);
+    }
+
+    return redirect()->route('login');
 })->name('checkout.start');
 
 Route::get('/checkout/{variant}', [LemonCheckoutController::class, 'create'])

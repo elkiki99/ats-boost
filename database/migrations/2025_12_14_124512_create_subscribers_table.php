@@ -14,17 +14,29 @@ return new class extends Migration
     {
         Schema::create('subscribers', function (Blueprint $table) {
             $table->id();
+
             $table->foreignIdFor(User::class)
                 ->constrained()
                 ->cascadeOnDelete();
 
-            // Lemon Squeezy
+            // Lemon identifiers
             $table->string('lemon_subscription_id')->unique();
             $table->string('lemon_variant_id');
 
-            // Local cache
-            $table->boolean('active')->default(true);
+            // SOURCE OF TRUTH (Lemon)
+            $table->string('status')->default('active'); // active, cancelled, expired, paused, past_due, on_trial
+
+            // DERIVED / CACHE
+            $table->boolean('active')->default(false);
+
+            // Dates
             $table->timestamp('ends_at')->nullable();
+            $table->timestamp('renews_at')->nullable();
+
+            // URLs (muy útil)
+            $table->string('customer_portal_url')->nullable();
+            $table->string('update_payment_method_url')->nullable();
+
             $table->timestamps();
         });
     }
