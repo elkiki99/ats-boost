@@ -6,6 +6,7 @@ use OpenAI\Laravel\Facades\OpenAI;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Smalot\PdfParser\Parser;
 use RuntimeException;
+use Carbon\Carbon;
 
 class CoverLetterService
 {
@@ -142,10 +143,13 @@ class CoverLetterService
             ";
 
         $header = "<h1>{$name}</h1>";
+
         if ($role || $company) {
             $line = trim("{$role}" . ($company ? " · {$company}" : ''));
             $header .= "<h2>{$line}</h2>";
         }
+
+        $date = Carbon::now()->translatedFormat('d/m/Y');
 
         $prompt = "
             You are a professional career coach and senior recruiter.
@@ -158,7 +162,7 @@ class CoverLetterService
 
             STRUCTURE (MANDATORY):
             1. Header section:
-            - Date (today)
+            - Date {$date}
             - Company name (if known)
             - Job title (if known)
 

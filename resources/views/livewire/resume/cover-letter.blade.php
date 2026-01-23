@@ -15,7 +15,7 @@
     </flux:modal>
 
     <!-- Result modal -->
-    <flux:modal name="cover-letter-result" :dismissible="false" variant="floating"
+    <flux:modal class="!max-w-sm flex flex-col items-center space-y-6 p-4" name="cover-letter-result" :dismissible="false" variant="floating"
         class="w-full! max-w-3xl space-y-6 p-4">
         <div>
             <flux:heading size="lg">

@@ -3,10 +3,9 @@
 namespace App\Livewire\Settings;
 
 use App\Services\LemonSqueezyService;
-use Flux\Flux;
-
-use Livewire\Component;
 use Illuminate\Support\Facades\Auth;
+use Livewire\Component;
+use Flux\Flux;
 
 class Subscriptions extends Component
 {
@@ -31,7 +30,7 @@ class Subscriptions extends Component
                 $this->newPlan
             );
 
-        $this->refreshSubscription();
+        // $this->refreshSubscription();
 
         Flux::toast(
             heading: 'Subscription updated',
@@ -49,7 +48,7 @@ class Subscriptions extends Component
 
         $this->modal('cancel-subscription')->close();
 
-        $this->refreshSubscription();
+        // $this->refreshSubscription();
 
         Flux::toast(
             heading: 'Subscription cancelled',
@@ -67,7 +66,7 @@ class Subscriptions extends Component
 
         $this->modal('resume-subscription')->close();
 
-        $this->refreshSubscription();
+        // $this->refreshSubscription();
 
         Flux::toast(
             heading: 'Subscription resumed',

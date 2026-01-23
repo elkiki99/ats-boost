@@ -17,7 +17,7 @@
     </flux:modal>
 
     <!-- Score result modal -->
-    <flux:modal class="!max-w-sm flex flex-col items-center space-y-6 p-4" name="analysis-result" variant="floating">
+    <flux:modal class="!max-w-sm flex flex-col items-center space-y-6 p-4" :dismissible="false" name="analysis-result" variant="floating">
         <div>
             <flux:heading size="lg" class="text-center">
                 Your ATS score
