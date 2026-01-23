@@ -31,6 +31,8 @@ class Subscriptions extends Component
                 $this->newPlan
             );
 
+        $this->refreshSubscription();
+
         Flux::toast(
             heading: 'Subscription updated',
             text: 'Your subscription plan has been changed successfully.',
@@ -46,6 +48,8 @@ class Subscriptions extends Component
             );
 
         $this->modal('cancel-subscription')->close();
+
+        $this->refreshSubscription();
 
         Flux::toast(
             heading: 'Subscription cancelled',
@@ -63,10 +67,18 @@ class Subscriptions extends Component
 
         $this->modal('resume-subscription')->close();
 
+        $this->refreshSubscription();
+
         Flux::toast(
             heading: 'Subscription resumed',
             text: 'Your subscription has been resumed successfully.',
             variant: 'success'
         );
+    }
+
+    protected function refreshSubscription()
+    {
+        $this->subscription = Auth::user()->fresh()->subscriber;
+        $this->newPlan = $this->subscription->lemon_variant_id;
     }
 }
