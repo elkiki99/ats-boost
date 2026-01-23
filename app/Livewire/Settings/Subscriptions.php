@@ -53,4 +53,20 @@ class Subscriptions extends Component
             variant: 'success'
         );
     }
+
+    public function resumeSubscription()
+    {
+        app(LemonSqueezyService::class)
+            ->resumeSubscription(
+                $this->subscription->lemon_subscription_id
+            );
+
+        $this->modal('resume-subscription')->close();
+
+        Flux::toast(
+            heading: 'Subscription resumed',
+            text: 'Your subscription has been resumed successfully.',
+            variant: 'success'
+        );
+    }
 }

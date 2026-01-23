@@ -3,10 +3,8 @@
 
     <x-settings.layout :heading="__('Subscriptions')" :subheading="__('Manage your account subscription')">
         @if ($subscription)
-
             {{-- 🔔 Informational callouts --}}
             <div class="space-y-4 mb-6">
-
                 {{-- Cancelled but still active --}}
                 @if (!$subscription->active && $subscription->ends_at && now()->lt($subscription->ends_at))
                     <flux:callout icon="shield-exclamation" color="amber">
@@ -83,28 +81,53 @@
 
                 <flux:separator />
 
-                {{-- Cancel --}}
-                <div class="space-y-4">
-                    <flux:heading>Cancel plan</flux:heading>
-                    <flux:subheading>
-                        Canceling your subscription will keep your access until the end
-                        of the current billing period.
-                    </flux:subheading>
+                {{--  Resume --}}
+                @if (!$subscription->active && $subscription->ends_at && now()->lt($subscription->ends_at))
+                    <div class="space-y-4">
+                        <flux:heading>Resume plan</flux:heading>
+                        <flux:subheading>
+                            Your subscription is currently canceled but still active until the end of the billing
+                            period.
+                        </flux:subheading>
 
-                    @if (!$subscription->active && $subscription->ends_at && now()->lt($subscription->ends_at))
-                        <flux:button disabled variant="danger">
-                            Cancel subscription
-                        </flux:button>
-                    @else
+                        <flux:modal.trigger name="resume-subscription">
+                            <flux:button variant="primary" color="green">
+                                Resume subscription
+                            </flux:button>
+                        </flux:modal.trigger>
+                    </div>
+                @elseif (!$subscription->active && $subscription->ends_at && now()->gte($subscription->ends_at))
+                    <div class="space-y-4">
+                        <flux:heading>Renew plan</flux:heading>
+                        <flux:subheading>
+                            Your subscription has expired. Renew your subscription to regain access to premium
+                            features.
+                        </flux:subheading>
+
+                        <flux:modal.trigger name="renew-subscription">
+                            <flux:button variant="primary" wire:click="renewSubscription">
+                                Renew subscription
+                            </flux:button>
+                        </flux:modal.trigger>
+                    </div>
+                @else
+                    {{-- Cancel --}}
+                    <div class="space-y-4">
+                        <flux:heading>Cancel plan</flux:heading>
+                        <flux:subheading>
+                            Canceling your subscription will keep your access until the end
+                            of the current billing period.
+                        </flux:subheading>
                         <flux:modal.trigger name="cancel-subscription">
                             <flux:button variant="danger">
                                 Cancel subscription
                             </flux:button>
                         </flux:modal.trigger>
-                    @endif
-                </div>
+                    </div>
+                @endif
             </div>
 
+            {{-- Modals --}}
             <flux:modal name="update-subscription" class="md:w-96">
                 <div class="space-y-6">
                     <div class="flex items-start justify-between">
@@ -118,6 +141,25 @@
                         <flux:button x-on:click="$flux.modal('update-subscription').close()" variant="ghost"> Undo
                         </flux:button>
                         <flux:button variant="primary" wire:click="changePlan"> Update subscription </flux:button>
+                    </div>
+                </div>
+            </flux:modal>
+
+            <flux:modal name="resume-subscription" class="md:w-96">
+                <div class="space-y-6">
+                    <div class="flex items-start justify-between">
+                        <div>
+                            <flux:heading size="lg">Resume subscription?</flux:heading>
+                            <flux:text class="mt-2"> Your subscription will be resumed.<br> You will regain access to
+                                all premium features. </flux:text>
+                        </div>
+                    </div>
+                    <div class="flex justify-end gap-4">
+                        <flux:button x-on:click="$flux.modal('resume-subscription').close()" variant="ghost"> Undo
+                        </flux:button>
+                        <flux:button variant="primary" color="green" wire:click="resumeSubscription"> Resume
+                            subscription
+                        </flux:button>
                     </div>
                 </div>
             </flux:modal>
