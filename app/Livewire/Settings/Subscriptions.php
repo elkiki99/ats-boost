@@ -31,6 +31,7 @@ class Subscriptions extends Component
             );
 
         // $this->refreshSubscription();
+        $this->modal('update-subscription')->close();
 
         Flux::toast(
             heading: 'Subscription updated',
