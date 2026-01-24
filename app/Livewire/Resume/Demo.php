@@ -58,7 +58,10 @@ class Demo extends Component
         $this->candidateName = $result['name'];
 
         $this->modal('tailoring-demo-in-progress')->close();
+
         $this->usageCount++;
+        session(['cv_usage_count' => $this->usageCount]);
+
         $this->modal('tailoring-demo-result')->show();
     }
 
