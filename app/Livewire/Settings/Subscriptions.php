@@ -24,6 +24,8 @@ class Subscriptions extends Component
             ]);
         }
 
+        // dd(auth()->user()->id);
+
         // 2️⃣ Cargamos el estado actual SIEMPRE después
         $this->subscription = Auth::user()->fresh()->subscriber;
         $this->newPlan = $this->subscription->lemon_variant_id ?? null;
