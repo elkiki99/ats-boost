@@ -45,7 +45,7 @@ class SyncSubscription
             Subscriber::updateOrCreate(
                 ['mp_subscription_id' => $subscriptionId],
                 [
-                    'user_id'     => $userId,
+                    'user_id'     => Auth::user()->id,
                     'status'      => $subscriptionData['status'] ?? 'pending',
                     'active'      => in_array(
                         $subscriptionData['status'] ?? '',
