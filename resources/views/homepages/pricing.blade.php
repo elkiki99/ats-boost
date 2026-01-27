@@ -75,7 +75,7 @@
                             </div>
 
                             <flux:button class="w-full" as="link"
-                                href="https://www.mercadopago.com.uy/subscriptions/checkout?preapproval_plan_id=58902fcda81d4a05ada50f7935dfbecf"
+                                href="{{ route('checkout.start', ['variant' => '58902fcda81d4a05ada50f7935dfbecf']) }}"
                                 variant="filled" icon-trailing="chevron-right">
                                 Try for free
                             </flux:button>
@@ -135,7 +135,7 @@
                             </div>
 
                             <flux:button class="w-full" as="link"
-                                href="{{ route('checkout.start', ['variant' => 'aa05600269734ba5a250717b3e391b58']) }}"
+                                href="{{ route('checkout.start', ['variant' => '87a920276b3844c0a6b4a582589e2fca']) }}"
                                 variant="primary" icon-trailing="chevron-right">
                                 Try for free
                             </flux:button>
@@ -194,7 +194,7 @@
                             </div>
 
                             <flux:button class="w-full" as="link"
-                                href="https://www.mercadopago.com.uy/subscriptions/checkout?preapproval_plan_id=81c71d0de5834d1d9837ff601821e344"
+                                href="{{ route('checkout.start', ['variant' => '81c71d0de5834d1d9837ff601821e344']) }}"
                                 variant="filled" icon-trailing="chevron-right">
                                 Try for free
                             </flux:button>

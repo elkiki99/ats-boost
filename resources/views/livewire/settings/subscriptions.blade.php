@@ -38,33 +38,35 @@
                 {{-- Change plan --}}
                 <flux:select variant="listbox" wire:model.live="newPlan" label="Update plan" required>
                     {{-- Monthly --}}
-                    <flux:select.option value="1227617" :disabled="$subscription->mp_plan_id === 'aa05600269734ba5a250717b3e391b58'">
+                    <flux:select.option value="87a920276b3844c0a6b4a582589e2fca"
+                        :disabled="$subscription->mp_plan_id === '87a920276b3844c0a6b4a582589e2fca'">
                         <div class="flex items-center justify-between gap-2 w-full">
                             <span>Monthly Plan – $4.99 / month</span>
 
-                            @if ($subscription->mp_plan_id === 'aa05600269734ba5a250717b3e391b58')
+                            @if ($subscription->mp_plan_id === '87a920276b3844c0a6b4a582589e2fca')
                                 <flux:badge size="sm" color="green">Current</flux:badge>
                             @endif
                         </div>
                     </flux:select.option>
 
                     {{-- Weekly --}}
-                    <flux:select.option value="1227622" :disabled="$subscription->lemon_variant_id === '1227622'">
+                    <flux:select.option value="58902fcda81d4a05ada50f7935dfbecf" :disabled="$subscription->lemon_variant_id === '58902fcda81d4a05ada50f7935dfbecf'">
                         <div class="flex items-center justify-between gap-2 w-full">
                             <span>Weekly Plan – $1.99 / week</span>
 
-                            @if ($subscription->lemon_variant_id === '1227622')
+                            @if ($subscription->lemon_variant_id === '58902fcda81d4a05ada50f7935dfbecf')
                                 <flux:badge size="sm" color="green">Current</flux:badge>
                             @endif
                         </div>
                     </flux:select.option>
 
                     {{-- Yearly --}}
-                    <flux:select.option value="1227623" :disabled="$subscription->lemon_variant_id === '1227623'">
+                    <flux:select.option value="81c71d0de5834d1d9837ff601821e344"
+                        :disabled="$subscription->lemon_variant_id === '81c71d0de5834d1d9837ff601821e344'">
                         <div class="flex items-center justify-between gap-2 w-full">
                             <span>Yearly Plan – $39.99 / year</span>
 
-                            @if ($subscription->lemon_variant_id === '1227623')
+                            @if ($subscription->lemon_variant_id === '81c71d0de5834d1d9837ff601821e344')
                                 <flux:badge size="sm" color="green">Current</flux:badge>
                             @endif
                         </div>

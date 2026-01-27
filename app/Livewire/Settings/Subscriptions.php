@@ -3,7 +3,6 @@
 namespace App\Livewire\Settings;
 
 use App\Actions\MercadoPago\SyncSubscription;
-use App\Services\LemonSqueezyService;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use Livewire\Component;
@@ -23,8 +22,6 @@ class Subscriptions extends Component
                 'source' => 'back_url',
             ]);
         }
-
-        // dd(auth()->user()->id);
 
         // 2️⃣ Cargamos el estado actual SIEMPRE después
         $this->subscription = Auth::user()->fresh()->subscriber;
