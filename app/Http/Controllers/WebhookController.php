@@ -42,10 +42,12 @@ class WebhookController extends Controller
             'subscription_preapproval' => $sync->handle([
                 'id' => $resourceId,
                 'type' => 'subscription_preapproval',
+                'external_reference' => 'user:' . auth()->id(),
             ]),
             'subscription_authorized_payment' => $sync->handle([
                 'id' => $resourceId,
                 'type' => 'subscription_authorized_payment',
+                'external_reference' => 'user:' . auth()->id(),
             ]),
             default => Log::info('Mercado Pago: Unhandled webhook topic', [
                 'topic' => $topic,
