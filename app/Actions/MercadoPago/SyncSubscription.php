@@ -24,28 +24,15 @@ class SyncSubscription
         $subscriptionId = $data['id'];
 
         try {
-            // 1️⃣ Traemos la suscripción desde Mercado Pago
+            // 1: Traemos la suscripción desde Mercado Pago
             $subscriptionData = $this->mercadoPago->getSubscription($subscriptionId);
 
-            // // 2️⃣ Extraemos el external_reference
-            // $externalReference = $subscriptionData['external_reference'] ?? null;
-
-            // if (! $externalReference || ! str_starts_with($externalReference, 'user:')) {
-            //     Log::error('Mercado Pago: Missing or invalid external_reference', [
-            //         'subscription_id' => $subscriptionId,
-            //         'external_reference' => $externalReference,
-            //     ]);
-
-            //     return;
-            // }
-
-            // $userId = (int) str_replace('user:', '', $externalReference);
-
-            // 3️⃣ Sincronizamos en DB (idempotente)
+            // 2: Sincronizamos en DB (idempotente)
             Subscriber::updateOrCreate(
                 ['mp_subscription_id' => $subscriptionId],
                 [
-                    'user_id'     => auth()->user()->id,
+                    'user_id'     => auth()->id(),
+                    'mp_plan_id'  => $subscriptionData['preapproval_plan_id'] ?? null,
                     'status'      => $subscriptionData['status'] ?? 'pending',
                     'active'      => in_array(
                         $subscriptionData['status'] ?? '',
