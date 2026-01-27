@@ -2,8 +2,10 @@
 
 namespace App\Livewire\Settings;
 
+use App\Actions\MercadoPago\SyncSubscription;
 use App\Services\LemonSqueezyService;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Http\Request;
 use Livewire\Component;
 use Flux\Flux;
 
@@ -12,9 +14,18 @@ class Subscriptions extends Component
     public $subscription;
     public $newPlan;
 
-    public function mount()
+    public function mount(Request $request)
     {
-        $this->subscription = Auth::user()->subscriber;
+        // 1️⃣ Si viene de MercadoPago, sincronizamos
+        if ($request->filled('preapproval_id')) {
+            app(SyncSubscription::class)->handle([
+                'id' => $request->preapproval_id,
+                'source' => 'back_url',
+            ]);
+        }
+
+        // 2️⃣ Cargamos el estado actual SIEMPRE después
+        $this->subscription = Auth::user()->fresh()->subscriber;
         $this->newPlan = $this->subscription->lemon_variant_id ?? null;
     }
 

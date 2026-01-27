@@ -35,10 +35,6 @@ Route::view('privacy', 'homepages.privacy')
 Route::view('terms', 'homepages.terms')
     ->name('terms');
 
-// Route::get('/subscription/success', function () {
-//     redirect()->route('subscriptions.edit')->with('status', 'subscription-success');
-// })->name('subscription.success');
-
 Route::get('/checkout/start/{variant}', [CheckoutController::class, 'start'])
     ->name('checkout.start');
 
