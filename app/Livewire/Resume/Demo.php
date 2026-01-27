@@ -65,7 +65,6 @@ class Demo extends Component
         $this->modal('tailoring-demo-result')->show();
     }
 
-
     /**
      * Download tailored resume as PDF
      */

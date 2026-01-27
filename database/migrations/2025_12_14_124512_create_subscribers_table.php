@@ -7,9 +7,6 @@ use App\Models\User;
 
 return new class extends Migration
 {
-    /**
-     * Run the migrations.
-     */
     public function up(): void
     {
         Schema::create('subscribers', function (Blueprint $table) {
@@ -19,12 +16,12 @@ return new class extends Migration
                 ->constrained()
                 ->cascadeOnDelete();
 
-            // Lemon identifiers
-            $table->string('lemon_subscription_id')->unique();
-            $table->string('lemon_variant_id');
+            // Mercado Pago identifiers
+            $table->string('mp_subscription_id')->unique();
+            $table->string('mp_plan_id');
 
-            // SOURCE OF TRUTH (Lemon)
-            $table->string('status')->default('active'); // active, cancelled, expired, paused, past_due, on_trial
+            // SOURCE OF TRUTH (Mercado Pago)
+            $table->string('status')->default('active'); // active, cancelled, paused, pending
 
             // DERIVED / CACHE
             $table->boolean('active')->default(false);
@@ -33,17 +30,14 @@ return new class extends Migration
             $table->timestamp('ends_at')->nullable();
             $table->timestamp('renews_at')->nullable();
 
-            // URLs (muy útil)
-            $table->string('customer_portal_url')->nullable();
-            $table->string('update_payment_method_url')->nullable();
+            // Mercado Pago data
+            $table->string('payer_email')->nullable();
+            $table->json('metadata')->nullable();
 
             $table->timestamps();
         });
     }
 
-    /**
-     * Reverse the migrations.
-     */
     public function down(): void
     {
         Schema::dropIfExists('subscribers');

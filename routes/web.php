@@ -1,13 +1,13 @@
 <?php
 
-use App\Http\Controllers\LemonCheckoutController;
-use App\Livewire\Resume\CoverLetter;
+use App\Http\Controllers\CheckoutController;
+use App\Livewire\Settings\Subscriptions;
 use App\Livewire\Resume\ResumeAnalyzer;
 use App\Livewire\Resume\ResumeTailor;
-use App\Livewire\Settings\Subscriptions;
 use Illuminate\Support\Facades\Route;
 use App\Livewire\Settings\Appearance;
 use App\Livewire\Settings\TwoFactor;
+use App\Livewire\Resume\CoverLetter;
 use App\Livewire\Settings\Password;
 use App\Livewire\Settings\Profile;
 use Laravel\Fortify\Features;
@@ -35,25 +35,12 @@ Route::view('privacy', 'homepages.privacy')
 Route::view('terms', 'homepages.terms')
     ->name('terms');
 
-Route::get('/checkout/start/{variant}', function ($variant) {
-    session(['checkout_variant' => $variant]);
+// Route::get('/subscription/success', function () {
+//     redirect()->route('subscriptions.edit')->with('status', 'subscription-success');
+// })->name('subscription.success');
 
-    if (auth()->check()) {
-        $user = auth()->user();
-
-        if ($user->subscriber?->hasAccess()) {
-            return redirect()->route('subscriptions.edit');
-        }
-
-        return redirect()->route('checkout', $variant);
-    }
-
-    return redirect()->route('login');
-})->name('checkout.start');
-
-Route::get('/checkout/{variant}', [LemonCheckoutController::class, 'create'])
-    ->middleware('auth')
-    ->name('checkout');
+Route::get('/checkout/start/{variant}', [CheckoutController::class, 'start'])
+    ->name('checkout.start');
 
 Route::middleware(['auth'])->group(function () {
     Route::redirect('settings', 'settings/profile');

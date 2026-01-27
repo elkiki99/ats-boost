@@ -1,0 +1,65 @@
+<?php
+
+namespace App\Services;
+
+use Illuminate\Support\Facades\Http;
+
+class MercadoPagoService
+{
+    protected string $apiUrl = 'https://api.mercadopago.com';
+
+    public function __construct(
+        protected string $accessToken = ''
+    ) {
+        $this->accessToken = config('services.mercadopago.access_token');
+    }
+
+    public function createSubscription(array $data): array
+    {
+        $response = Http::withToken($this->accessToken)
+            ->post("{$this->apiUrl}/preapproval", $data);
+
+        if ($response->failed()) {
+            throw new \Exception($response->body());
+        }
+
+        return $response->json();
+    }
+
+    public function getSubscription(string $id): array
+    {
+        return Http::withToken($this->accessToken)
+            ->get("{$this->apiUrl}/preapproval/{$id}")
+            ->throw()
+            ->json();
+    }
+
+    public function cancelSubscription(string $id): array
+    {
+        return $this->updateSubscription($id, [
+            'status' => 'cancelled',
+        ]);
+    }
+
+    public function pauseSubscription(string $id): array
+    {
+        return $this->updateSubscription($id, [
+            'status' => 'paused',
+        ]);
+    }
+
+    public function resumeSubscription(string $id): array
+    {
+        return $this->updateSubscription($id, [
+            'status' => 'authorized',
+        ]);
+    }
+
+    public function updateSubscription(string $id, array $data): array
+    {
+        return Http::withToken($this->accessToken)
+            ->put("{$this->apiUrl}/preapproval/{$id}", $data)
+            ->throw()
+            ->json();
+    }
+}

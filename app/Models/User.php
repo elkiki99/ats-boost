@@ -64,13 +64,8 @@ class User extends Authenticatable
             ->implode('');
     }
 
-    public function subscriber()
+    public function subscriber(): \Illuminate\Database\Eloquent\Relations\HasOne
     {
         return $this->hasOne(Subscriber::class);
     }
-
-    // public function isSubscribed(): bool
-    // {
-    //     return $this->subscriber?->active === true;
-    // }
 }
