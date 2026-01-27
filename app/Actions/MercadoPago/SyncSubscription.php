@@ -27,19 +27,19 @@ class SyncSubscription
             // 1️⃣ Traemos la suscripción desde Mercado Pago
             $subscriptionData = $this->mercadoPago->getSubscription($subscriptionId);
 
-            // 2️⃣ Extraemos el external_reference
-            $externalReference = $subscriptionData['external_reference'] ?? null;
+            // // 2️⃣ Extraemos el external_reference
+            // $externalReference = $subscriptionData['external_reference'] ?? null;
 
-            if (! $externalReference || ! str_starts_with($externalReference, 'user:')) {
-                Log::error('Mercado Pago: Missing or invalid external_reference', [
-                    'subscription_id' => $subscriptionId,
-                    'external_reference' => $externalReference,
-                ]);
+            // if (! $externalReference || ! str_starts_with($externalReference, 'user:')) {
+            //     Log::error('Mercado Pago: Missing or invalid external_reference', [
+            //         'subscription_id' => $subscriptionId,
+            //         'external_reference' => $externalReference,
+            //     ]);
 
-                return;
-            }
+            //     return;
+            // }
 
-            $userId = (int) str_replace('user:', '', $externalReference);
+            // $userId = (int) str_replace('user:', '', $externalReference);
 
             // 3️⃣ Sincronizamos en DB (idempotente)
             Subscriber::updateOrCreate(
@@ -61,7 +61,7 @@ class SyncSubscription
 
             Log::info('Mercado Pago: Subscription synced successfully', [
                 'subscription_id' => $subscriptionId,
-                'user_id' => $userId,
+                'user_id' => auth()->user()->id,
                 'status' => $subscriptionData['status'] ?? 'unknown',
             ]);
         } catch (\Throwable $e) {

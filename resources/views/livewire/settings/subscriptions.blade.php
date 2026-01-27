@@ -38,11 +38,11 @@
                 {{-- Change plan --}}
                 <flux:select variant="listbox" wire:model.live="newPlan" label="Update plan" required>
                     {{-- Monthly --}}
-                    <flux:select.option value="1227617" :disabled="$subscription->lemon_variant_id === '1227617'">
+                    <flux:select.option value="1227617" :disabled="$subscription->mp_plan_id === 'aa05600269734ba5a250717b3e391b58'">
                         <div class="flex items-center justify-between gap-2 w-full">
                             <span>Monthly Plan – $4.99 / month</span>
 
-                            @if ($subscription->lemon_variant_id === '1227617')
+                            @if ($subscription->mp_plan_id === 'aa05600269734ba5a250717b3e391b58')
                                 <flux:badge size="sm" color="green">Current</flux:badge>
                             @endif
                         </div>
