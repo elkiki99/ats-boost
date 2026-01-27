@@ -29,67 +29,67 @@ class Subscriptions extends Component
         $this->newPlan = $this->subscription->lemon_variant_id ?? null;
     }
 
-    public function changePlan()
-    {
-        if ($this->newPlan === $this->subscription->lemon_variant_id) {
-            return;
-        }
+    // public function changePlan()
+    // {
+    //     if ($this->newPlan === $this->subscription->lemon_variant_id) {
+    //         return;
+    //     }
 
-        app(LemonSqueezyService::class)
-            ->changePlan(
-                $this->subscription->lemon_subscription_id,
-                $this->newPlan
-            );
+    //     app(LemonSqueezyService::class)
+    //         ->changePlan(
+    //             $this->subscription->lemon_subscription_id,
+    //             $this->newPlan
+    //         );
 
-        // $this->refreshSubscription();
-        $this->modal('update-subscription')->close();
+    //     // $this->refreshSubscription();
+    //     $this->modal('update-subscription')->close();
 
-        Flux::toast(
-            heading: 'Subscription updated',
-            text: 'Your subscription plan has been changed successfully.',
-            variant: 'success'
-        );
-    }
+    //     Flux::toast(
+    //         heading: 'Subscription updated',
+    //         text: 'Your subscription plan has been changed successfully.',
+    //         variant: 'success'
+    //     );
+    // }
 
-    public function cancelSubscription()
-    {
-        app(LemonSqueezyService::class)
-            ->cancelSubscription(
-                $this->subscription->lemon_subscription_id
-            );
+    // public function cancelSubscription()
+    // {
+    //     app(LemonSqueezyService::class)
+    //         ->cancelSubscription(
+    //             $this->subscription->lemon_subscription_id
+    //         );
 
-        $this->modal('cancel-subscription')->close();
+    //     $this->modal('cancel-subscription')->close();
 
-        // $this->refreshSubscription();
+    //     // $this->refreshSubscription();
 
-        Flux::toast(
-            heading: 'Subscription cancelled',
-            text: 'Your subscription will end at the end of the billing period.',
-            variant: 'success'
-        );
-    }
+    //     Flux::toast(
+    //         heading: 'Subscription cancelled',
+    //         text: 'Your subscription will end at the end of the billing period.',
+    //         variant: 'success'
+    //     );
+    // }
 
-    public function resumeSubscription()
-    {
-        app(LemonSqueezyService::class)
-            ->resumeSubscription(
-                $this->subscription->lemon_subscription_id
-            );
+    // public function resumeSubscription()
+    // {
+    //     app(LemonSqueezyService::class)
+    //         ->resumeSubscription(
+    //             $this->subscription->lemon_subscription_id
+    //         );
 
-        $this->modal('resume-subscription')->close();
+    //     $this->modal('resume-subscription')->close();
 
-        // $this->refreshSubscription();
+    //     // $this->refreshSubscription();
 
-        Flux::toast(
-            heading: 'Subscription resumed',
-            text: 'Your subscription has been resumed successfully.',
-            variant: 'success'
-        );
-    }
+    //     Flux::toast(
+    //         heading: 'Subscription resumed',
+    //         text: 'Your subscription has been resumed successfully.',
+    //         variant: 'success'
+    //     );
+    // }
 
-    protected function refreshSubscription()
-    {
-        $this->subscription = Auth::user()->fresh()->subscriber;
-        $this->newPlan = $this->subscription->lemon_variant_id;
-    }
+    // protected function refreshSubscription()
+    // {
+    //     $this->subscription = Auth::user()->fresh()->subscriber;
+    //     $this->newPlan = $this->subscription->lemon_variant_id;
+    // }
 }
