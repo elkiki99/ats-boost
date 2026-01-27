@@ -4,8 +4,8 @@ namespace App\Actions\MercadoPago;
 
 use App\Models\Subscriber;
 use App\Services\MercadoPagoService;
-use Illuminate\Support\Facades\Log;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Log;
 
 class SyncSubscription
 {
@@ -17,21 +17,30 @@ class SyncSubscription
     {
         if (! isset($data['id'])) {
             Log::warning('Mercado Pago: Missing subscription ID');
-
             return;
         }
 
         $subscriptionId = $data['id'];
 
         try {
-            // 1: Traemos la suscripción desde Mercado Pago
             $subscriptionData = $this->mercadoPago->getSubscription($subscriptionId);
 
-            // 2: Sincronizamos en DB (idempotente)
+            // USER ID desde external_reference
+            $externalReference = $subscriptionData['external_reference'] ?? null;
+
+            if (
+                ! $externalReference ||
+                ! str_starts_with($externalReference, 'user:')
+            ) {
+                throw new \Exception('Invalid external_reference');
+            }
+
+            $userId = (int) str_replace('user:', '', $externalReference);
+
             Subscriber::updateOrCreate(
                 ['mp_subscription_id' => $subscriptionId],
                 [
-                    'user_id'     => auth()->id(),
+                    'user_id'     => $userId,
                     'mp_plan_id'  => $subscriptionData['preapproval_plan_id'] ?? null,
                     'status'      => $subscriptionData['status'] ?? 'pending',
                     'active'      => in_array(
@@ -48,7 +57,7 @@ class SyncSubscription
 
             Log::info('Mercado Pago: Subscription synced successfully', [
                 'subscription_id' => $subscriptionId,
-                'user_id' => auth()->user()->id,
+                'user_id' => $userId,
                 'status' => $subscriptionData['status'] ?? 'unknown',
             ]);
         } catch (\Throwable $e) {

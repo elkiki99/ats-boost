@@ -16,13 +16,13 @@ class Subscriptions extends Component
 
     public function mount(Request $request)
     {
-        // 1️⃣ Si viene de MercadoPago, sincronizamos
-        if ($request->filled('preapproval_id')) {
-            app(SyncSubscription::class)->handle([
-                'id' => $request->preapproval_id,
-                'source' => 'back_url',
-            ]);
-        }
+        // // 1️⃣ Si viene de MercadoPago, sincronizamos
+        // if ($request->filled('preapproval_id')) {
+        //     app(SyncSubscription::class)->handle([
+        //         'id' => $request->preapproval_id,
+        //         'source' => 'back_url',
+        //     ]);
+        // }
 
         // dd(auth()->user()->id);
 
