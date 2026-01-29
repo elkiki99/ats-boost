@@ -3,10 +3,10 @@
 namespace App\Livewire\Resume;
 
 use App\Services\CoverLetterService;
-use Livewire\Attributes\Validate;
-use Livewire\WithFileUploads;
-use Livewire\Component;
 use Flux\Flux;
+use Livewire\Attributes\Validate;
+use Livewire\Component;
+use Livewire\WithFileUploads;
 
 class CoverLetter extends Component
 {
@@ -81,7 +81,7 @@ class CoverLetter extends Component
         );
 
         return response()->streamDownload(
-            fn() => print($pdfContent),
+            fn () => print ($pdfContent),
             $fileName
         );
     }
@@ -89,6 +89,6 @@ class CoverLetter extends Component
     public function render()
     {
         return view('livewire.resume.cover-letter')
-            ->title('Cover Letter • ATS Boost');
+            ->title('Carta de presentación • ATS Boost');
     }
 }

@@ -12,11 +12,16 @@ class MercadoPagoService
         protected string $accessToken = ''
     ) {
         $this->accessToken = config('services.mercadopago.access_token');
+
+        if (! $this->accessToken) {
+            throw new \Exception('Token de acceso de MercadoPago no configurado. Configura MERCADOPAGO_ACCESS_TOKEN en .env');
+        }
     }
 
     public function createSubscription(array $data): array
     {
         $response = Http::withToken($this->accessToken)
+            ->timeout(10)
             ->post("{$this->apiUrl}/preapproval", $data);
 
         if ($response->failed()) {
@@ -29,6 +34,7 @@ class MercadoPagoService
     public function getSubscription(string $id): array
     {
         return Http::withToken($this->accessToken)
+            ->timeout(10)
             ->get("{$this->apiUrl}/preapproval/{$id}")
             ->throw()
             ->json();
@@ -58,6 +64,7 @@ class MercadoPagoService
     public function updateSubscription(string $id, array $data): array
     {
         return Http::withToken($this->accessToken)
+            ->timeout(10)
             ->put("{$this->apiUrl}/preapproval/{$id}", $data)
             ->throw()
             ->json();

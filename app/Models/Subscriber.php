@@ -37,7 +37,7 @@ class Subscriber extends Model
     public function hasAccess(): bool
     {
         return $this->active || (
-            !$this->active
+            ! $this->active
             && $this->ends_at
             && now()->lt($this->ends_at)
         );
@@ -45,6 +45,6 @@ class Subscriber extends Model
 
     public function isActive(): bool
     {
-        return $this->active && $this->status === 'active';
+        return $this->active && $this->status === 'authorized';
     }
 }

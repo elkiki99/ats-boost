@@ -19,7 +19,7 @@ class CheckoutController extends Controller
         }
 
         return redirect()->away(
-            'https://www.mercadopago.com.uy/subscriptions/checkout?preapproval_plan_id=' . $variant
+            'https://www.mercadopago.com.uy/subscriptions/checkout?preapproval_plan_id='.$variant
         );
     }
 }

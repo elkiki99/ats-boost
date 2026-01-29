@@ -1,62 +1,62 @@
-<x-layouts.main title="Terms & Conditions • ATS Boost">
+<x-layouts.main title="Términos y Condiciones • ATS Boost">
     <section class="space-y-6 max-w-4xl mx-auto">
         <flux:heading level="1" class="lg:!text-4xl md:!text-3xl text-xl">
-            Terms & Conditions
+            Términos y Condiciones
         </flux:heading>
 
         <flux:subheading>
-            These Terms & Conditions govern your access to and use of ATS Boost.
-            By using our platform, you agree to be bound by these terms.
+            Estos Términos y Condiciones rigen tu acceso y uso de ATS Boost.
+            Al usar nuestra plataforma, aceptas estar vinculado por estos términos.
         </flux:subheading>
 
         <!-- Section 1 -->
         <div>
             <flux:heading class="lg:!text-xl md:!text-lg sm:text-base" level="2">
-                1. Acceptance of Terms
+                1. Aceptación de Términos
             </flux:heading>
             <flux:subheading>
-                By accessing or using ATS Boost, you confirm that you have read,
-                understood, and agreed to these Terms & Conditions.
+                Al acceder o usar ATS Boost, confirmas que has leído,
+                entendido y aceptado estos Términos y Condiciones.
                 <br><br>
-                If you do not agree with any part of these terms, you must not use the platform.
+                Si no estás de acuerdo con ninguna parte de estos términos, no debes usar la plataforma.
             </flux:subheading>
         </div>
 
         <!-- Section 2 -->
         <div>
             <flux:heading class="lg:!text-xl md:!text-lg sm:text-base" level="2">
-                2. Description of Service
+                2. Descripción del Servicio
             </flux:heading>
             <flux:subheading>
-                ATS Boost provides AI-powered tools to help users create, optimize,
-                and tailor resumes and related job application materials.
+                ATS Boost proporciona herramientas basadas en IA para ayudar a los usuarios a crear, optimizar
+                y personalizar currículum y otros materiales de solicitud de empleo.
                 <br><br>
-                We reserve the right to modify, suspend, or discontinue any part of the service
-                at any time without prior notice.
+                Nos reservamos el derecho de modificar, suspender o discontinuar cualquier parte del servicio
+                en cualquier momento sin previo aviso.
             </flux:subheading>
         </div>
 
         <!-- Section 3 -->
         <div>
             <flux:heading class="lg:!text-xl md:!text-lg sm:text-base" level="2">
-                3. User Responsibilities
+                3. Responsabilidades del Usuario
             </flux:heading>
             <flux:subheading>
-                By using ATS Boost, you agree to:
+                Al usar ATS Boost, aceptas:
             </flux:subheading>
 
             <ul class="list-disc pl-6 mt-2 space-y-1">
                 <li>
-                    <flux:text>Provide accurate and up-to-date information.</flux:text>
+                    <flux:text>Proporcionar información precisa y actualizada.</flux:text>
                 </li>
                 <li>
-                    <flux:text>Use the platform only for lawful purposes.</flux:text>
+                    <flux:text>Usar la plataforma solo con fines legítimos.</flux:text>
                 </li>
                 <li>
-                    <flux:text>Not misuse, reverse-engineer, or abuse the service.</flux:text>
+                    <flux:text>No abusar, descompilar ni mal usar el servicio.</flux:text>
                 </li>
                 <li>
-                    <flux:text>Not upload content that violates third-party rights.</flux:text>
+                    <flux:text>No cargar contenido que viole derechos de terceros.</flux:text>
                 </li>
             </ul>
         </div>
@@ -64,76 +64,76 @@
         <!-- Section 4 -->
         <div>
             <flux:heading class="lg:!text-xl md:!text-lg sm:text-base" level="2">
-                4. Subscriptions & Payments
+                4. Suscripciones y Pagos
             </flux:heading>
             <flux:subheading>
-                Some features of ATS Boost require a paid subscription.
-                All payments are processed securely through third-party providers
-                such as Lemon Squeezy.
+                Algunas características de ATS Boost requieren una suscripción de pago.
+                Todos los pagos se procesan de forma segura a través de proveedores de terceros
+                como Lemon Squeezy.
                 <br><br>
-                Subscription fees are non-refundable unless otherwise stated by applicable law.
+                Las tarifas de suscripción no son reembolsables a menos que lo indique la ley aplicable.
             </flux:subheading>
         </div>
 
         <!-- Section 5 -->
         <div>
             <flux:heading class="lg:!text-xl md:!text-lg sm:text-base" level="2">
-                5. Intellectual Property
+                5. Propiedad Intelectual
             </flux:heading>
             <flux:subheading>
-                All content, software, designs, and branding associated with ATS Boost
-                are the intellectual property of ATS Boost or its licensors.
+                Todo el contenido, software, diseños y marca asociados con ATS Boost
+                son propiedad intelectual de ATS Boost o sus licenciantes.
                 <br><br>
-                You may not copy, modify, distribute, or exploit any part of the platform
-                without prior written permission.
+                No puedes copiar, modificar, distribuir ni explotar ninguna parte de la plataforma
+                sin permiso escrito previo.
             </flux:subheading>
         </div>
 
         <!-- Section 6 -->
         <div>
             <flux:heading class="lg:!text-xl md:!text-lg sm:text-base" level="2">
-                6. Disclaimer of Warranties
+                6. Exclusión de Garantías
             </flux:heading>
             <flux:subheading>
-                ATS Boost is provided on an “as is” and “as available” basis.
-                We do not guarantee that the service will be error-free, uninterrupted,
-                or that generated results will guarantee employment outcomes.
+                ATS Boost se proporciona "tal cual" y "según disponibilidad".
+                No garantizamos que el servicio estará libre de errores, ininterrumpido,
+                o que los resultados generados garantizarán resultados de empleo.
             </flux:subheading>
         </div>
 
         <!-- Section 7 -->
         <div>
             <flux:heading class="lg:!text-xl md:!text-lg sm:text-base" level="2">
-                7. Limitation of Liability
+                7. Limitación de Responsabilidad
             </flux:heading>
             <flux:subheading>
-                To the maximum extent permitted by law, ATS Boost shall not be liable
-                for any indirect, incidental, or consequential damages arising from
-                your use of the platform.
+                En la máxima medida permitida por la ley, ATS Boost no será responsable
+                por daños indirectos, incidentales o consecuentes que surjan de
+                tu uso de la plataforma.
             </flux:subheading>
         </div>
 
         <!-- Section 8 -->
         <div>
             <flux:heading class="lg:!text-xl md:!text-lg sm:text-base" level="2">
-                8. Changes to These Terms
+                8. Cambios en Estos Términos
             </flux:heading>
             <flux:subheading>
-                We may update these Terms & Conditions from time to time.
-                Continued use of the platform after changes are published
-                constitutes acceptance of the updated terms.
+                Podemos actualizar estos Términos y Condiciones de vez en cuando.
+                El uso continuado de la plataforma después de que se publiquen cambios
+                constituye la aceptación de los términos actualizados.
             </flux:subheading>
         </div>
 
         <!-- Section 9 -->
         <div>
             <flux:heading class="lg:!text-xl md:!text-lg sm:text-base" level="2">
-                9. Contact Us
+                9. Contáctanos
             </flux:heading>
             <flux:subheading>
-                If you have any questions about these Terms & Conditions, please contact us at:
+                Si tienes preguntas sobre estos Términos y Condiciones, por favor contáctanos en:
                 <br><br>
-                <strong>Email:</strong> support@atsboost.com
+                <strong>Correo electrónico:</strong> support@atsboost.com
             </flux:subheading>
         </div>
     </section>

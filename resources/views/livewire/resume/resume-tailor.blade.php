@@ -4,10 +4,10 @@
         :dismissible="false" :closable="false" variant="floating">
         <div>
             <flux:heading size="lg" class="text-center">
-                Tailoring your CV
+                Adaptando tu currículum
             </flux:heading>
             <flux:subheading class="text-center">
-                Matching your experience to the job description while preserving your original voice.
+                Adaptando tu experiencia a la descripción del trabajo mientras se preserva tu voz original.
             </flux:subheading>
         </div>
 
@@ -18,11 +18,12 @@
     <flux:modal name="tailoring-result" :dismissible="false" variant="floating" class="w-full! max-w-3xl space-y-6 p-4">
         <div>
             <flux:heading size="lg">
-                Your tailored CV is ready
+                Tu currículum adaptado está listo
             </flux:heading>
 
             <flux:subheading>
-                We optimized your CV based on the job description while keeping your original content intact.
+                Optimizamos tu currículum basándonos en la descripción del trabajo mientras manteníamos tu contenido
+                original intacto.
             </flux:subheading>
         </div>
 
@@ -32,14 +33,15 @@
 
         <div class="flex justify-end">
             <flux:button variant="primary" icon="arrow-down-tray" wire:click="downloadPdf">
-                Download tailored PDF
+                Descargar currículum adaptado en PDF
             </flux:button>
         </div>
     </flux:modal>
 
     <div class="relative mb-6 w-full">
-        <flux:heading size="xl" level="1">{{ __('Resume tailor') }}</flux:heading>
-        <flux:subheading size="lg" class="mb-6">{{ __('Tailor your resume to match any job description') }}
+        <flux:heading size="xl" level="1">{{ __('Adaptador de currículum') }}</flux:heading>
+        <flux:subheading size="lg" class="mb-6">
+            {{ __('Adapta tu currículum para que coincida con cualquier descripción de trabajo') }}
         </flux:subheading>
         <flux:separator variant="subtle" />
     </div>
@@ -47,8 +49,8 @@
     <div class="w-full py-6">
         <div class="flex flex-col lg:flex-row gap-6 w-full">
             <div class="w-full">
-                <flux:file-upload wire:model="resume" label="Upload resume">
-                    <flux:file-upload.dropzone heading="Drop your CV or click to browse" text="PDF up to 10MB"
+                <flux:file-upload wire:model="resume" label="Cargar currículum">
+                    <flux:file-upload.dropzone heading="Suelta tu CV o haz clic para examinar" text="PDF hasta 10MB"
                         with-progress inline />
                 </flux:file-upload>
 
@@ -64,13 +66,13 @@
             </div>
 
             <div class="w-full">
-                <flux:textarea wire:model="description" rows="10" label="Job description"
-                    placeholder="We are looking for a Software Developer to join our company.
+                <flux:textarea wire:model="description" rows="10" label="Descripción del trabajo"
+                    placeholder="Estamos buscando un desarrollador de software para unirse a nuestra empresa.
 
-The right candidate must be..." />
+El candidato ideal debe ser..." />
 
                 <flux:button x-on:click="$wire.startTailoring()" icon="sparkles" class="mt-4 w-full" variant="primary">
-                    Tailor my CV
+                    Adaptar mi CV
                 </flux:button>
             </div>
         </div>

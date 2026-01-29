@@ -5,11 +5,11 @@
 
         <div>
             <flux:heading size="lg" class="text-center">
-                Analyzing your CV
+                Analizando tu CV
             </flux:heading>
 
             <flux:subheading class="text-center">
-                Reviewing your experience, skills, and structure to understand your profile.
+                Revisando tu experiencia, habilidades y estructura para entender tu perfil.
             </flux:subheading>
         </div>
 
@@ -17,14 +17,16 @@
     </flux:modal>
 
     <!-- Score result modal -->
-    <flux:modal class="!max-w-sm flex flex-col items-center space-y-6 p-4" :dismissible="false" name="analysis-result" variant="floating">
+    <flux:modal class="!max-w-sm flex flex-col items-center space-y-6 p-4" :dismissible="false" name="analysis-result"
+        variant="floating">
         <div>
             <flux:heading size="lg" class="text-center">
-                Your ATS score
+                Tu puntuación de ATS
             </flux:heading>
 
             <flux:subheading class="text-center">
-                This score reflects how well your CV matches common ATS requirements and job descriptions.
+                Esta puntuación refleja qué tan bien tu CV coincide con los requisitos comunes de ATS y las
+                descripciones de trabajo.
             </flux:subheading>
         </div>
 
@@ -48,7 +50,7 @@
         </div>
 
         <flux:button variant="primary" icon="rocket-launch" wire:click="startImproving">
-            Improve my resume
+            Mejorar mi currículum
         </flux:button>
     </flux:modal>
 
@@ -58,11 +60,11 @@
 
         <div>
             <flux:heading size="lg" class="text-center">
-                Improving your CV
+                Mejorando tu CV
             </flux:heading>
 
             <flux:subheading class="text-center">
-                Refining wording, highlighting key skills, and optimizing it for ATS systems.
+                Refinando la redacción, destacando habilidades clave y optimizándolo para sistemas ATS.
             </flux:subheading>
         </div>
 
@@ -75,11 +77,12 @@
 
         <div>
             <flux:heading size="lg">
-                Your improved CV is ready
+                Tu CV mejorado está listo
             </flux:heading>
 
             <flux:subheading>
-                Your resume was enhanced to better match the job description while keeping your experience authentic.
+                Tu currículum fue mejorado para que coincida mejor con la descripción del trabajo mientras se mantiene
+                tu experiencia auténtica.
             </flux:subheading>
         </div>
 
@@ -89,27 +92,27 @@
 
         <div class="flex justify-end">
             <flux:button variant="primary" icon="arrow-down-tray" wire:click="downloadPdf">
-                Download improved PDF
+                Descargar currículum mejorado en PDF
             </flux:button>
         </div>
     </flux:modal>
 
     <div class="relative mb-6 w-full">
         <flux:heading size="xl" level="1">
-            {{ __('Resume analyzer') }}
+            {{ __('Analizador de currículum') }}
         </flux:heading>
 
         <flux:subheading size="lg" class="mb-6">
-            {{ __('Check your ATS score and improve your chances of getting hired') }}
+            {{ __('Verifica tu puntuación de ATS y mejora tus posibilidades de ser contratado') }}
         </flux:subheading>
 
         <flux:separator variant="subtle" />
     </div>
 
     <div class="w-full lg:w-1/2 py-6">
-        <flux:file-upload wire:model="resume" label="Upload resume">
-            <flux:file-upload.dropzone heading="Drop your CV or click to browse" text="PDF up to 10MB" with-progress
-                inline />
+        <flux:file-upload wire:model="resume" label="Cargar currículum">
+            <flux:file-upload.dropzone heading="Suelta tu CV o haz clic para examinar" text="PDF hasta 10MB"
+                with-progress inline />
         </flux:file-upload>
 
         <div class="mt-3 flex flex-col gap-2">
@@ -123,7 +126,7 @@
         </div>
 
         <flux:button x-on:click="$wire.startAnalyzing()" icon="magnifying-glass" class="mt-4 w-full" variant="primary">
-            Analyze my CV
+            Analizar mi CV
         </flux:button>
     </div>
 </div>

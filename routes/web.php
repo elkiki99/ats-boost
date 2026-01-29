@@ -1,15 +1,15 @@
 <?php
 
 use App\Http\Controllers\CheckoutController;
-use App\Livewire\Settings\Subscriptions;
+use App\Livewire\Resume\CoverLetter;
 use App\Livewire\Resume\ResumeAnalyzer;
 use App\Livewire\Resume\ResumeTailor;
-use Illuminate\Support\Facades\Route;
 use App\Livewire\Settings\Appearance;
-use App\Livewire\Settings\TwoFactor;
-use App\Livewire\Resume\CoverLetter;
 use App\Livewire\Settings\Password;
 use App\Livewire\Settings\Profile;
+use App\Livewire\Settings\Subscriptions;
+use App\Livewire\Settings\TwoFactor;
+use Illuminate\Support\Facades\Route;
 use Laravel\Fortify\Features;
 
 Route::get('/', function () {

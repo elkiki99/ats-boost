@@ -1,35 +1,36 @@
-<x-layouts.main title="Features • ATS Boost">
+<x-layouts.main title="Características • ATS Boost">
     <section class="space-y-6">
         <div class="!text-center lg:!text-start">
             <flux:badge color="blue" icon="cpu-chip" size="sm" variant="pill">
-                AI-powered resume builder
+                Constructor de currículum basado en IA
             </flux:badge>
         </div>
 
         <flux:heading level="1"
             class="!text-5xl !mb-6 md:!text-6xl font-black max-w-4xl mx-auto lg:mx-0 lg:max-w-full text-center lg:text-start hidden md:block">
-            Built to give you an unfair advantage
-            <br class="hidden lg:block">in the<span
+            Hecho para darte una ventaja injusta
+            <br class="hidden lg:block">en el<span
                 class="!text-5xl font-black text-transparent md:!text-6xl bg-gradient-to-r from-blue-600 via-blue-300 to-blue-500 bg-clip-text">
-                job market
+                mundo laboral
             </span>
         </flux:heading>
-        
+
         <!-- Mobile -->
-        <flux:heading level="1" class="md:hidden !text-5xl text-center">Built to give you an unfair advantage</flux:heading>
+        <flux:heading level="1" class="md:hidden !text-5xl text-center">Hecho para darte ventaja
+        </flux:heading>
 
         <flux:subheading level="2" class="max-w-xl mx-auto text-sm text-center md:text-base lg:text-start lg:mx-0">
-            Generate tailored resumes, optimize keywords, and boost your chances
-            of landing interviews — all in seconds.
+            Genera currículos personalizados, optimiza palabras clave y aumenta tus posibilidades
+            de conseguir entrevistas — todo en segundos.
         </flux:subheading>
 
         <div class="flex items-center justify-center gap-4 lg:justify-start">
             <flux:button wire:navigate href="/dashboard" icon-trailing="arrow-up-right">
-                Try it free
+                Prueba gratis
             </flux:button>
 
             <flux:button variant="primary" wire:navigate href="/pricing" icon-trailing="arrow-up-right">
-                Upgrade now
+                Actualizar ahora
             </flux:button>
         </div>
     </section>
@@ -38,31 +39,30 @@
     <section class="py-12 space-y-6">
         <div class="grid grid-cols-1 gap-4 py-6 sm:grid-cols-2 md:grid-cols-3">
             <x-feature-card icon="fire" color="text-orange-600 dark:text-orange-400"
-                title="Unlimited tailored resumes">
-                Generate as many resumes as you want, instantly personalized for each job.
+                title="Currículos ilimitados personalizados">
+                Genera tantos currículos como quieras, personalizados al instante para cada trabajo.
             </x-feature-card>
 
             <x-feature-card icon="sparkles" color="text-green-600 dark:text-green-400"
-                title="ATS keyword optimization">
-                Ensure your CV passes applicant tracking systems with AI-recommended keywords.
+                title="Optimización de palabras clave ATS">
+                Asegura que tu CV pase los sistemas de seguimiento de candidatos con palabras clave recomendadas por IA.
             </x-feature-card>
 
-            <x-feature-card icon="language" color="text-indigo-600 dark:text-indigo-400" title="Grammar & clarity">
-                Improve readability, tone and structure for maximum impact.
+            <x-feature-card icon="language" color="text-indigo-600 dark:text-indigo-400" title="Gramática y claridad">
+                Mejora la legibilidad, el tono y la estructura para máximo impacto.
             </x-feature-card>
 
-            <x-feature-card icon="document-text" color="text-sky-600 dark:text-sky-400"
-                title="Professional formatting">
-                Use clean, modern templates that hiring managers love.
+            <x-feature-card icon="document-text" color="text-sky-600 dark:text-sky-400" title="Formato profesional">
+                Usa plantillas limpias y modernas que los reclutadores aman.
             </x-feature-card>
 
             <x-feature-card icon="pencil-square" color="text-purple-600 dark:text-purple-400"
-                title="Cover letter generator">
-                Create tailored cover letters with one click.
+                title="Generador de carta de presentación">
+                Crea cartas de presentación personalizadas con un solo clic.
             </x-feature-card>
 
-            <x-feature-card icon="bolt" color="text-yellow-600 dark:text-yellow-400" title="Priority delivery">
-                Get resume versions generated instantly during peak hours.
+            <x-feature-card icon="bolt" color="text-yellow-600 dark:text-yellow-400" title="Entrega prioritaria">
+                Obtén versiones de currículum generadas al instante durante horas pico.
             </x-feature-card>
         </div>
     </section>
@@ -71,117 +71,116 @@
     <section class="py-6 space-y-6 max-w-4xl mx-auto">
         <div class="!text-center">
             <flux:badge color="blue" icon="sparkles" size="sm" variant="pill">
-                FAQs
+                Preguntas frecuentes
             </flux:badge>
         </div>
 
         <flux:heading level="2" class="font-bold text-center !text-4xl lg:!text-5xl py-6">
-            Frequently asked questions
+            Preguntas frecuentes
         </flux:heading>
 
         <flux:accordion variant="reverse" exclusive transition class="w-full py-6 lg:col-span-2">
             <flux:accordion.item expanded>
-                <flux:accordion.heading level="3">Is it compatible with ATS?</flux:accordion.heading>
+                <flux:accordion.heading level="3">¿Es compatible con ATS?</flux:accordion.heading>
                 <flux:accordion.content>
-                    Yes — every resume is optimized for modern ATS filters, keyword parsing, and clean formatting.
+                    Sí — cada currículum está optimizado para filtros ATS modernos, análisis de palabras clave y formato
+                    limpio.
                 </flux:accordion.content>
             </flux:accordion.item>
 
             <flux:accordion.item>
-                <flux:accordion.heading level="3">How many resumes can I generate?</flux:accordion.heading>
+                <flux:accordion.heading level="3">¿Cuántos currículos puedo generar?</flux:accordion.heading>
                 <flux:accordion.content>
-                    Unlimited. Create as many tailored versions as you want for every job you apply to.
+                    Ilimitado. Crea tantas versiones personalizadas como quieras para cada trabajo al que te postules.
                 </flux:accordion.content>
             </flux:accordion.item>
 
             <flux:accordion.item>
-                <flux:accordion.heading level="3">Does it include cover letters?</flux:accordion.heading>
+                <flux:accordion.heading level="3">¿Incluye cartas de presentación?</flux:accordion.heading>
                 <flux:accordion.content>
-                    Yes — you can generate personalized, job-specific cover letters instantly.
+                    Sí — puedes generar cartas de presentación personalizadas y específicas para cada trabajo al
+                    instante.
                 </flux:accordion.content>
             </flux:accordion.item>
 
             <flux:accordion.item>
-                <flux:accordion.heading level="3">Can I export my resume?</flux:accordion.heading>
+                <flux:accordion.heading level="3">¿Puedo exportar mi currículum?</flux:accordion.heading>
                 <flux:accordion.content>
-                    Absolutely. Download high-quality PDFs and store every version in your dashboard.
+                    Absolutamente. Descarga PDF de alta calidad y guarda cada versión en tu panel.
                 </flux:accordion.content>
             </flux:accordion.item>
 
             <flux:accordion.item>
-                <flux:accordion.heading level="3">Do you store my personal information?</flux:accordion.heading>
+                <flux:accordion.heading level="3">¿Guardan mi información personal?</flux:accordion.heading>
                 <flux:accordion.content>
-                    Your data stays private. Nothing is used for training or shared with third parties.
+                    Tus datos permanecen privados. Nada se utiliza para entrenar o se comparte con terceros.
                 </flux:accordion.content>
             </flux:accordion.item>
 
             <flux:accordion.item>
-                <flux:accordion.heading level="3">Will the tool change or invent experience I don't have?
-                    </flux:flux:accordion.heading>
-                    <flux:accordion.content>
-                        Never. It only reorganizes and rewrites your real experience to match the job description — no
-                        fabrication.
-                    </flux:accordion.content>
-            </flux:accordion.item>
-
-            <flux:accordion.item>
-                <flux:accordion.heading level="3">Can I use it even if I’m not a developer?
+                <flux:accordion.heading level="3">¿La herramienta cambiará o inventará experiencia que no tengo?
                 </flux:accordion.heading>
                 <flux:accordion.content>
-                    Yes — it's designed for all roles: tech, design, marketing, operations, HR, data, and more.
+                    Nunca. Solo reorganiza y rescribe tu experiencia real para que coincida con la descripción del
+                    trabajo — sin fabricación.
                 </flux:accordion.content>
             </flux:accordion.item>
 
             <flux:accordion.item>
-                <flux:accordion.heading level="3">Does it rewrite my entire resume?</flux:accordion.heading>
-                <flux:accordion.content>
-                    Only the parts that need improvement. It keeps your voice and structure while enhancing clarity and
-                    relevance.
-                </flux:accordion.content>
-            </flux:accordion.item>
-
-            <flux:accordion.item>
-                <flux:accordion.heading level="3">What formats can I upload?</flux:accordion.heading>
-                <flux:accordion.content>
-                    We currently only accept PDF files, with support for more formats coming soon.
-                </flux:accordion.content>
-            </flux:accordion.item>
-
-            <flux:accordion.item>
-                <flux:accordion.heading level="3">Does it work with international job applications?
+                <flux:accordion.heading level="3">¿Puedo usarlo aunque no sea desarrollador?
                 </flux:accordion.heading>
                 <flux:accordion.content>
-                    Yes — the tool adapts resumes for U.S., EU, UK, LATAM, and remote-first recruiters.
+                    Sí — está diseñado para todos los roles: tecnología, diseño, marketing, operaciones, RRHH, datos y
+                    más.
                 </flux:accordion.content>
             </flux:accordion.item>
 
             <flux:accordion.item>
-                <flux:accordion.heading level="3">Can I edit the resume after it's generated?
+                <flux:accordion.heading level="3">¿Reescribe todo mi currículum?</flux:accordion.heading>
+                <flux:accordion.content>
+                    Solo las partes que necesitan mejora. Mantiene tu voz y estructura mientras mejora la claridad y
+                    relevancia.
+                </flux:accordion.content>
+            </flux:accordion.item>
+
+            <flux:accordion.item>
+                <flux:accordion.heading level="3">¿Qué formatos puedo cargar?</flux:accordion.heading>
+                <flux:accordion.content>
+                    Actualmente solo aceptamos archivos PDF, con soporte para más formatos próximamente.
+                </flux:accordion.content>
+            </flux:accordion.item>
+
+            <flux:accordion.item>
+                <flux:accordion.heading level="3">¿Funciona con solicitudes de empleo internacionales?
                 </flux:accordion.heading>
                 <flux:accordion.content>
-                    Of course. You can tweak, rewrite, and regenerate as many times as you want.
+                    Sí — la herramienta adapta currículum para reclutadores de EE.UU., UE, Reino Unido, LATAM y remotos.
+                </flux:accordion.content>
+            </flux:accordion.item>
+
+            <flux:accordion.item>
+                <flux:accordion.heading level="3">¿Puedo editar el currículum después de que se genere?
+                </flux:accordion.heading>
+                <flux:accordion.content>
+                    Por supuesto. Puedes ajustar, reescribir y regenerar tantas veces como quieras.
                 </flux:accordion.content>
             </flux:accordion.item>
 
             <flux:accordion.item>
                 <flux:accordion.heading level="3">
-                    Why do I see a charge from LEMSQZY* STORE?
+                    ¿Por qué veo un cargo de MERCADO PAGO?
                 </flux:accordion.heading>
                 <flux:accordion.content>
-                    This is completely normal — <strong>LEMSQZY* STORE</strong> is Lemon Squeezy, the secure payment
-                    provider we use for subscriptions and billing.
-                    You can read more in their official explanation here:
-                    <a href="https://www.lemonsqueezy.com/why-did-lemon-squeeezy-charge-me" target="_blank"
-                        class="text-blue-600 underline hover:text-blue-700">
-                        Why am I seeing this charge?
-                    </a>
+                    Esto es completamente normal — <strong>MERCADO PAGO</strong> es nuestro proveedor de
+                    pagos seguro que usamos para suscripciones y facturación.
+                    Es un servicio confiable que protege tus pagos y datos financieros.
                 </flux:accordion.content>
             </flux:accordion.item>
         </flux:accordion>
 
         <div class="flex justify-end">
             <flux:button as="link" variant="ghost" wire:navigate href="/pricing" icon-trailing="arrow-up-right">
-                Pricing
+                Precios
             </flux:button>
         </div>
     </section>

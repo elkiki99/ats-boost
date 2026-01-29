@@ -4,10 +4,10 @@
         :dismissible="false" :closable="false" variant="floating">
         <div>
             <flux:heading size="lg" class="text-center">
-                Generating cover letter
+                Generando carta de presentación
             </flux:heading>
             <flux:subheading class="text-center">
-                Matching your vibe to generate a winning cover letter...
+                Combinando tu estilo para generar una carta de presentación ganadora...
             </flux:subheading>
         </div>
 
@@ -15,15 +15,15 @@
     </flux:modal>
 
     <!-- Result modal -->
-    <flux:modal class="!max-w-sm flex flex-col items-center space-y-6 p-4" name="cover-letter-result" :dismissible="false" variant="floating"
-        class="w-full! max-w-3xl space-y-6 p-4">
+    <flux:modal class="!max-w-sm flex flex-col items-center space-y-6 p-4" name="cover-letter-result"
+        :dismissible="false" variant="floating" class="w-full! max-w-3xl space-y-6 p-4">
         <div>
             <flux:heading size="lg">
-                Your cover letter is ready
+                Tu carta de presentación está lista
             </flux:heading>
 
             <flux:subheading>
-                We created a tailored cover letter based on your needs.
+                Creamos una carta de presentación personalizada según tus necesidades.
             </flux:subheading>
         </div>
 
@@ -33,39 +33,39 @@
 
         <div class="flex justify-end">
             <flux:button variant="primary" icon="arrow-down-tray" wire:click="downloadPdf">
-                Download cover letter
+                Descargar carta de presentación
             </flux:button>
         </div>
     </flux:modal>
 
     <div class="relative mb-6 w-full">
-        <flux:heading size="xl" level="1">{{ __('Cover letter') }}</flux:heading>
-        <flux:subheading size="lg" class="mb-6">{{ __('Generate cover letters in seconds and stand out') }}
+        <flux:heading size="xl" level="1">{{ __('Carta de presentación') }}</flux:heading>
+        <flux:subheading size="lg" class="mb-6">{{ __('Genera cartas de presentación en segundos y destaca') }}
         </flux:subheading>
         <flux:separator variant="subtle" />
     </div>
 
     <div class="flex flex-col lg:flex-row gap-6 w-full">
         <div class="w-full">
-            <flux:textarea wire:model="company" rows="10" label="Company (optional)"
-                placeholder="Meta's mission is to build the future of human connection and the technology that makes it possible.
+            <flux:textarea wire:model="company" rows="10" label="Empresa" badge="Opcional"
+                placeholder="La misión de Meta es dar a las personas el poder de construir comunidades y acercar al mundo.
 
-Our technologies help people connect, find communities, and grow businesses. When Facebook launched in 2004, it changed the..." />
+Nuestras tecnologías ayudan a las personas a conectarse, encontrar comunidades y hacer crecer negocios. Cuando Facebook se lanzó en 2004, cambió la..." />
         </div>
 
         <div class="w-full">
-            <flux:textarea wire:model="description" rows="10" label="Job description"
-                placeholder="We are looking for a Software Developer to join our company.
+            <flux:textarea wire:model="description" rows="10" label="Descripción del trabajo"
+                placeholder="Estamos buscando un desarrollador de software para unirse a nuestra empresa.
 
-The right candidate must be..." />
+El candidato ideal debe ser..." />
 
         </div>
     </div>
 
     <div class="w-full lg:w-1/2 mt-4">
-        <flux:file-upload wire:model="resume" label="Upload resume">
-            <flux:file-upload.dropzone heading="Drop your CV or click to browse" text="PDF up to 10MB" with-progress
-                inline />
+        <flux:file-upload wire:model="resume" label="Cargar currículum">
+            <flux:file-upload.dropzone heading="Suelta tu CV o haz clic para examinar" text="PDF hasta 10MB"
+                with-progress inline />
         </flux:file-upload>
 
         <div class="mt-3 flex flex-col gap-2">
@@ -79,8 +79,9 @@ The right candidate must be..." />
         </div>
     </div>
 
-    <flux:button x-on:click="$wire.startGeneratingCoverLetter()" icon="pencil-square" class="mt-4 w-full" variant="primary">
-        Generate cover letter
+    <flux:button x-on:click="$wire.startGeneratingCoverLetter()" icon="pencil-square" class="mt-4 w-full"
+        variant="primary">
+        Generar carta de presentación
     </flux:button>
 </div>
 

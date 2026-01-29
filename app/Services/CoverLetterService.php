@@ -2,14 +2,192 @@
 
 namespace App\Services;
 
-use OpenAI\Laravel\Facades\OpenAI;
 use Barryvdh\DomPDF\Facade\Pdf;
-use Smalot\PdfParser\Parser;
-use RuntimeException;
 use Carbon\Carbon;
+use OpenAI\Laravel\Facades\OpenAI;
+use RuntimeException;
+use Smalot\PdfParser\Parser;
 
 class CoverLetterService
 {
+    /**
+     * Detecta el idioma principal del texto (español, inglés, etc.)
+     */
+    private function detectLanguage(string $text): string
+    {
+        // Palabras clave en español
+        $spanishKeywords = ['el ', 'la ', 'de ', 'que ', 'experiencia', 'educación', 'habilidades', 'trabajo', 'empresa', 'año', 'descripción'];
+
+        // Palabras clave en inglés
+        $englishKeywords = ['the ', 'and ', 'a ', 'to ', 'experience', 'education', 'skills', 'job', 'company', 'year', 'description'];
+
+        // Convertir a minúsculas para análisis
+        $textLower = strtolower($text);
+
+        // Contar coincidencias
+        $spanishCount = 0;
+        $englishCount = 0;
+
+        foreach ($spanishKeywords as $keyword) {
+            $spanishCount += substr_count($textLower, $keyword);
+        }
+
+        foreach ($englishKeywords as $keyword) {
+            $englishCount += substr_count($textLower, $keyword);
+        }
+
+        // Retornar idioma con mayor coincidencia
+        return $spanishCount > $englishCount ? 'es' : 'en';
+    }
+
+    /**
+     * Obtiene el prompt dinámico según el idioma
+     */
+    private function getPromptInferCandidateProfile(string $language, string $cvText): string
+    {
+        $currentDate = Carbon::now()->format('d/m/Y');
+
+        if ($language === 'es') {
+            return "
+            Hoy es: {$currentDate}
+
+            Extrae el nombre completo del candidato y su rol profesional principal del CV a continuación.
+
+            REGLAS:
+            - Usa SOLO el contenido del CV.
+            - NO adivines datos faltantes.
+            - Si no está claro, devuelve valores null.
+            - Devuelve JSON ESTRICTO.
+
+            FORMATO JSON:
+            {
+                \"name\": string|null,
+                \"role\": string|null
+            }
+
+            --- CV ---
+            {$cvText}
+        ";
+        }
+
+        // English version
+        return "
+            Today is: {$currentDate}
+
+            Extract the full name of the candidate and their main professional role from the CV below.
+
+            RULES:
+            - Use ONLY the CV content.
+            - Do NOT guess missing data.
+            - If unclear, return null values.
+            - Return STRICT JSON.
+
+            JSON FORMAT:
+            {
+                \"name\": string|null,
+                \"role\": string|null
+            }
+
+            --- CV ---
+            {$cvText}
+        ";
+    }
+
+    /**
+     * Obtiene el prompt dinámico para generar carta de presentación según idioma
+     */
+    private function getPromptGenerateCoverLetter(string $language, string $candidateName, string $candidateRole, string $cvText, string $jobOffer): string
+    {
+        $currentDate = Carbon::now()->format('d/m/Y');
+
+        if ($language === 'es') {
+            return "
+            Eres un motor de generación profesional de cartas de presentación.
+
+            Hoy es: {$currentDate}
+
+            Genera una carta de presentación en HTML puro basada en:
+            - Perfil del candidato
+            - Descripción del trabajo
+
+            ====================
+            REGLAS GLOBALES
+            ====================
+
+            - Devuelve SOLO HTML válido.
+            - NO incluyas <html>, <head>, <body>, ni estilos.
+            - Estructura:
+              <h1>Candidato Name</h1>
+              <h2>Fecha</h2>
+              <p>párrafos de la carta...</p>
+            - Usa <strong> para énfasis.
+            - Los párrafos deben ser naturales y persuasivos.
+            - La carta debe dirigirse al empleador.
+            - Máximo 4-5 párrafos.
+
+            ====================
+            DATOS DEL CANDIDATO
+            ====================
+
+            Nombre: {$candidateName}
+            Rol: {$candidateRole}
+            CV:
+            {$cvText}
+
+            ====================
+            DESCRIPCIÓN DEL TRABAJO
+            ====================
+
+            {$jobOffer}
+
+            Genera la carta ahora:
+        ";
+        }
+
+        // English version
+        return "
+            You are a professional cover letter generation engine.
+
+            Today is: {$currentDate}
+
+            Generate a cover letter in pure HTML based on:
+            - Candidate profile
+            - Job description
+
+            ====================
+            GLOBAL RULES
+            ====================
+
+            - Return ONLY valid HTML.
+            - Do NOT include <html>, <head>, <body>, or styles.
+            - Structure:
+              <h1>Candidate Name</h1>
+              <h2>Date</h2>
+              <p>paragraphs of the letter...</p>
+            - Use <strong> for emphasis.
+            - Paragraphs should be natural and persuasive.
+            - The letter should address the employer.
+            - Maximum 4-5 paragraphs.
+
+            ====================
+            CANDIDATE DATA
+            ====================
+
+            Name: {$candidateName}
+            Role: {$candidateRole}
+            CV:
+            {$cvText}
+
+            ====================
+            JOB DESCRIPTION
+            ====================
+
+            {$jobOffer}
+
+            Generate the letter now:
+        ";
+    }
+
     public function generatePdf(string $html): string
     {
         return Pdf::loadHTML("
@@ -45,8 +223,8 @@ class CoverLetterService
 
     public function extractCvText(string $path): string
     {
-        if (!file_exists($path)) {
-            throw new RuntimeException('CV file not found.');
+        if (! file_exists($path)) {
+            throw new RuntimeException('Archivo de CV no encontrado.');
         }
 
         if (str_ends_with(strtolower($path), '.pdf')) {
@@ -59,37 +237,21 @@ class CoverLetterService
     private function extractPdf(string $path): string
     {
         try {
-            $parser = new Parser();
+            $parser = new Parser;
             $pdf = $parser->parseFile($path);
+
             return trim($pdf->getText());
         } catch (\Throwable) {
-            throw new RuntimeException('Unable to extract text from PDF CV.');
+            throw new RuntimeException('No se puede extraer texto del PDF de CV.');
         }
     }
 
     /**
-     * Infer candidate name and role from CV using AI
+     * Inferir nombre del candidato y rol profesional del CV usando IA
      */
-    public function inferCandidateProfile(string $cvText): array
+    public function inferCandidateProfile(string $cvText, string $language = 'en'): array
     {
-        $prompt = "
-            Extract the candidate's full name and primary professional role from the CV below.
-
-            RULES:
-            - Use ONLY the CV content.
-            - Do NOT guess missing data.
-            - If unclear, return null values.
-            - Output STRICT JSON.
-
-            JSON FORMAT:
-            {
-                \"name\": string|null,
-                \"role\": string|null
-            }
-
-            --- CV ---
-            {$cvText}
-        ";
+        $prompt = $this->getPromptInferCandidateProfile($language, $cvText);
 
         $response = OpenAI::chat()->create([
             'model' => 'gpt-4.1',
@@ -110,7 +272,7 @@ class CoverLetterService
         ?string $role,
         ?string $company = null
     ): string {
-        $name ??= 'Cover Letter';
+        $name ??= 'Carta de Presentación';
         $rolePart = $role ? " - {$role}" : '';
         $companyPart = $company ? " - {$company}" : '';
 
@@ -122,93 +284,26 @@ class CoverLetterService
     }
 
     /**
-     * Generate cover letter with inferred header
+     * Generar carta de presentación con encabezado inferido
      */
     public function generateCoverLetter(
         string $description,
         string $cvText,
         ?string $company = null
     ): string {
-        $profile = $this->inferCandidateProfile($cvText);
+        $language = $this->detectLanguage($description);
+        $profile = $this->inferCandidateProfile($cvText, $language);
 
-        $name = $profile['name'] ?? 'Candidate';
+        $name = $profile['name'] ?? ($language === 'es' ? 'Candidato' : 'Candidate');
         $role = $profile['role'] ?? null;
 
-        $companyInstruction = $company
-            ? "The company name is: {$company}. Always use this name."
-            : "
-                The company name is NOT explicitly provided.
-                If clearly mentioned in the job description, you may use it.
-                Otherwise, do NOT guess.
-            ";
+        $prompt = $this->getPromptGenerateCoverLetter($language, $name, (string) $role, $cvText, $description);
 
-        $header = "<h1>{$name}</h1>";
-
-        if ($role || $company) {
-            $line = trim("{$role}" . ($company ? " · {$company}" : ''));
-            $header .= "<h2>{$line}</h2>";
+        if ($language === 'es') {
+            $placeholderLetter = 'Carta de Presentación';
+        } else {
+            $placeholderLetter = 'Cover Letter';
         }
-
-        $date = Carbon::now()->translatedFormat('d/m/Y');
-
-        $prompt = "
-            You are a professional career coach and senior recruiter.
-
-            TASK:
-            Write a formal, professional cover letter following the classic business structure.
-
-            LANGUAGE:
-            Same language as the job description.
-
-            STRUCTURE (MANDATORY):
-            1. Header section:
-            - Date {$date}
-            - Company name (if known)
-            - Job title (if known)
-
-            2. Greeting:
-            - Address the company or hiring team professionally.
-            - If no contact name is available, use a neutral greeting.
-
-            3. Opening paragraph:
-            - Clearly state the position you are applying for.
-            - Explain why you are interested in this role and company.
-            - Briefly state why you are a strong fit.
-
-            4. Middle paragraph(s):
-            - Provide 1–2 specific examples from the CV that demonstrate relevance.
-            - Do NOT repeat the full resume.
-            - Clearly connect experience to the role requirements.
-
-            5. Closing paragraph:
-            - Reiterate interest and enthusiasm.
-            - State willingness to discuss further.
-            - Thank the reader for their time.
-
-            6. Sign-off:
-            - Professional closing
-            - Candidate name
-
-            RULES:
-            - Use ONLY information present in the CV.
-            - Do NOT invent experience, companies, or skills.
-            - Be confident, concise, and specific.
-            - Maximum 4 short body paragraphs.
-            - Clean HTML only.
-            - Allowed tags: h1, h2, p, strong, em, br
-
-            HEADER (MANDATORY):
-            Use the following header EXACTLY as provided:
-            {$header}
-
-            --- CV ---
-            {$cvText}
-
-            --- JOB DESCRIPTION ---
-            {$description}
-
-            {$companyInstruction}
-            ";
 
         $response = OpenAI::chat()->create([
             'model' => 'gpt-4.1',

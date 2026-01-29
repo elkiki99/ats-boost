@@ -4,8 +4,8 @@ namespace App\Actions\MercadoPago;
 
 use App\Models\Subscriber;
 use App\Services\MercadoPagoService;
-use Illuminate\Support\Facades\Log;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Log;
 
 class SyncSubscription
 {
@@ -31,18 +31,18 @@ class SyncSubscription
             Subscriber::updateOrCreate(
                 ['mp_subscription_id' => $subscriptionId],
                 [
-                    'user_id'     => auth()->id(),
-                    'mp_plan_id'  => $subscriptionData['preapproval_plan_id'] ?? null,
-                    'status'      => $subscriptionData['status'] ?? 'pending',
-                    'active'      => in_array(
+                    'user_id' => auth()->id(),
+                    'mp_plan_id' => $subscriptionData['preapproval_plan_id'] ?? null,
+                    'status' => $subscriptionData['status'] ?? 'pending',
+                    'active' => in_array(
                         $subscriptionData['status'] ?? '',
                         ['authorized', 'active']
                     ),
-                    'renews_at'   => isset($subscriptionData['next_payment_date'])
+                    'renews_at' => isset($subscriptionData['next_payment_date'])
                         ? Carbon::parse($subscriptionData['next_payment_date'])
                         : null,
                     'payer_email' => $subscriptionData['payer_email'] ?? null,
-                    'metadata'    => $subscriptionData,
+                    'metadata' => $subscriptionData,
                 ]
             );
 

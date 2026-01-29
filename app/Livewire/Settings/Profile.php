@@ -3,11 +3,11 @@
 namespace App\Livewire\Settings;
 
 use App\Models\User;
+use Flux\Flux;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Validation\Rule;
 use Livewire\Component;
-use Flux\Flux;
 
 class Profile extends Component
 {
@@ -78,5 +78,10 @@ class Profile extends Component
         $user->sendEmailVerificationNotification();
 
         Session::flash('status', 'verification-link-sent');
+    }
+
+    public function render()
+    {
+        return view('livewire.settings.profile')->title(__('Perfil • ATS Boost'));
     }
 }

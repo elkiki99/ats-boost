@@ -2,12 +2,11 @@
 
 namespace App\Livewire\Resume;
 
+use Flux\Flux;
 use Illuminate\Support\Facades\Auth;
 use Livewire\Attributes\Validate;
-use App\Services\CvTailorService;
-use Livewire\WithFileUploads;
 use Livewire\Component;
-use Flux\Flux;
+use Livewire\WithFileUploads;
 
 class Demo extends Component
 {
@@ -20,8 +19,11 @@ class Demo extends Component
     public string $description = '';
 
     public string $candidateName = '';
+
     public string $tailored = '';
+
     public int $usageCount = 0;
+
     public string $cvText = '';
 
     public function mount()
@@ -31,8 +33,9 @@ class Demo extends Component
 
     public function startTailoring()
     {
-        if ((!Auth::user() || !Auth::user()->isSubscribed()) && $this->usageCount >= 3) {
+        if ((! Auth::user() || ! Auth::user()->isSubscribed()) && $this->usageCount >= 3) {
             $this->modal('limit-modal')->show();
+
             return;
         }
 

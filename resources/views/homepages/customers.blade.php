@@ -1,34 +1,34 @@
-<x-layouts.main title="Customers • ATS Boost">
+<x-layouts.main title="Clientes • ATS Boost">
     <section class="space-y-6">
         <div class="text-center">
             <flux:badge color="blue" icon="megaphone" size="sm" variant="pill">
-                They speak for ourselves
+                Hablan por sí solos
             </flux:badge>
         </div>
 
         <flux:heading level="1"
             class="!text-5xl !mb-6 md:!text-6xl font-black max-w-4xl mx-auto lg:max-w-full text-center hidden md:block">
-            See why professionals trust us<br class="hidden lg:block">
-            to elevate <span
+            Ve por qué los profesionales nos confían<br class="hidden lg:block">
+            para mejorar <span
                 class="text-5xl font-black text-transparent md:text-6xl dark:from-blue-500 dark:via-blue-300 dark:to-blue-600 bg-gradient-to-r from-blue-600 via-blue-400 to-blue-700 bg-clip-text">
-                their resumes</span>
+                sus currículum</span>
         </flux:heading>
 
         <!-- Mobile -->
-        <flux:heading level="1" class="md:hidden !text-5xl text-center">See why professionals trust us</flux:heading>
+        <flux:heading level="1" class="md:hidden !text-5xl text-center">Ve por qué nos confían</flux:heading>
 
         <flux:subheading level="2" class="max-w-xl mx-auto text-sm text-center md:text-base">
-            Real users. Real results. Discover how ATS Boost improves clarity, impact, and job-winning performance in
-            every resume.
+            Usuarios reales. Resultados reales. Descubre cómo ATS Boost mejora la claridad, el impacto y el desempeño
+            ganador de empleos en cada currículum.
         </flux:subheading>
 
         <div class="flex items-center justify-center gap-4">
             <flux:button wire:navigate href="/dashboard" icon-trailing="arrow-up-right">
-                Try it free
+                Prueba gratis
             </flux:button>
 
             <flux:button variant="primary" wire:navigate href="/pricing" icon-trailing="arrow-up-right">
-                Upgrade now
+                Actualizar ahora
             </flux:button>
         </div>
 
@@ -37,57 +37,57 @@
                 @foreach ([
         [
             'name' => 'Emily Carter',
-            'role' => 'Full-Stack Developer',
+            'role' => 'Desarrolladora Full-Stack',
             'img' => 'emilycarter',
-            'text' => 'I used to spend hours rewriting my CV for every job. This tool adapts everything in minutes while keeping my real experience intact. It genuinely boosted my interview rate.',
+            'text' => 'Sol\u00eda pasar horas rescribiendo mi CV para cada trabajo. Esta herramienta adapta todo en minutos manteniendo mi experiencia real intacta. Genuinamente aument\u00f3 mi tasa de entrevistas.',
         ],
         [
             'name' => 'Jason Lee',
-            'role' => 'Junior Software Engineer',
+            'role' => 'Ingeniero de Software Junior',
             'img' => 'jasonlee',
-            'text' => 'I had no idea how to highlight what companies actually cared about. The tailored version did it for me—clean, relevant, and more confident without exaggeration.',
+            'text' => 'No sabía cómo destacar lo que las empresas realmente valoraban. La versión personalizada lo hizo por mí — limpia, relevante y más confiada sin exageración.',
         ],
         [
             'name' => 'Hannah Smith',
-            'role' => 'Customer Support Specialist transitioning to Tech',
+            'role' => 'Especialista en Atención al Cliente en transición a Tecnología',
             'img' => 'hannahsmith',
-            'text' => 'I was switching careers and my CV felt chaotic. The tailored version aligned everything to the job description so well that I finally started getting callbacks.',
+            'text' => 'Estaba cambiando de carrera y mi CV se sentiá caótico. La versión personalizada alineó todo perfectamente con la descripción del trabajo, así que finalmente empecé a recibir respuestas.',
         ],
         [
             'name' => 'Michael Brown',
-            'role' => 'Frontend Developer',
+            'role' => 'Desarrollador Frontend',
             'img' => 'michaelbrown',
-            'text' => 'It reorganized my CV in a way I had never managed on my own. Same experience, better presentation. I landed two interviews in a week.',
+            'text' => 'Reorganizó mi CV de una manera que nunca había logrado por mi cuenta. Misma experiencia, mejor presentación. Conseguí dos entrevistas en una semana.',
         ],
         [
             'name' => 'Samantha Reyes',
-            'role' => 'Data Analyst',
+            'role' => 'Analista de Datos',
             'img' => 'samanthareyes',
-            'text' => 'My CV had good content but lacked structure. The tailored version made it crisp, relevant, and easy to scan. Recruiters started replying almost immediately.',
+            'text' => 'Mi CV tenía buen contenido pero carecía de estructura. La versión personalizada lo hizo crujiente, relevante y fácil de escanear. Los reclutadores comenzaron a responder casi de inmediato.',
         ],
         [
             'name' => 'Daniel Kim',
-            'role' => 'Mobile Developer',
+            'role' => 'Desarrollador Móvil',
             'img' => 'danielkim',
-            'text' => 'It doesn’t invent anything—just makes your actual experience match what the company needs. Simple idea, huge impact on results.',
+            'text' => 'No inventa nada — solo hace que tu experiencia real coincida con lo que la empresa necesita. Idea simple, impacto enorme en los resultados.',
         ],
         [
             'name' => 'Olivia Thompson',
-            'role' => 'UX Designer',
+            'role' => 'Diseñadora UX',
             'img' => 'oliviathompson',
-            'text' => "I love that it respects my tone. My CV finally reads like me, but focused and aligned with the role. It opened doors I couldn't reach before.",
+            'text' => 'Me encanta que respete mi tono. Mi CV finalmente se lee como yo, pero enfocado y alineado con el rol. Abrió puertas que no podía alcanzar antes.',
         ],
         [
             'name' => 'Ryan Mitchell',
-            'role' => 'Entry-Level IT Technician',
+            'role' => 'Técnico en Tecnología de la Información de Entrada',
             'img' => 'ryanmitchell',
-            'text' => 'I struggled to explain my skills clearly. The tailored CV made everything easy to understand and role-focused. I got my first tech interview thanks to it.',
+            'text' => 'Luchaba por explicar mis habilidades claramente. El CV personalizado hizo que todo fuera fácil de entender y enfocado en el rol. Conseguí mi primera entrevista de tecnología gracias a él.',
         ],
         [
             'name' => 'Chloe Davis',
-            'role' => 'Backend Developer',
+            'role' => 'Desarrolladora Backend',
             'img' => 'chloedavis',
-            'text' => 'The tool is incredibly precise. My CV now highlights exactly what hiring managers want to see. Nothing fake—just my experience, but optimized.',
+            'text' => 'La herramienta es increíblemente precisa. Mi CV ahora destaca exactamente lo que los gerentes de contratación quieren ver. Nada falso — solo mi experiencia, pero optimizada.',
         ],
     ] as $t)
                     <div class="break-inside-avoid">
@@ -129,7 +129,7 @@
 
         <div class="flex justify-end">
             <flux:button as="link" variant="ghost" wire:navigate href="/features" icon-trailing="arrow-up-right">
-                View features
+                Ver características
             </flux:button>
         </div>
     </section>

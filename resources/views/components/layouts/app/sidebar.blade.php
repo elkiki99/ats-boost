@@ -6,7 +6,8 @@
 </head>
 
 <body class="min-h-screen bg-white dark:bg-zinc-800">
-    <flux:sidebar sticky collapsible="mobile" class="border-e border-zinc-200 bg-zinc-50 dark:border-zinc-700 dark:bg-zinc-900 sm:w-auto w-full min-w-56">
+    <flux:sidebar sticky collapsible="mobile"
+        class="border-e border-zinc-200 bg-zinc-50 dark:border-zinc-700 dark:bg-zinc-900 sm:w-auto w-full min-w-56">
         <flux:sidebar.toggle class="lg:hidden" icon="x-mark" />
 
         <a href="{{ route('dashboard') }}" class="me-5 flex items-center space-x-2 rtl:space-x-reverse" wire:navigate>
@@ -14,26 +15,26 @@
         </a>
 
         <flux:navlist variant="outline">
-            <flux:navlist.group :heading="__('Platform')" class="grid">
+            <flux:navlist.group :heading="__('Plataforma')" class="grid">
                 <flux:navlist.item icon="home" :href="route('dashboard')" :current="request()->routeIs('dashboard')"
-                    wire:navigate>{{ __('Dashboard') }}</flux:navlist.item>
+                    wire:navigate>{{ __('Panel de control') }}</flux:navlist.item>
             </flux:navlist.group>
         </flux:navlist>
 
         <flux:navlist variant="outline">
-            <flux:navlist.group :heading="__('Resume')" class="grid">
+            <flux:navlist.group :heading="__('Currículum')" class="grid">
                 <flux:navlist.item icon="scissors" :href="route('resume.resume-tailor')"
-                    :current="request()->routeIs('resume.resume-tailor')">{{ __('Tailor') }}
+                    :current="request()->routeIs('resume.resume-tailor')">{{ __('Adaptar') }}
                 </flux:navlist.item>
                 {{-- <flux:navlist.item icon="briefcase" :href="route('resume.resume-builder')"
                     :current="request()->routeIs('resume.resume-builder')">{{ __('Builder') }}
                 </flux:navlist.item> --}}
                 <flux:navlist.item icon="chart-bar" :href="route('resume.resume-analyzer')"
                     :current="request()->routeIs('resume.resume-analyzer')">
-                    {{ __('Analyzer') }}</flux:navlist.item>
+                    {{ __('Analizador') }}</flux:navlist.item>
                 <flux:navlist.item icon="envelope-open" :href="route('resume.cover-letter')"
                     :current="request()->routeIs('resume.cover-letter')">
-                    {{ __('Cover letter') }}</flux:navlist.item>
+                    {{ __('Carta de presentación') }}</flux:navlist.item>
             </flux:navlist.group>
         </flux:navlist>
 
@@ -109,7 +110,8 @@
                 <flux:menu.separator />
 
                 <flux:menu.radio.group>
-                    <flux:menu.item :href="route('profile.edit')" icon="cog" wire:navigate>{{ __('Settings') }}
+                    <flux:menu.item :href="route('profile.edit')" icon="cog" wire:navigate>
+                        {{ __('Configuración') }}
                     </flux:menu.item>
                 </flux:menu.radio.group>
 
@@ -118,7 +120,7 @@
                 <form method="POST" action="{{ route('logout') }}" class="w-full">
                     @csrf
                     <flux:menu.item as="button" type="submit" icon="arrow-right-start-on-rectangle" class="w-full">
-                        {{ __('Log Out') }}
+                        {{ __('Cerrar sesión') }}
                     </flux:menu.item>
                 </form>
             </flux:menu>
@@ -156,7 +158,8 @@
                 <flux:menu.separator />
 
                 <flux:menu.radio.group>
-                    <flux:menu.item :href="route('profile.edit')" icon="cog" wire:navigate>{{ __('Settings') }}
+                    <flux:menu.item :href="route('profile.edit')" icon="cog" wire:navigate>
+                        {{ __('Configuración') }}
                     </flux:menu.item>
                 </flux:menu.radio.group>
 
@@ -165,7 +168,7 @@
                 <form method="POST" action="{{ route('logout') }}" class="w-full">
                     @csrf
                     <flux:menu.item as="button" type="submit" icon="arrow-right-start-on-rectangle" class="w-full">
-                        {{ __('Log Out') }}
+                        {{ __('Cerrar sesión') }}
                     </flux:menu.item>
                 </form>
             </flux:menu>

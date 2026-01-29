@@ -12,24 +12,24 @@
 
     <div class="absolute left-1/2 -translate-x-1/2 max-md:hidden">
         <flux:navbar class="-mb-px flex gap-2">
-            <flux:navbar.item href="/customers" wire:navigate>Customers</flux:navbar.item>
-            <flux:navbar.item href="/features" wire:navigate>Features</flux:navbar.item>
-            <flux:navbar.item href="/pricing" wire:navigate>Pricing</flux:navbar.item>
+            <flux:navbar.item href="/customers" wire:navigate>Clientes</flux:navbar.item>
+            <flux:navbar.item href="/features" wire:navigate>Características</flux:navbar.item>
+            <flux:navbar.item href="/pricing" wire:navigate>Precios</flux:navbar.item>
         </flux:navbar>
     </div>
 
     <div class="ml-auto flex items-center gap-3">
         @if (Auth::user())
             <flux:navbar.item href="/dashboard" wire:navigate>
-                Dashboard
+                Panel de control
             </flux:navbar.item>
         @else
             <flux:navbar.item href="/login" wire:navigate>
-                Log in
+                Iniciar sesión
             </flux:navbar.item>
 
             <flux:button variant="primary" size="sm" as="link" href="/register" wire:navigate>
-                Register
+                Registrarse
             </flux:button>
         @endif
 
@@ -52,25 +52,25 @@
             </flux:sidebar.header>
 
             <flux:sidebar.nav>
-                <flux:sidebar.item icon="users" wire:navigate href="/customers">Customers</flux:sidebar.item>
-                <flux:sidebar.item icon="sparkles" wire:navigate href="/features">Features</flux:sidebar.item>
-                <flux:sidebar.item icon="credit-card" wire:navigate href="/pricing">Pricing</flux:sidebar.item>
+                <flux:sidebar.item icon="users" wire:navigate href="/customers">Clientes</flux:sidebar.item>
+                <flux:sidebar.item icon="sparkles" wire:navigate href="/features">Características</flux:sidebar.item>
+                <flux:sidebar.item icon="credit-card" wire:navigate href="/pricing">Precios</flux:sidebar.item>
             </flux:sidebar.nav>
 
             <flux:sidebar.spacer />
 
             @if (Auth::user())
                 <flux:button variant="primary" icon="squares-plus" as="link" href="/dashboard" wire:navigate>
-                    Dashboard
+                    Panel de control
                 </flux:button>
             @else
                 <div class="flex flex-col w-full space-y-2">
                     <flux:sidebar.item href="/login" wire:navigate class="!text-center items-center">
-                        Log in
+                        Iniciar sesión
                     </flux:sidebar.item>
 
                     <flux:button variant="primary" as="link" href="/register" wire:navigate>
-                        Register
+                        Registrarse
                     </flux:button>
                 </div>
             @endif

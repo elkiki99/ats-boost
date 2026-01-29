@@ -2,11 +2,11 @@
 
 namespace App\Livewire\Resume;
 
-use Livewire\Attributes\Validate;
 use App\Services\CvTailorService;
-use Livewire\WithFileUploads;
+use Flux\Flux;
+use Livewire\Attributes\Validate;
 use Livewire\Component;
-use Flux\Flux;  
+use Livewire\WithFileUploads;
 
 class ResumeTailor extends Component
 {
@@ -19,7 +19,9 @@ class ResumeTailor extends Component
     public string $description = '';
 
     public string $candidateName = '';
+
     public string $tailored = '';
+
     public string $cvText = '';
 
     /**
@@ -72,6 +74,6 @@ class ResumeTailor extends Component
     public function render()
     {
         return view('livewire.resume.resume-tailor')
-            ->title('Resume Tailor • ATS Boost');
+            ->title('Adaptador de curriculum • ATS Boost');
     }
 }

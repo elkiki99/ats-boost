@@ -1,8 +1,9 @@
-<x-layouts.app :title="__('Dashboard • ATS Boost')">
+<x-layouts.app :title="__('Panel de control • ATS Boost')">
 
     <div class="relative mb-6 w-full">
-        <flux:heading size="xl" level="1">{{ __('Dashboard') }}</flux:heading>
-        <flux:subheading size="lg" class="mb-6">{{ __('Welcome back') }} {{ auth()->user()->name }}! Let's boost your job applications.
+        <flux:heading size="xl" level="1">{{ __('Panel de control') }}</flux:heading>
+        <flux:subheading size="lg" class="mb-6">{{ __('Bienvenido de nuevo') }} {{ auth()->user()->name }}! Vamos a
+            potenciar tus solicitudes de empleo.
         </flux:subheading>
         <flux:separator variant="subtle" />
     </div>
@@ -15,14 +16,14 @@
                     class="h-full group cursor-pointer transition hover:border-neutral-300 dark:hover:border-neutral-600">
 
                     <div class="mb-2 flex items-center">
-                        <flux:heading>Tailor your resume</flux:heading>
+                        <flux:heading>Adapta tu currículum</flux:heading>
                         <flux:spacer />
                         <flux:icon.arrow-right variant="micro"
                             class="text-zinc-500 dark:text-zinc-300 transition-transform duration-300 group-hover:translate-x-1" />
                     </div>
 
                     <flux:subheading>
-                        Match your resume to any job description. Optimize it for ATS success.
+                        Adapta tu currículum a cualquier descripción de trabajo. Optimízalo para el éxito en ATS.
                     </flux:subheading>
                 </flux:card>
             </a>
@@ -33,14 +34,14 @@
                     class="h-full group cursor-pointer transition hover:border-neutral-300 dark:hover:border-neutral-600">
 
                     <div class="mb-2 flex items-center">
-                        <flux:heading>Resume analyzer</flux:heading>
+                        <flux:heading>Analizador de currículum</flux:heading>
                         <flux:spacer />
                         <flux:icon.arrow-right variant="micro"
                             class="text-zinc-500 dark:text-zinc-300 transition-transform duration-300 group-hover:translate-x-1" />
                     </div>
 
                     <flux:subheading>
-                        Get instant feedback, ATS score and actionable improvements for your resume.
+                        Obtén retroalimentación instantánea, puntuación de ATS y mejoras accionables para tu currículum.
                     </flux:subheading>
                 </flux:card>
             </a>
@@ -51,14 +52,14 @@
                     class="h-full group cursor-pointer transition hover:border-neutral-300 dark:hover:border-neutral-600">
 
                     <div class="mb-2 flex items-center">
-                        <flux:heading>Cover letter</flux:heading>
+                        <flux:heading>Carta de presentación</flux:heading>
                         <flux:spacer />
                         <flux:icon.arrow-right variant="micro"
                             class="text-zinc-500 dark:text-zinc-300 transition-transform duration-300 group-hover:translate-x-1" />
                     </div>
 
                     <flux:subheading>
-                        Generate a cover letter built on proven professional writing standards.
+                        Genera una carta de presentación basada en estándares profesionales comprobados.
                     </flux:subheading>
                 </flux:card>
             </a>

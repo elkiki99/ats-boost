@@ -1,25 +1,26 @@
-<x-layouts.main title="Pricing • ATS Boost">
+<x-layouts.main title="Precios • ATS Boost">
     <section class="space-y-6">
         <div class="!text-center">
             <flux:badge color="blue" icon="cursor-arrow-ripple" size="sm" variant="pill">
-                High impact, low cost
+                Alto impacto, bajo costo
             </flux:badge>
         </div>
 
         <!-- Desktop -->
         <flux:heading level="1"
             class="!text-5xl md:!text-6xl !mb-6 font-black max-w-4xl mx-auto lg:max-w-full text-center hidden md:block">
-            Ready for a job-winning resume<br class="hidden lg:block">
-            that gets you <span
+            Listo para un currículum ganador<br class="hidden lg:block">
+            que te consiga trabajo<span
                 class="text-5xl font-black text-transparent md:text-6xl dark:from-blue-500 dark:via-blue-300 dark:to-blue-600 bg-gradient-to-r from-blue-600 via-blue-400 to-blue-700 bg-clip-text">
-                hired asap?</span>
+                rápidamente?</span>
         </flux:heading>
 
         <!-- Mobile -->
-        <flux:heading level="1" class="md:hidden !text-5xl text-center">Pricing</flux:heading>
+        <flux:heading level="1" class="md:hidden !text-5xl text-center">Precios</flux:heading>
 
-        <flux:subheading level="2" class="max-w-xl mx-auto text-sm text-center md:hidden">Ready for a job-winning
-            resume that gets you hired?</flux:subheading>
+        <flux:subheading level="2" class="max-w-xl mx-auto text-sm text-center md:hidden">¿Listo para un currículum
+            ganador
+            que te consiga trabajo?</flux:subheading>
 
         <div class="py-6 space-y-6">
             <!-- Pricing -->
@@ -32,52 +33,52 @@
                     <flux:card class="flex flex-col h-full p-6  rounded-lg shadow-sm md:p-8 lg:rounded-r-none">
                         <div class="space-y-6">
                             <div class="space-y-2">
-                                <flux:subheading class="!text-sm">Weekly Plan</flux:subheading>
-                                <flux:heading class="!text-3xl">$1.99 / week</flux:heading>
+                                <flux:subheading class="!text-sm">Plan Semanal</flux:subheading>
+                                <flux:heading class="!text-3xl">$1.99 / semana</flux:heading>
                             </div>
 
                             <!-- Features -->
                             <div class="flex flex-col gap-2">
                                 <div class="flex items-center gap-2">
                                     <flux:icon.fire class="text-amber-600 dark:text-amber-400" variant="solid" />
-                                    <flux:heading>Unlimited tailored resumes</flux:heading>
+                                    <flux:heading>Currículums personalizados ilimitados</flux:heading>
                                 </div>
 
                                 <div class="flex items-center gap-2">
                                     <flux:icon.check-circle class="text-green-600 dark:text-green-400"
                                         variant="solid" />
-                                    <flux:heading>ATS keyword optimization</flux:heading>
+                                    <flux:heading>Optimización de palabras clave para ATS</flux:heading>
                                 </div>
 
                                 <div class="flex items-center gap-2">
                                     <flux:icon.check-circle class="text-green-600 dark:text-green-400"
                                         variant="solid" />
-                                    <flux:heading>Grammar & clarity enhancements</flux:heading>
+                                    <flux:heading>Mejoras de gramática y claridad</flux:heading>
                                 </div>
 
                                 <div class="flex items-center gap-2">
                                     <flux:icon.check-circle class="text-green-600 dark:text-green-400"
                                         variant="solid" />
-                                    <flux:heading>Cover letter generator</flux:heading>
+                                    <flux:heading>Generador de cartas de presentación</flux:heading>
                                 </div>
 
                                 <div class="flex items-center gap-2">
                                     <flux:icon.check-circle class="text-green-600 dark:text-green-400"
                                         variant="solid" />
-                                    <flux:heading>ATS score and enhancement</flux:heading>
+                                    <flux:heading>Puntuación y mejora de ATS</flux:heading>
                                 </div>
 
                                 <div class="flex items-center gap-2">
                                     <flux:icon.check-circle class="text-green-600 dark:text-green-400"
                                         variant="solid" />
-                                    <flux:heading>Professional formatting</flux:heading>
+                                    <flux:heading>Formato profesional</flux:heading>
                                 </div>
                             </div>
 
                             <flux:button class="w-full" as="link"
                                 href="{{ route('checkout.start', ['variant' => '58902fcda81d4a05ada50f7935dfbecf']) }}"
                                 variant="filled" icon-trailing="chevron-right">
-                                Try for free
+                                Prueba gratis
                             </flux:button>
                         </div>
                     </flux:card>
@@ -90,54 +91,60 @@
                     <flux:card class="flex flex-col h-full p-6  rounded-lg shadow-sm md:p-8 lg:pb-12">
                         <div class="space-y-6">
                             <div class="space-y-2">
-                                <flux:badge icon="fire" size="sm" color="green" class="mb-2">Most popular
+                                <flux:badge icon="fire" size="sm" color="green" class="mb-2">Más popular
                                 </flux:badge>
-                                <flux:subheading class="!text-sm">Monthly Plan</flux:subheading>
-                                <flux:heading class="!text-3xl">$4.99 / month</flux:heading>
+                                <flux:subheading class="!text-sm">Plan Mensual</flux:subheading>
+                                <flux:heading class="!text-3xl">$4.99 / mes</flux:heading>
                             </div>
 
                             <!-- Features -->
                             <div class="flex flex-col gap-2">
                                 <div class="flex items-center gap-2">
                                     <flux:icon.fire class="text-amber-600 dark:text-amber-400" variant="solid" />
-                                    <flux:heading>Unlimited tailored resumes</flux:heading>
+                                    <flux:heading>Currículums personalizados ilimitados</flux:heading>
                                 </div>
 
                                 <div class="flex items-center gap-2">
                                     <flux:icon.check-circle class="text-green-600 dark:text-green-400"
                                         variant="solid" />
-                                    <flux:heading>ATS keyword optimization</flux:heading>
+                                    <flux:heading>Optimización de palabras clave para ATS</flux:heading>
                                 </div>
 
                                 <div class="flex items-center gap-2">
                                     <flux:icon.check-circle class="text-green-600 dark:text-green-400"
                                         variant="solid" />
-                                    <flux:heading>Grammar & clarity enhancements</flux:heading>
+                                    <flux:heading>Mejoras de gramática y claridad</flux:heading>
                                 </div>
 
                                 <div class="flex items-center gap-2">
                                     <flux:icon.check-circle class="text-green-600 dark:text-green-400"
                                         variant="solid" />
-                                    <flux:heading>Cover letter generator</flux:heading>
+                                    <flux:heading>Generador de cartas de presentación</flux:heading>
                                 </div>
 
                                 <div class="flex items-center gap-2">
                                     <flux:icon.check-circle class="text-green-600 dark:text-green-400"
                                         variant="solid" />
-                                    <flux:heading>ATS score and enhancement</flux:heading>
+                                    <flux:heading>Puntuación y mejora de ATS</flux:heading>
                                 </div>
 
                                 <div class="flex items-center gap-2">
                                     <flux:icon.check-circle class="text-green-600 dark:text-green-400"
                                         variant="solid" />
-                                    <flux:heading>Professional formatting</flux:heading>
+                                    <flux:heading>Formato profesional</flux:heading>
                                 </div>
                             </div>
 
-                            <flux:button class="w-full" as="link"
+                            {{-- <flux:button class="w-full" as="link"
                                 href="{{ route('checkout.start', ['variant' => '87a920276b3844c0a6b4a582589e2fca']) }}"
                                 variant="primary" icon-trailing="chevron-right">
                                 Try for free
+                            </flux:button> --}}
+
+                            <flux:button class="w-full" as="link"
+                                href="{{ route('checkout.start', ['variant' => 'aa05600269734ba5a250717b3e391b58']) }}"
+                                variant="primary" icon-trailing="chevron-right">
+                                Prueba gratis
                             </flux:button>
                         </div>
                     </flux:card>
@@ -151,52 +158,52 @@
                         <div class="space-y-6">
 
                             <div class="space-y-2">
-                                <flux:subheading class="!text-sm">Yearly Plan</flux:subheading>
-                                <flux:heading class="!text-3xl">$39.99 / year</flux:heading>
+                                <flux:subheading class="!text-sm">Plan Anual</flux:subheading>
+                                <flux:heading class="!text-3xl">$39.99 / año</flux:heading>
                             </div>
 
                             <!-- Features -->
                             <div class="flex flex-col gap-2">
                                 <div class="flex items-center gap-2">
                                     <flux:icon.fire class="text-amber-600 dark:text-amber-400" variant="solid" />
-                                    <flux:heading>Unlimited tailored resumes</flux:heading>
+                                    <flux:heading>Currículums personalizados ilimitados</flux:heading>
                                 </div>
 
                                 <div class="flex items-center gap-2">
                                     <flux:icon.check-circle class="text-green-600 dark:text-green-400"
                                         variant="solid" />
-                                    <flux:heading>ATS keyword optimization</flux:heading>
+                                    <flux:heading>Optimización de palabras clave para ATS</flux:heading>
                                 </div>
 
                                 <div class="flex items-center gap-2">
                                     <flux:icon.check-circle class="text-green-600 dark:text-green-400"
                                         variant="solid" />
-                                    <flux:heading>Grammar & clarity enhancements</flux:heading>
+                                    <flux:heading>Mejoras de gramática y claridad</flux:heading>
                                 </div>
 
                                 <div class="flex items-center gap-2">
                                     <flux:icon.check-circle class="text-green-600 dark:text-green-400"
                                         variant="solid" />
-                                    <flux:heading>Cover letter generator</flux:heading>
+                                    <flux:heading>Generador de cartas de presentación</flux:heading>
                                 </div>
 
                                 <div class="flex items-center gap-2">
                                     <flux:icon.check-circle class="text-green-600 dark:text-green-400"
                                         variant="solid" />
-                                    <flux:heading>ATS score and enhancement</flux:heading>
+                                    <flux:heading>Puntuación y mejora de ATS</flux:heading>
                                 </div>
 
                                 <div class="flex items-center gap-2">
                                     <flux:icon.check-circle class="text-green-600 dark:text-green-400"
                                         variant="solid" />
-                                    <flux:heading>Professional formatting</flux:heading>
+                                    <flux:heading>Formato profesional</flux:heading>
                                 </div>
                             </div>
 
                             <flux:button class="w-full" as="link"
                                 href="{{ route('checkout.start', ['variant' => '81c71d0de5834d1d9837ff601821e344']) }}"
                                 variant="filled" icon-trailing="chevron-right">
-                                Try for free
+                                Prueba gratis
                             </flux:button>
                         </div>
                     </flux:card>
@@ -206,8 +213,8 @@
             <flux:separator variant="subtle" />
 
             <div class="flex items-center justify-center gap-2 text-center">
-                <flux:subheading>Still not sure? Check out what our happy <flux:link class="!text-sm" wire:navigate
-                        href="/customers">customers</flux:link> are saying.</flux:subheading>
+                <flux:subheading>¿Aún no estás seguro? Mira qué dicen nuestros <flux:link class="!text-sm"
+                        wire:navigate href="/customers">clientes satisfechos</flux:link>.</flux:subheading>
             </div>
         </div>
     </section>

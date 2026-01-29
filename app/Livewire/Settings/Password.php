@@ -39,4 +39,9 @@ class Password extends Component
 
         $this->dispatch('password-updated');
     }
+
+    public function render()
+    {
+        return view('livewire.settings.password')->title(__('Contraseña • ATS Boost'));
+    }
 }

@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Actions\MercadoPago\SyncSubscription;
-use App\Http\Controllers\Controller;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
@@ -21,11 +20,11 @@ class WebhookController extends Controller
         $resourceId = $request->input('data.id');
 
         // Caso 2: resource = URL completa
-        if (!$resourceId && $request->filled('resource')) {
+        if (! $resourceId && $request->filled('resource')) {
             $resourceId = basename($request->input('resource'));
         }
 
-        if (!$topic || !$resourceId) {
+        if (! $topic || ! $resourceId) {
             Log::warning('Mercado Pago: Missing topic or resource ID', [
                 'payload' => $request->all(),
             ]);
@@ -42,12 +41,10 @@ class WebhookController extends Controller
             'subscription_preapproval' => $sync->handle([
                 'id' => $resourceId,
                 'type' => 'subscription_preapproval',
-                // 'external_reference' => 'user:' . auth()->id(),
             ]),
             'subscription_authorized_payment' => $sync->handle([
                 'id' => $resourceId,
                 'type' => 'subscription_authorized_payment',
-                // 'external_reference' => 'user:' . auth()->id(),
             ]),
             default => Log::info('Mercado Pago: Unhandled webhook topic', [
                 'topic' => $topic,
