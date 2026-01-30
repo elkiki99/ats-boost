@@ -38,6 +38,11 @@ return [
     'mercadopago' => [
         'access_token' => env('MERCADOPAGO_ACCESS_TOKEN'),
         'webhook_secret' => env('MERCADOPAGO_WEBHOOK_SECRET'),
+        'plans' => [
+            'weekly' => env('MERCADOPAGO_WEEKLY_PLAN_ID'),
+            'monthly' => env('MERCADOPAGO_MONTHLY_PLAN_ID'),
+            'yearly' => env('MERCADOPAGO_YEARLY_PLAN_ID'),
+        ],
     ],
 
 ];

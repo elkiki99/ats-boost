@@ -47,20 +47,6 @@ class MercadoPagoService
         ]);
     }
 
-    public function pauseSubscription(string $id): array
-    {
-        return $this->updateSubscription($id, [
-            'status' => 'paused',
-        ]);
-    }
-
-    public function resumeSubscription(string $id): array
-    {
-        return $this->updateSubscription($id, [
-            'status' => 'authorized',
-        ]);
-    }
-
     public function updateSubscription(string $id, array $data): array
     {
         return Http::withToken($this->accessToken)

@@ -2,6 +2,7 @@
 
 namespace App\Livewire\Settings;
 
+use App\Actions\MercadoPago\HandleSubscriptionPlanChange;
 use App\Actions\MercadoPago\SyncSubscription;
 use Flux\Flux;
 use Illuminate\Http\Request;
@@ -23,6 +24,34 @@ class Subscriptions extends Component
                 'id' => $request->preapproval_id,
                 'source' => 'back_url',
             ]);
+
+            // Check if this is a plan change completion
+            $oldSubscriptionId = session('plan_change_old_subscription_id');
+            if ($oldSubscriptionId) {
+                // New subscription is now confirmed, safe to cancel the old one
+                $success = app(HandleSubscriptionPlanChange::class)->handle(
+                    Auth::user(),
+                    $request->preapproval_id,
+                    $oldSubscriptionId
+                );
+
+                if ($success) {
+                    Flux::toast(
+                        heading: 'Plan actualizado',
+                        text: 'Tu suscripción ha sido actualizada exitosamente.',
+                        variant: 'success'
+                    );
+                } else {
+                    Log::warning('Plan change finalization may have failed', [
+                        'user_id' => Auth::id(),
+                        'new_subscription_id' => $request->preapproval_id,
+                    ]);
+                }
+
+                // Clean up session
+                session()->forget('plan_change_old_subscription_id');
+                session()->forget('plan_change_new_plan_id');
+            }
         }
 
         $this->loadSubscription();
@@ -56,26 +85,20 @@ class Subscriptions extends Component
         }
 
         try {
-            app(\App\Services\MercadoPagoService::class)
-                ->updateSubscription(
-                    $this->subscription->mp_subscription_id,
-                    ['preapproval_plan_id' => $this->newPlan]
-                );
-
-            // Sync the updated subscription from MercadoPago API
-            app(SyncSubscription::class)->handle([
-                'id' => $this->subscription->mp_subscription_id,
-                'source' => 'plan_change',
+            // Store the plan change intent in session
+            // The old subscription will only be cancelled AFTER the new one is confirmed
+            session([
+                'plan_change_old_subscription_id' => $this->subscription->mp_subscription_id,
+                'plan_change_new_plan_id' => $this->newPlan,
             ]);
-
-            $this->loadSubscription();
 
             $this->modal('update-subscription')->close();
 
-            Flux::toast(
-                heading: 'Subscription updated',
-                text: 'Your subscription plan has been changed successfully.',
-                variant: 'success'
+            // Redirect to Mercado Pago checkout with the new plan
+            // User will complete payment, then return with new preapproval_id
+            // At that point, mount() will finalize by cancelling the old subscription
+            return redirect()->away(
+                'https://www.mercadopago.com.uy/subscriptions/checkout?preapproval_plan_id=' . $this->newPlan
             );
         } catch (\Throwable $e) {
             Log::error('Subscription changePlan failed', [
@@ -141,61 +164,6 @@ class Subscriptions extends Component
             Flux::toast(
                 heading: 'Error al cancelar',
                 text: 'Hubo un error al cancelar tu suscripción.',
-                variant: 'danger'
-            );
-        }
-    }
-
-    public function resumeSubscription()
-    {
-        if (! $this->subscription) {
-            return;
-        }
-
-        try {
-            app(\App\Services\MercadoPagoService::class)
-                ->resumeSubscription($this->subscription->mp_subscription_id);
-
-            // Sync the resumed subscription from MercadoPago API
-            app(SyncSubscription::class)->handle([
-                'id' => $this->subscription->mp_subscription_id,
-                'source' => 'resume',
-            ]);
-
-            $this->loadSubscription();
-
-            $this->modal('resume-subscription')->close();
-
-            Flux::toast(
-                heading: 'Suscripción reanudada',
-                text: 'Tu suscripción ha sido reanudada exitosamente.',
-                variant: 'success'
-            );
-        } catch (\Throwable $e) {
-            // Check if already active
-            if (str_contains($e->getMessage(), 'already authorized') || str_contains($e->getMessage(), 'You can not modify')) {
-                app(SyncSubscription::class)->handle([
-                    'id' => $this->subscription->mp_subscription_id,
-                    'source' => 'resume_check',
-                ]);
-                $this->loadSubscription();
-
-                Flux::toast(
-                    heading: 'Ya activa',
-                    text: 'Tu suscripción ya está activa.',
-                    variant: 'info'
-                );
-
-                return;
-            }
-
-            Log::error('Subscription resumeSubscription failed', [
-                'error' => $e->getMessage(),
-                'subscription_id' => $this->subscription?->mp_subscription_id,
-            ]);
-            Flux::toast(
-                heading: 'Error al reanudar',
-                text: 'Hubo un error al reanudar tu suscripción.',
                 variant: 'danger'
             );
         }

@@ -2,6 +2,7 @@
 
 namespace App\Livewire\Resume;
 
+use App\Services\CvTailorService;
 use Flux\Flux;
 use Illuminate\Support\Facades\Auth;
 use Livewire\Attributes\Validate;
