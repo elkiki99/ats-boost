@@ -1,4 +1,5 @@
-<flux:header sticky container class="relative bg-white dark:bg-zinc-800 border-b border-zinc-200 dark:border-zinc-600">
+{{-- <flux:header sticky container class="relative bg-white dark:bg-zinc-800 border-b border-zinc-200 dark:border-zinc-600"> --}}
+<flux:header  container class="relative bg-transparent">
     <div class="flex items-center gap-3">
         <a href="{{ route('home') }}" class="flex items-center gap-2 font-medium" wire:navigate>
             <span class="flex h-7 w-7 items-center justify-center rounded-md">

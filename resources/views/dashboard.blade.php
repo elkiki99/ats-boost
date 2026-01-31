@@ -1,5 +1,4 @@
 <x-layouts.app :title="__('Panel de control • ATS Boost')">
-
     <div class="relative mb-6 w-full">
         <flux:heading size="xl" level="1">{{ __('Panel de control') }}</flux:heading>
         <flux:subheading size="lg" class="mb-6">{{ __('Bienvenido de nuevo') }} {{ auth()->user()->name }}! Vamos a
@@ -8,7 +7,7 @@
         <flux:separator variant="subtle" />
     </div>
 
-    <div class="flex h-full w-full flex-1 flex-col gap-4 rounded-xl">
+    <div class="flex h-auto w-full flex-1 flex-col gap-4 rounded-xl">
         <div class="grid gap-4 md:grid-cols-3 items-stretch">
             {{-- Tailor Your Resume (core feature) --}}
             <a href="{{ route('resume.resume-tailor') }}">

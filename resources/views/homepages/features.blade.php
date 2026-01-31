@@ -2,7 +2,7 @@
     <section class="space-y-6">
         <div class="!text-center lg:!text-start">
             <flux:badge color="blue" icon="cpu-chip" size="sm" variant="pill">
-                Constructor de currículum basado en IA
+                Usa la IA a tu favor
             </flux:badge>
         </div>
 
@@ -39,7 +39,7 @@
     <section class="py-12 space-y-6">
         <div class="grid grid-cols-1 gap-4 py-6 sm:grid-cols-2 md:grid-cols-3">
             <x-feature-card icon="fire" color="text-orange-600 dark:text-orange-400"
-                title="Currículos ilimitados personalizados">
+                title="Currículums ilimitados personalizados">
                 Genera tantos currículos como quieras, personalizados al instante para cada trabajo.
             </x-feature-card>
 

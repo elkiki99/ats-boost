@@ -14,12 +14,12 @@ class CheckoutController extends Controller
 
         $user = auth()->user();
 
-        if ($user->subscriber?->hasAccess()) {
+        if ($user->hasActiveSubscription()) {
             return redirect()->route('subscriptions.edit');
         }
 
         return redirect()->away(
-            'https://www.mercadopago.com.uy/subscriptions/checkout?preapproval_plan_id='.$variant
+            'https://www.mercadopago.com.uy/subscriptions/checkout?preapproval_plan_id=' . $variant
         );
     }
 }

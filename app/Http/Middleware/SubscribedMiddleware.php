@@ -4,6 +4,7 @@ namespace App\Http\Middleware;
 
 use Closure;
 use Illuminate\Http\Request;
+use Flux\Flux;
 
 class SubscribedMiddleware
 {
@@ -27,7 +28,8 @@ class SubscribedMiddleware
             ->first();
 
         if (! $subscription || ! $subscription->hasAccess()) {
-            abort(403, __('No tienes una suscripción activa.'));
+            session(['subscription_required' => true]);
+            return redirect()->route('subscriptions.edit');
         }
 
         return $next($request);

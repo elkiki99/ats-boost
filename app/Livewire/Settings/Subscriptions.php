@@ -4,11 +4,11 @@ namespace App\Livewire\Settings;
 
 use App\Actions\MercadoPago\HandleSubscriptionPlanChange;
 use App\Actions\MercadoPago\SyncSubscription;
-use Flux\Flux;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
 use Livewire\Component;
+use Flux\Flux;
 
 class Subscriptions extends Component
 {
@@ -18,6 +18,16 @@ class Subscriptions extends Component
 
     public function mount(Request $request)
     {
+        if (session()->get('subscription_required')) {
+            Flux::toast(
+                heading: 'Suscripción requerida',
+                text: 'Necesitas una suscripción activa para acceder a esta función.',
+                variant: 'warning'
+            );
+
+            session()->forget('subscription_required');
+        }
+
         // Si vuelve de MP, pedimos sync PERO sin asumir nada
         if ($request->filled('preapproval_id')) {
             app(SyncSubscription::class)->handle([
@@ -27,6 +37,7 @@ class Subscriptions extends Component
 
             // Check if this is a plan change completion
             $oldSubscriptionId = session('plan_change_old_subscription_id');
+
             if ($oldSubscriptionId) {
                 // New subscription is now confirmed, safe to cancel the old one
                 $success = app(HandleSubscriptionPlanChange::class)->handle(
