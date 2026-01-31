@@ -66,8 +66,8 @@ class ResumeAnalyzer extends Component
     public function downloadPdf(AnalyzeResumeService $service)
     {
         Flux::toast(
-            heading: 'PDF ready!',
-            text: 'Your improved resume was downloaded successfully.',
+            heading: '¡PDF listo!',
+            text: 'Tu currículum mejorado se descargó correctamente.',
             variant: 'success',
         );
 

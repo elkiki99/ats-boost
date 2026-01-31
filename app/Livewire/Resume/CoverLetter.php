@@ -75,8 +75,8 @@ class CoverLetter extends Component
         );
 
         Flux::toast(
-            heading: 'Pdf ready!',
-            text: 'Your cover letter was downloaded successfully.',
+            heading: '¡Pdf listo!',
+            text: 'Tu carta de presentación se descargó correctamente.',
             variant: 'success',
         );
 

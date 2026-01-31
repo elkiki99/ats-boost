@@ -77,8 +77,8 @@ class Demo extends Component
         $this->validate();
 
         Flux::toast(
-            heading: 'Pdf ready!',
-            text: 'Your tailored resume was downloaded successfully.',
+            heading: '¡Pdf listo!',
+            text: 'Tu currículum adaptado se descargó correctamente.',
             variant: 'success',
         );
 
