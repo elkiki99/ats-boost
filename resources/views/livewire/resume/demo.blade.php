@@ -1,7 +1,7 @@
 <div class="w-full py-6">
     <div class="flex flex-col lg:flex-row gap-6 w-full">
         <div class="w-full">
-            <flux:file-upload wire:model="resume" label="Cargar currículum">
+            <flux:file-upload required wire:model="resume" label="Cargar currículum">
                 <flux:file-upload.dropzone heading="Suelta tu CV o haz clic para examinar" text="PDF hasta 10MB"
                     with-progress inline />
             </flux:file-upload>
@@ -17,8 +17,8 @@
             </div>
         </div>
 
-        <div class="w-full">
-            <flux:textarea wire:model="description" rows="10" label="Descripción del trabajo"
+        <div class="w-full space-y-3">
+            <flux:textarea required autofocus wire:model="description" rows="10" label="Descripción del trabajo"
                 placeholder="Estamos buscando un desarrollador de software para unirse a nuestra empresa.
 
 El candidato ideal debe ser..." />
@@ -64,7 +64,7 @@ El candidato ideal debe ser..." />
 
         <div class="flex justify-end">
             <flux:button variant="primary" icon="arrow-down-tray" wire:click="downloadPdf">
-                Descargar currículum adaptado en PDF
+                Descargar CV adaptado
             </flux:button>
         </div>
     </flux:modal>

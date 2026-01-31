@@ -13,10 +13,10 @@ class Demo extends Component
 {
     use WithFileUploads;
 
-    #[Validate('required|mimes:pdf,txt|max:10240')]
+    #[Validate('required|mimes:pdf,txt|max:10240', as: 'curriculum')]
     public $resume = null;
 
-    #[Validate('required|string|min:50')]
+    #[Validate('required|string|min:50', as: 'descripción')]
     public string $description = '';
 
     public string $candidateName = '';

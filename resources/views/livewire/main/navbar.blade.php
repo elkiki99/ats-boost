@@ -12,15 +12,15 @@
 
     <div class="absolute left-1/2 -translate-x-1/2 max-md:hidden">
         <flux:navbar class="-mb-px flex gap-2">
-            <flux:navbar.item href="/customers" wire:navigate>Clientes</flux:navbar.item>
-            <flux:navbar.item href="/features" wire:navigate>Características</flux:navbar.item>
-            <flux:navbar.item href="/pricing" wire:navigate>Precios</flux:navbar.item>
+            <flux:navbar.item :href="route('customers')" :current="request()->routeIs('customers')" wire:navigate>Clientes</flux:navbar.item>
+            <flux:navbar.item :href="route('features')" :current="request()->routeIs('features')" wire:navigate>Características</flux:navbar.item>
+            <flux:navbar.item :href="route('pricing')" :current="request()->routeIs('pricing')" wire:navigate>Precios</flux:navbar.item>
         </flux:navbar>
     </div>
 
     <div class="ml-auto flex items-center gap-3">
         @if (Auth::user())
-            <flux:navbar.item href="/dashboard" wire:navigate>
+            <flux:navbar.item href="{{ route('dashboard') }}" wire:navigate>
                 Panel de control
             </flux:navbar.item>
         @else
@@ -52,15 +52,15 @@
             </flux:sidebar.header>
 
             <flux:sidebar.nav>
-                <flux:sidebar.item icon="users" wire:navigate href="/customers">Clientes</flux:sidebar.item>
-                <flux:sidebar.item icon="sparkles" wire:navigate href="/features">Características</flux:sidebar.item>
-                <flux:sidebar.item icon="credit-card" wire:navigate href="/pricing">Precios</flux:sidebar.item>
+                <flux:sidebar.item icon="users" wire:navigate href="{{ route('customers') }}">Clientes</flux:sidebar.item>
+                <flux:sidebar.item icon="sparkles" wire:navigate href="{{ route('features') }}">Características</flux:sidebar.item>
+                <flux:sidebar.item icon="credit-card" wire:navigate href="{{ route('pricing') }}">Precios</flux:sidebar.item>
             </flux:sidebar.nav>
 
             <flux:sidebar.spacer />
 
             @if (Auth::user())
-                <flux:button variant="primary" icon="squares-plus" as="link" href="/dashboard" wire:navigate>
+                <flux:button variant="primary" icon="squares-plus" as="link" href="{{ route('dashboard') }}" wire:navigate>
                     Panel de control
                 </flux:button>
             @else

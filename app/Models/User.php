@@ -71,4 +71,11 @@ class User extends Authenticatable
     {
         return $this->hasMany(Subscriber::class);
     }
+
+    public function isSubscribed(): bool
+    {
+        $subscriber = $this->subscriber;
+
+        return $subscriber && $subscriber->isActive();
+    }
 }

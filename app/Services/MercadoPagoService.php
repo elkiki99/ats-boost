@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Cache;
 
 class MercadoPagoService
 {
@@ -54,5 +55,32 @@ class MercadoPagoService
             ->put("{$this->apiUrl}/preapproval/{$id}", $data)
             ->throw()
             ->json();
+    }
+
+    public function getPlan(string $planId): array
+    {
+        $response = Http::withToken($this->accessToken)
+            ->timeout(10)
+            ->get("{$this->apiUrl}/preapproval_plan/{$planId}");
+
+        if ($response->failed()) {
+            throw new \Exception("No se pudo obtener el plan {$planId}: {$response->body()}");
+        }
+
+        return $response->json();
+    }
+
+    public function getPlanPrice(string $planId): array
+    {
+        return Cache::remember("mp_plan_price_{$planId}", now()->addHours(6), function () use ($planId) {
+            $plan = $this->getPlan($planId);
+
+            return [
+                'amount' => $plan['auto_recurring']['transaction_amount'],
+                'currency' => $plan['auto_recurring']['currency_id'],
+                'frequency' => $plan['auto_recurring']['frequency'],
+                'frequency_type' => $plan['auto_recurring']['frequency_type'],
+            ];
+        });
     }
 }

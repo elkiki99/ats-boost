@@ -25,11 +25,11 @@
         </flux:subheading>
 
         <div class="flex items-center justify-center gap-4 lg:justify-start">
-            <flux:button wire:navigate href="/dashboard" icon-trailing="arrow-up-right">
+            <flux:button wire:navigate href="{{ route('dashboard') }}" icon-trailing="arrow-up-right">
                 Prueba gratis
             </flux:button>
 
-            <flux:button variant="primary" wire:navigate href="/pricing" icon-trailing="arrow-up-right">
+            <flux:button variant="primary" wire:navigate href="{{ route('pricing') }}" icon-trailing="arrow-up-right">
                 Actualizar ahora
             </flux:button>
         </div>
@@ -69,15 +69,17 @@
 
     <!-- FAQs -->
     <section class="py-6 space-y-6 max-w-4xl mx-auto">
-        <div class="!text-center">
-            <flux:badge color="blue" icon="sparkles" size="sm" variant="pill">
-                Preguntas frecuentes
-            </flux:badge>
-        </div>
+        <div>
+            <div class="!text-center">
+                <flux:badge color="blue" icon="sparkles" size="sm" variant="pill">
+                    ¿Alguna pregunta?
+                </flux:badge>
+            </div>
 
-        <flux:heading level="2" class="font-bold text-center !text-4xl lg:!text-5xl py-6">
-            Preguntas frecuentes
-        </flux:heading>
+            <flux:heading level="2" class="font-bold text-center !text-4xl lg:!text-5xl py-6">
+                Preguntas frecuentes
+            </flux:heading>
+        </div>
 
         <flux:accordion variant="reverse" exclusive transition class="w-full py-6 lg:col-span-2">
             <flux:accordion.item expanded>
@@ -179,7 +181,7 @@
         </flux:accordion>
 
         <div class="flex justify-end">
-            <flux:button as="link" variant="ghost" wire:navigate href="/pricing" icon-trailing="arrow-up-right">
+            <flux:button as="link" variant="ghost" wire:navigate href="{{ route('pricing') }}" icon-trailing="arrow-up-right">
                 Precios
             </flux:button>
         </div>

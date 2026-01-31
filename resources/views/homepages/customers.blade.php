@@ -23,11 +23,11 @@
         </flux:subheading>
 
         <div class="flex items-center justify-center gap-4">
-            <flux:button wire:navigate href="/dashboard" icon-trailing="arrow-up-right">
+            <flux:button wire:navigate href="{{ route('dashboard') }}" icon-trailing="arrow-up-right">
                 Prueba gratis
             </flux:button>
 
-            <flux:button variant="primary" wire:navigate href="/pricing" icon-trailing="arrow-up-right">
+            <flux:button variant="primary" wire:navigate href="{{ route('pricing') }}" icon-trailing="arrow-up-right">
                 Actualizar ahora
             </flux:button>
         </div>
@@ -39,7 +39,7 @@
             'name' => 'Emily Carter',
             'role' => 'Desarrolladora Full-Stack',
             'img' => 'emilycarter',
-            'text' => 'Sol\u00eda pasar horas rescribiendo mi CV para cada trabajo. Esta herramienta adapta todo en minutos manteniendo mi experiencia real intacta. Genuinamente aument\u00f3 mi tasa de entrevistas.',
+            'text' => 'Solía pasar horas rescribiendo mi CV para cada trabajo. Esta herramienta adapta todo en minutos manteniendo mi experiencia real intacta. Genuinamente aumenté mi tasa de entrevistas.',
         ],
         [
             'name' => 'Jason Lee',
@@ -128,7 +128,7 @@
         </div>
 
         <div class="flex justify-end">
-            <flux:button as="link" variant="ghost" wire:navigate href="/features" icon-trailing="arrow-up-right">
+            <flux:button as="link" variant="ghost" wire:navigate href="{{ route('features') }}" icon-trailing="arrow-up-right">
                 Ver características
             </flux:button>
         </div>

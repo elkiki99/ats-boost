@@ -54,7 +54,7 @@ Nuestras tecnologías ayudan a las personas a conectarse, encontrar comunidades 
         </div>
 
         <div class="w-full">
-            <flux:textarea wire:model="description" rows="10" label="Descripción del trabajo"
+            <flux:textarea required autofocus wire:model="description" rows="10" label="Descripción del trabajo"
                 placeholder="Estamos buscando un desarrollador de software para unirse a nuestra empresa.
 
 El candidato ideal debe ser..." />
@@ -62,8 +62,8 @@ El candidato ideal debe ser..." />
         </div>
     </div>
 
-    <div class="w-full lg:w-1/2 mt-4">
-        <flux:file-upload wire:model="resume" label="Cargar currículum">
+    <div class="w-full lg:w-1/2 mt-6">
+        <flux:file-upload required wire:model="resume" label="Cargar currículum">
             <flux:file-upload.dropzone heading="Suelta tu CV o haz clic para examinar" text="PDF hasta 10MB"
                 with-progress inline />
         </flux:file-upload>

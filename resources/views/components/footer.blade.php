@@ -8,10 +8,10 @@
 
         <flux:subheading class="text-center md:text-right">
             <div class="flex gap-4">
-                <flux:link wire:navigate href="/terms" class="text-center max-md:mb-1 !text-sm md:text-left">Términos y
+                <flux:link wire:navigate href="{{ route('terms') }}" class="text-center max-md:mb-1 !text-sm md:text-left">Términos y
                     Condiciones
                 </flux:link>
-                <flux:link wire:navigate href="/privacy" class="text-center max-md:mb-1 !text-sm md:text-left">
+                <flux:link wire:navigate href="{{ route('privacy') }}" class="text-center max-md:mb-1 !text-sm md:text-left">
                     Política de Privacidad
                 </flux:link>
             </div>

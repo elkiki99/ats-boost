@@ -1,52 +1,52 @@
 <?php
 
 use App\Http\Controllers\CheckoutController;
-use App\Livewire\Resume\CoverLetter;
+use App\Livewire\Settings\Subscriptions;
 use App\Livewire\Resume\ResumeAnalyzer;
 use App\Livewire\Resume\ResumeTailor;
+use Illuminate\Support\Facades\Route;
 use App\Livewire\Settings\Appearance;
+use App\Livewire\Settings\TwoFactor;
+use App\Livewire\Resume\CoverLetter;
 use App\Livewire\Settings\Password;
 use App\Livewire\Settings\Profile;
-use App\Livewire\Settings\Subscriptions;
-use App\Livewire\Settings\TwoFactor;
-use Illuminate\Support\Facades\Route;
 use Laravel\Fortify\Features;
 
 Route::get('/', function () {
     return view('homepages.welcome');
 })->name('home');
 
-Route::view('dashboard', 'dashboard')
+Route::view('panel', 'dashboard')
     ->middleware(['auth', 'verified'])
     ->name('dashboard');
 
-Route::view('customers', 'homepages.customers')
+Route::view('clientes', 'homepages.customers')
     ->name('customers');
 
-Route::view('features', 'homepages.features')
+Route::view('caracteristicas', 'homepages.features')
     ->name('features');
 
-Route::view('pricing', 'homepages.pricing')
+Route::view('precios', 'homepages.pricing')
     ->name('pricing');
 
-Route::view('privacy', 'homepages.privacy')
+Route::view('privacidad', 'homepages.privacy')
     ->name('privacy');
 
-Route::view('terms', 'homepages.terms')
+Route::view('terminos', 'homepages.terms')
     ->name('terms');
 
 Route::get('/checkout/start/{variant}', [CheckoutController::class, 'start'])
     ->name('checkout.start');
 
 Route::middleware(['auth'])->group(function () {
-    Route::redirect('settings', 'settings/profile');
+    Route::redirect('ajustes', 'ajustes/perfil');
 
-    Route::get('settings/profile', Profile::class)->name('profile.edit');
-    Route::get('settings/password', Password::class)->name('user-password.edit');
-    Route::get('settings/appearance', Appearance::class)->name('appearance.edit');
-    Route::get('settings/subscriptions', Subscriptions::class)->name('subscriptions.edit');
+    Route::get('ajustes/perfil', Profile::class)->name('profile.edit');
+    Route::get('ajustes/contraseña', Password::class)->name('user-password.edit');
+    Route::get('ajustes/apariencia', Appearance::class)->name('appearance.edit');
+    Route::get('ajustes/suscripciones', Subscriptions::class)->name('subscriptions.edit');
 
-    Route::get('settings/two-factor', TwoFactor::class)
+    Route::get('ajustes/autenticacion-doble', TwoFactor::class)
         ->middleware(
             when(
                 Features::canManageTwoFactorAuthentication()
@@ -59,7 +59,7 @@ Route::middleware(['auth'])->group(function () {
 });
 
 Route::middleware(['auth', 'subscribed'])->group(function () {
-    Route::get('dashboard/resume-tailor', ResumeTailor::class)->name('resume.resume-tailor');
-    Route::get('dashboard/resume-analyzer', ResumeAnalyzer::class)->name('resume.resume-analyzer');
-    Route::get('dashboard/cover-letter', CoverLetter::class)->name('resume.cover-letter');
+    Route::get('panel/adaptar-cv', ResumeTailor::class)->name('resume.resume-tailor');
+    Route::get('panel/analizar-cv', ResumeAnalyzer::class)->name('resume.resume-analyzer');
+    Route::get('panel/carta-presentacion', CoverLetter::class)->name('resume.cover-letter');
 });

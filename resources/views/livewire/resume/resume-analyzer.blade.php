@@ -92,7 +92,7 @@
 
         <div class="flex justify-end">
             <flux:button variant="primary" icon="arrow-down-tray" wire:click="downloadPdf">
-                Descargar currículum mejorado en PDF
+                Descargar CV mejorado
             </flux:button>
         </div>
     </flux:modal>
