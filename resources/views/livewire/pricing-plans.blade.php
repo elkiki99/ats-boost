@@ -3,9 +3,8 @@
 
     <!-- Weekly Plan -->
     <div
-        class="flex flex-col flex-1 w-full gap-2 p-2 border rounded-2xl border-zinc-200 dark:border-zinc-700/75 bg-zinc-100 dark:bg-zinc-900 lg:mt-10 lg:pr-0 lg:border-r-0 lg:rounded-r-none">
-
-        <flux:card class="flex flex-col h-full p-6  rounded-lg shadow-sm md:p-8 lg:rounded-r-none">
+        class="flex flex-col flex-1 w-full gap-2 p-2 border rounded-2xl border-stone-200 dark:border-stone-700/75 bg-transparent lg:mt-10 lg:pr-0 lg:border-r-0 lg:rounded-r-none">
+        <flux:card class="flex flex-col h-full p-6 rounded-lg shadow-sm md:p-8 lg:rounded-r-none">
             <div class="space-y-6">
                 <div class="space-y-2">
                     <flux:subheading class="!text-sm">Plan Semanal</flux:subheading>
@@ -56,8 +55,8 @@
 
     <!-- Monthly Plan (Most Popular) -->
     <div
-        class="flex flex-col flex-1 gap-2 p-2 border-2 border-blue-800 rounded-2xl dark:border-blue-200 bg-zinc-100 dark:bg-zinc-900 lg:-mb-4">
-        <flux:card class="flex flex-col h-full p-6  rounded-lg shadow-sm md:p-8 lg:pb-12">
+        class="flex flex-col flex-1 gap-2 p-2 border-2 border-blue-800 rounded-2xl dark:border-blue-200 bg-transparent lg:-mb-4">
+        <flux:card class="flex flex-col h-full p-6 rounded-lg shadow-sm md:p-8 lg:pb-12">
             <div class="space-y-6">
                 <div class="space-y-2">
                     <flux:badge icon="fire" size="sm" color="green" class="mb-2">Más popular
@@ -110,11 +109,9 @@
 
     <!-- Yearly Plan -->
     <div
-        class="flex flex-col flex-1 gap-2 p-2 border rounded-2xl border-zinc-200 dark:border-zinc-700/75 bg-zinc-100 dark:bg-zinc-900 lg:mt-10 lg:rounded-l-none lg:border-l-0 lg:pl-0">
-
-        <flux:card class="flex flex-col h-full p-6  rounded-lg shadow-sm md:p-8 lg:rounded-l-none">
+        class="flex flex-col flex-1 gap-2 p-2 border rounded-2xl border-stone-200 dark:border-stone-700/75 bg-transparent lg:mt-10 lg:rounded-l-none lg:border-l-0 lg:pl-0">
+        <flux:card class="flex flex-col h-full p-6 rounded-lg shadow-sm md:p-8 lg:rounded-l-none">
             <div class="space-y-6">
-
                 <div class="space-y-2">
                     <flux:subheading class="!text-sm">Plan Anual</flux:subheading>
                     <flux:heading class="!text-3xl">{{ $prices['yearly']['formatted'] }} /año</flux:heading>
