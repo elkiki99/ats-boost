@@ -53,7 +53,7 @@ El candidato ideal debe ser..." />
             </flux:heading>
 
             <flux:subheading>
-                Optimizamos tu currículum basándonos en la descripción del trabajo mientras mantenían tu contenido
+                Optimizamos tu currículum basándonos en la descripción del trabajo manteniendo tu contenido
                 original intacto.
             </flux:subheading>
         </div>
