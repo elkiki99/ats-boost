@@ -81,11 +81,11 @@ El candidato ideal debe ser..." />
         </div>
 
         <div class="flex justify-center gap-2">
-            <flux:button icon-trailing="arrow-right" wire:navigate href="/register">
+            <flux:button icon-trailing="arrow-right" wire:navigate href="{{ route('register') }}">
                 Crear cuenta
             </flux:button>
 
-            <flux:button variant="primary" icon-trailing="arrow-right" wire:navigate href="/pricing">
+            <flux:button variant="primary" icon-trailing="arrow-right" wire:navigate href="{{ route('pricing') }}">
                 Ver planes
             </flux:button>
         </div>

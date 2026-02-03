@@ -18,10 +18,6 @@
         <!-- Mobile -->
         <flux:heading level="1" class="md:hidden !text-5xl text-center">Precios</flux:heading>
 
-        <flux:subheading level="2" class="max-w-xl mx-auto text-sm text-center md:hidden">¿Listo para un currículum
-            ganador
-            que te consiga trabajo?</flux:subheading>
-
         <div class="py-6 space-y-6">
             <livewire:pricing-plans />
 

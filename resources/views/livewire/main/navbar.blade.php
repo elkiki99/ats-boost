@@ -29,7 +29,7 @@
                 Iniciar sesión
             </flux:navbar.item>
 
-            <flux:button variant="primary" size="sm" as="link" href="/register" wire:navigate>
+            <flux:button class="max-sm:hidden" variant="primary" size="sm" as="link" href="/register" wire:navigate>
                 Registrarse
             </flux:button>
         @endif
@@ -47,7 +47,7 @@
                         ATS <span class="font-bold">Boost</span>
                     </flux:text>
                 </a>
-                {{-- <flux:sidebar.collapse class="lg:hidden" /> --}}
+
                 <flux:sidebar.toggle class="lg:hidden" icon="x-mark" />
 
             </flux:sidebar.header>

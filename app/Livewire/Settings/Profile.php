@@ -33,31 +33,13 @@ class Profile extends Component
 
         $validated = $this->validate([
             'name' => ['required', 'string', 'max:255'],
-
-            // 'email' => [
-            //     'required',
-            //     'string',
-            //     'lowercase',
-            //     'email',
-            //     'max:255',
-            //     Rule::unique(User::class)->ignore($user->id),
-            // ],
         ]);
-
-        // $user->fill($validated);
-
-        // if ($user->isDirty('email')) {
-        //     $user->email_verified_at = null;
-        // }
-
-        // $user->save();
 
         $user->update($validated);
 
-        // $this->dispatch('profile-updated', name: $user->name);
         Flux::toast(
-            heading: 'Profile updated',
-            text: 'Your profile has been updated successfully.',
+            heading: 'Perfil actualizado',
+            text: 'Tu perfil se ha actualizado correctamente.',
             variant: 'success',
         );
     }
