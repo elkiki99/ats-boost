@@ -13,7 +13,7 @@
 
     <div class="absolute left-1/2 -translate-x-1/2 max-md:hidden">
         <flux:navbar class="-mb-px flex gap-2">
-            <flux:navbar.item :href="route('customers')" :current="request()->routeIs('customers')" wire:navigate>Clientes</flux:navbar.item>
+            {{-- <flux:navbar.item :href="route('customers')" :current="request()->routeIs('customers')" wire:navigate>Clientes</flux:navbar.item> --}}
             <flux:navbar.item :href="route('features')" :current="request()->routeIs('features')" wire:navigate>Características</flux:navbar.item>
             <flux:navbar.item :href="route('pricing')" :current="request()->routeIs('pricing')" wire:navigate>Precios</flux:navbar.item>
         </flux:navbar>
@@ -53,7 +53,7 @@
             </flux:sidebar.header>
 
             <flux:sidebar.nav>
-                <flux:sidebar.item icon="users" wire:navigate href="{{ route('customers') }}">Clientes</flux:sidebar.item>
+                {{-- <flux:sidebar.item icon="users" wire:navigate href="{{ route('customers') }}">Clientes</flux:sidebar.item> --}}
                 <flux:sidebar.item icon="sparkles" wire:navigate href="{{ route('features') }}">Características</flux:sidebar.item>
                 <flux:sidebar.item icon="credit-card" wire:navigate href="{{ route('pricing') }}">Precios</flux:sidebar.item>
             </flux:sidebar.nav>

@@ -20,8 +20,8 @@ Route::view('panel', 'dashboard')
     ->middleware(['auth', 'verified'])
     ->name('dashboard');
 
-Route::view('clientes', 'homepages.customers')
-    ->name('customers');
+// Route::view('clientes', 'homepages.customers')
+//     ->name('customers');
 
 Route::view('caracteristicas', 'homepages.features')
     ->name('features');

@@ -1,4 +1,4 @@
-<x-layouts.main title="Clientes • ATS Boost">
+{{-- <x-layouts.main title="Clientes • ATS Boost">
     <section class="space-y-6">
         <div class="text-center">
             <flux:badge color="blue" icon="megaphone" size="sm" variant="pill">
@@ -133,4 +133,4 @@
             </flux:button>
         </div>
     </section>
-</x-layouts.main>
+</x-layouts.main> --}}

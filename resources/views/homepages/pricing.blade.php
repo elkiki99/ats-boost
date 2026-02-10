@@ -24,8 +24,8 @@
             <flux:separator variant="subtle" />
 
             <div class="flex items-center justify-center gap-2 text-center">
-                <flux:subheading>¿Aún no estás seguro? Mira qué dicen nuestros <flux:link class="!text-sm"
-                        wire:navigate href="{{ route('customers') }}">clientes satisfechos</flux:link>.</flux:subheading>
+                <flux:subheading>¿Aún no estás seguro? Probá nuestra <flux:link class="!text-sm"
+                        wire:navigate href="{{ route('home') }}">demo</flux:link>.</flux:subheading>
             </div>
         </div>
     </section>
