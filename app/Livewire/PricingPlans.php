@@ -5,8 +5,6 @@ namespace App\Livewire;
 use Livewire\Component;
 use App\Services\MercadoPagoService;
 use App\Support\Money;
-
-
 class PricingPlans extends Component
 {
     public array $prices = [];

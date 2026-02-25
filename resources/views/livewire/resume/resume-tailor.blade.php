@@ -7,7 +7,7 @@
                 Adaptando tu currículum
             </flux:heading>
             <flux:subheading class="text-center">
-                Adaptando tu experiencia a la descripción del trabajo mientras se preserva tu voz original.
+                Adaptando tu experiencia a la descripción del trabajo mientras preservamos el contenido relevante.
             </flux:subheading>
         </div>
 
@@ -22,7 +22,7 @@
             </flux:heading>
 
             <flux:subheading>
-                Optimizamos tu currículum basándonos en la descripción del trabajo mientras manteníamos tu contenido
+                Optimizamos tu currículum basándonos en la descripción del trabajo manteniendo tu contenido
                 original intacto.
             </flux:subheading>
         </div>

@@ -7,7 +7,7 @@
         <flux:card class="flex flex-col h-full p-6 rounded-lg shadow-sm md:p-8 lg:rounded-r-none">
             <div class="space-y-6">
                 <div class="space-y-2">
-                    <flux:subheading class="!text-sm">Plan Semanal</flux:subheading>
+                    <flux:subheading class="!text-sm">Plan semanal</flux:subheading>
                     <flux:heading class="!text-3xl">{{ $prices['weekly']['formatted'] }} /semana</flux:heading>
                 </div>
 
@@ -61,7 +61,7 @@
                 <div class="space-y-2">
                     <flux:badge icon="fire" size="sm" color="green" class="mb-2">Más popular
                     </flux:badge>
-                    <flux:subheading class="!text-sm">Plan Mensual</flux:subheading>
+                    <flux:subheading class="!text-sm">Plan mensual</flux:subheading>
                     <flux:heading class="!text-3xl">{{ $prices['monthly']['formatted'] }} /mes</flux:heading>
                 </div>
 
@@ -113,7 +113,7 @@
         <flux:card class="flex flex-col h-full p-6 rounded-lg shadow-sm md:p-8 lg:rounded-l-none">
             <div class="space-y-6">
                 <div class="space-y-2">
-                    <flux:subheading class="!text-sm">Plan Anual</flux:subheading>
+                    <flux:subheading class="!text-sm">Plan anual</flux:subheading>
                     <flux:heading class="!text-3xl">{{ $prices['yearly']['formatted'] }} /año</flux:heading>
                 </div>
 

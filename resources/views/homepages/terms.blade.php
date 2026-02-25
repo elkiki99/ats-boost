@@ -133,7 +133,7 @@
             <flux:subheading>
                 Si tienes preguntas sobre estos Términos y Condiciones, por favor contáctanos en:
                 <br><br>
-                <strong>Correo electrónico:</strong> support@atsboost.com
+                <strong>Correo electrónico:</strong> brossani23@gmail.com
             </flux:subheading>
         </div>
     </section>

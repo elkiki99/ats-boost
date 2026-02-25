@@ -3,18 +3,33 @@
 
     <x-settings.layout :heading="__('Suscripciones')" :subheading="__('Gestiona tu suscripción de cuenta')">
         @if ($subscription)
+            @php
+                $hasAccess = $subscription->ends_at?->isFuture();
+            @endphp
+
             {{-- Status-based callouts with subscription info --}}
             <div class="space-y-6 mb-6">
                 @if ($subscription->status === 'cancelled')
-                    <flux:callout icon="shield-exclamation" color="red">
-                        <flux:callout.heading>
-                            Suscripción cancelada
-                        </flux:callout.heading>
-                        <flux:callout.text>
-                            Tu suscripción ha sido cancelada permanentemente.
-                        </flux:callout.text>
-                    </flux:callout>
-                @elseif ($subscription->status === 'authorized' || $subscription->status === 'active')
+                    @if(!$hasAccess)
+                        <flux:callout icon="shield-exclamation" color="red">
+                            <flux:callout.heading>
+                                Suscripción cancelada
+                            </flux:callout.heading>
+                            <flux:callout.text>
+                                Tu suscripción ha sido cancelada permanentemente.
+                            </flux:callout.text>
+                        </flux:callout>
+                    @else
+                        <flux:callout icon="clock" color="amber">
+                            <flux:callout.heading>
+                                Suscripción cancelada
+                            </flux:callout.heading>
+                            <flux:callout.text>
+                                Seguirás teniendo acceso hasta {{ $subscription->ends_at->format('d/m/Y') }}.
+                            </flux:callout.text>
+                        </flux:callout>
+                    @endif
+                @else ($subscription->status === 'authorized' || $subscription->status === 'active')
                     <flux:callout icon="check-circle" color="green">
                         <flux:callout.heading>
                             Suscripción activa
@@ -23,58 +38,91 @@
                             Tu suscripción está activa y los beneficios están habilitados.
                         </flux:callout.text>
                     </flux:callout>
-                @else
-                    <flux:callout icon="clock" color="amber">
-                        <flux:callout.heading>
-                            Suscripción pendiente
-                        </flux:callout.heading>
-                        <flux:callout.text>
-                            Tu suscripción está siendo procesada.
-                        </flux:callout.text>
-                    </flux:callout>
                 @endif
             </div>
 
             <div class="space-y-6">
                 @if ($subscription->status !== 'cancelled')
                     {{-- Change plan (hidden for cancelled subscriptions) --}}
-                    <flux:select variant="listbox" wire:model.live="newPlan" label="Actualizar plan" required>
-                        {{-- Monthly --}}
-                        <flux:select.option value="{{ config('services.mercadopago.plans.monthly') }}"
-                            :disabled="$subscription->mp_plan_id === config('services.mercadopago.plans.monthly')">
-                            <div class="flex items-center justify-between gap-2 w-full">
-                                <span>Plan mensual – $4.99 / mes</span>
+                    <flux:radio.group
+                        variant="cards"
+                        wire:model.live="newPlan"
+                        label="Actualizar plan"
+                        class="flex-col gap-4"
+                        required
+                    >
 
-                                @if ($subscription->mp_plan_id === config('services.mercadopago.plans.monthly'))
-                                    <flux:badge size="sm" color="green">Actual</flux:badge>
-                                @endif
+                        {{-- Monthly --}}
+                        <flux:radio
+                            value="{{ config('services.mercadopago.plans.monthly') }}"
+                            :disabled="$subscription->mp_plan_id === config('services.mercadopago.plans.monthly')"
+                        >
+                            <flux:radio.indicator/>
+
+                            <div class="flex items-center justify-between w-full">
+                                <div class="flex-1">
+                                    <flux:heading size="sm">Plan mensual</flux:heading>
+                                    <flux:text size="sm" class="mt-1">
+                                        {{ $prices['monthly']['formatted'] }} /mes
+                                    </flux:text>
+                                </div>
+
+                                <div class="flex gap-2">
+                                    @if ($subscription->mp_plan_id === config('services.mercadopago.plans.monthly'))
+                                        <flux:badge size="sm" color="green">Actual</flux:badge>
+                                    @endif
+                                </div>
                             </div>
-                        </flux:select.option>
+                        </flux:radio>
+
 
                         {{-- Weekly --}}
-                        <flux:select.option value="{{ config('services.mercadopago.plans.weekly') }}"
-                            :disabled="$subscription->mp_plan_id === config('services.mercadopago.plans.weekly')">
-                            <div class="flex items-center justify-between gap-2 w-full">
-                                <span>Plan semanal – $1.99 / semana</span>
+                        <flux:radio
+                            value="{{ config('services.mercadopago.plans.weekly') }}"
+                            :disabled="$subscription->mp_plan_id === config('services.mercadopago.plans.weekly')"
+                        >
+                            <flux:radio.indicator/>
 
-                                @if ($subscription->mp_plan_id === config('services.mercadopago.plans.weekly'))
-                                    <flux:badge size="sm" color="green">Actual</flux:badge>
-                                @endif
+                            <div class="flex items-center justify-between w-full">
+                                <div class="flex-1">
+                                    <flux:heading size="sm">Plan semanal</flux:heading>
+                                    <flux:text size="sm" class="mt-1">
+                                        {{ $prices['weekly']['formatted'] }} /semana
+                                    </flux:text>
+                                </div>
+
+                                <div class="flex gap-2">
+                                    @if ($subscription->mp_plan_id === config('services.mercadopago.plans.weekly'))
+                                        <flux:badge size="sm" color="green">Actual</flux:badge>
+                                    @endif
+                                </div>
                             </div>
-                        </flux:select.option>
+                        </flux:radio>
+
 
                         {{-- Yearly --}}
-                        <flux:select.option value="{{ config('services.mercadopago.plans.yearly') }}"
-                            :disabled="$subscription->mp_plan_id === config('services.mercadopago.plans.yearly')">
-                            <div class="flex items-center justify-between gap-2 w-full">
-                                <span>Plan anual – $39.99 / año</span>
+                        <flux:radio
+                            value="{{ config('services.mercadopago.plans.yearly') }}"
+                            :disabled="$subscription->mp_plan_id === config('services.mercadopago.plans.yearly')"
+                        >
+                            <flux:radio.indicator/>
 
-                                @if ($subscription->mp_plan_id === config('services.mercadopago.plans.yearly'))
-                                    <flux:badge size="sm" color="green">Actual</flux:badge>
-                                @endif
+                            <div class="flex items-center justify-between w-full">
+                                <div class="flex-1">
+                                    <flux:heading size="sm">Plan anual</flux:heading>
+                                    <flux:text size="sm" class="mt-1">
+                                        {{ $prices['yearly']['formatted'] }} /año
+                                    </flux:text>
+                                </div>
+
+                                <div class="flex gap-2">
+                                    @if ($subscription->mp_plan_id === config('services.mercadopago.plans.yearly'))
+                                        <flux:badge size="sm" color="green">Actual</flux:badge>
+                                    @endif
+                                </div>
                             </div>
-                        </flux:select.option>
-                    </flux:select>
+                        </flux:radio>
+                    </flux:radio.group>
 
                     <flux:modal.trigger name="update-subscription">
                         <flux:button variant="primary" :disabled="$newPlan === $subscription->mp_plan_id">
@@ -84,7 +132,7 @@
 
                     <div class="mt-6"></div>
 
-                    <flux:separator />
+                    <flux:separator/>
                 @endif
 
                 {{-- Status-based actions --}}
@@ -93,7 +141,7 @@
                     <div class="space-y-4">
                         <flux:heading>Suscripción cancelada</flux:heading>
                         <flux:subheading>
-                            Tu suscripción ha sido cancelada permanentemente. Para recuperar el acceso a funciones
+                            Tu suscripción ha sido cancelada. Para recuperar el acceso a funciones
                             premium, necesitarás crear una nueva suscripción.
                         </flux:subheading>
 
@@ -115,14 +163,6 @@
                             </flux:button>
                         </flux:modal.trigger>
                     </div>
-                @else
-                    {{-- Pending or other status --}}
-                    <div class="space-y-4">
-                        <flux:heading>Suscripción pendiente</flux:heading>
-                        <flux:subheading>
-                            Tu suscripción está actualmente en estado pendiente. Vuelve pronto.
-                        </flux:subheading>
-                    </div>
                 @endif
             </div>
 
@@ -132,14 +172,16 @@
                     <div class="flex items-start justify-between">
                         <div>
                             <flux:heading size="lg">¿Actualizar suscripción?</flux:heading>
-                            <flux:text class="mt-2"> Tu suscripción será actualizada.<br> Sin cargos adicionales a
-                                menos que actualices a un plan superior. </flux:text>
+                            <flux:text class="mt-2">
+                                La suscripción actual será cancelada.<br> Se generará una nueva suscripción y
+                                no se aplicarán cargos adicionales.
+                            </flux:text>
                         </div>
                     </div>
                     <div class="flex justify-end gap-4">
                         <flux:button x-on:click="$flux.modal('update-subscription').close()" variant="ghost"> Deshacer
                         </flux:button>
-                        <flux:button variant="primary" wire:click="changePlan"> Actualizar suscripción </flux:button>
+                        <flux:button variant="primary" wire:click="changePlan"> Actualizar suscripción</flux:button>
                     </div>
                 </div>
             </flux:modal>
@@ -150,7 +192,8 @@
                         <div>
                             <flux:heading size="lg">¿Cancelar suscripción?</flux:heading>
                             <flux:text class="mt-2"> Tu suscripción será cancelada.<br> Perderás acceso a todas las
-                                funciones premium al final de tu período de facturación. </flux:text>
+                                funciones premium al final de tu período de facturación.
+                            </flux:text>
                         </div>
                     </div>
                     <div class="flex justify-end gap-4">

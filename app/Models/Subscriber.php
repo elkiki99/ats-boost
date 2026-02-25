@@ -14,6 +14,7 @@ class Subscriber extends Model
         'status',
         'active',
         'ends_at',
+        'trial_ends_at',
         'renews_at',
         'payer_email',
         'metadata',
@@ -24,6 +25,7 @@ class Subscriber extends Model
         return [
             'active' => 'boolean',
             'ends_at' => 'datetime',
+            'trial_ends_at' => 'datetime',
             'renews_at' => 'datetime',
             'metadata' => 'json',
         ];
@@ -36,15 +38,6 @@ class Subscriber extends Model
 
     public function hasAccess(): bool
     {
-        return $this->active || (
-            ! $this->active
-            && $this->ends_at
-            && now()->lt($this->ends_at)
-        );
-    }
-
-    public function isActive(): bool
-    {
-        return $this->active && $this->status === 'authorized';
+        return $this->ends_at?->isFuture() ?? false;
     }
 }

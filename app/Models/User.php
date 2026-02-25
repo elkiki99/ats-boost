@@ -82,7 +82,9 @@ class User extends Authenticatable
     public function hasActiveSubscription(): bool
     {
         return $this->subscribers()
-            ->get()
-            ->contains(fn($subscriber) => $subscriber->hasAccess());
+            ->where('ends_at', '>', now())
+            ->whereIn('status', ['authorized', 'active'])
+            ->where('active', true)
+            ->exists();
     }
 }

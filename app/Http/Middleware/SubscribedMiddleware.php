@@ -21,10 +21,8 @@ class SubscribedMiddleware
             abort(401);
         }
 
-        // Get the latest active or paused subscription
         $subscription = $user->subscribers()
-            ->whereIn('status', ['authorized', 'active', 'paused'])
-            ->latest()
+            ->where('ends_at', '>', now())
             ->first();
 
         if (! $subscription || ! $subscription->hasAccess()) {

@@ -15,29 +15,24 @@ class CvTailorService
      */
     private function detectLanguage(string $text): string
     {
-        // Palabras clave en español
-        $spanishKeywords = ['el ', 'la ', 'de ', 'que ', 'experiencia', 'educación', 'habilidades', 'trabajo', 'empresa', 'año', 'descripción'];
+        $response = OpenAI::chat()->create([
+            'model' => 'gpt-4o-mini',
+            'temperature' => 0,
+            'messages' => [
+                [
+                    'role' => 'system',
+                    'content' => 'Detect the primary language of the given text. Respond ONLY with "es" for Spanish or "en" for English. Do not add anything else.'
+                ],
+                [
+                    'role' => 'user',
+                    'content' => $text
+                ],
+            ],
+        ]);
 
-        // Palabras clave en inglés
-        $englishKeywords = ['the ', 'and ', 'a ', 'to ', 'experience', 'education', 'skills', 'job', 'company', 'year', 'description'];
+        $lang = trim($response->choices[0]->message->content);
 
-        // Convertir a minúsculas para análisis
-        $textLower = strtolower($text);
-
-        // Contar coincidencias
-        $spanishCount = 0;
-        $englishCount = 0;
-
-        foreach ($spanishKeywords as $keyword) {
-            $spanishCount += substr_count($textLower, $keyword);
-        }
-
-        foreach ($englishKeywords as $keyword) {
-            $englishCount += substr_count($textLower, $keyword);
-        }
-
-        // Retornar idioma con mayor coincidencia
-        return $spanishCount > $englishCount ? 'es' : 'en';
+        return $lang === 'es' ? 'es' : 'en';
     }
 
     /**

@@ -37,7 +37,7 @@ El candidato ideal debe ser..." />
                 Adaptando tu currículum
             </flux:heading>
             <flux:subheading class="text-center">
-                Adaptando tu experiencia a la descripción del trabajo mientras preservas tu voz original.
+                Adaptando tu experiencia a la descripción del trabajo mientras preservamos el contenido relevante.
             </flux:subheading>
         </div>
 
