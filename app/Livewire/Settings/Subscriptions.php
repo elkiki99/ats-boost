@@ -19,6 +19,16 @@ class Subscriptions extends Component
 
     public function mount(Request $request, MercadoPagoService $mp)
     {
+        if(session('subscription_required')) {
+            Flux::toast(
+                heading: 'Plan requerido',
+                text: 'Necesitas una suscripción activa.',
+                variant: 'warning',
+            );
+
+            session()->forget('subscription_required');
+        }
+
         // Sync ONLY when coming back from MercadoPago
         if ($request->filled('preapproval_id')) {
 

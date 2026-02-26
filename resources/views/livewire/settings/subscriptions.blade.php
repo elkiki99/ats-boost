@@ -174,7 +174,7 @@
                             <flux:heading size="lg">¿Actualizar suscripción?</flux:heading>
                             <flux:text class="mt-2">
                                 La suscripción actual será cancelada.<br> Se generará una nueva suscripción y
-                                no se aplicarán cargos adicionales.
+                                no se aplicarán cargos <adicionales class=""></adicionales>
                             </flux:text>
                         </div>
                     </div>
@@ -216,7 +216,7 @@
 
                 <x-slot name="actions">
                     <flux:button icon-trailing="arrow-right" href="{{ route('pricing') }}" wire:navigate>
-                        Actualizar a Pro
+                        Actualizar a pro
                     </flux:button>
                 </x-slot>
             </flux:callout>
