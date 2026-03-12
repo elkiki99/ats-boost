@@ -45,6 +45,7 @@ class MercadoPagoService
     {
         return $this->updateSubscription($id, [
             'status' => 'cancelled',
+            'active' => false,
         ]);
     }
 

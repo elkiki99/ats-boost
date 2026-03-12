@@ -21,7 +21,7 @@ class CvTailorService
             'messages' => [
                 [
                     'role' => 'system',
-                    'content' => 'Detect the primary language of the given text. Respond ONLY with "es" for Spanish or "en" for English. Do not add anything else.'
+                    'content' => 'Detect the primary language of the given text. Respond ONLY with "es" for Spanish or "en" for English. Do not add anything else. If there is no match, choose "en" by default'
                 ],
                 [
                     'role' => 'user',
@@ -205,6 +205,18 @@ class CvTailorService
             - Responsabilidades / logros DEBEN ser viñetas (<ul><li>)
             - MÁXIMO 5 viñetas por rol
 
+            REGLAS PARA REESCRITURA DE VIÑETAS (CRÍTICO):
+
+            - Puedes reescribir y refinar las viñetas dentro de Experiencia Laboral.
+            - Debes integrar tecnologías y palabras clave relevantes de la oferta,
+              pero SOLO si ya existen en el CV original.
+            - Nunca inventes nuevas habilidades o experiencias.
+            - Puedes hacer las viñetas más específicas y orientadas a logros.
+            - Si una habilidad (por ejemplo, PHP) existe en el CV y es relevante,
+              debe incorporarse naturalmente en la viñeta más apropiada.
+            - No te limites a agregar habilidades en la sección Skills sin adaptar la experiencia.
+            - El objetivo es alineación semántica profesional, no relleno de palabras clave.
+
             ====================
             FORMATO DE EDUCACIÓN (ESTRICTO, DESCRIPCIÓN PERMITIDA)
             ====================
@@ -323,6 +335,18 @@ class CvTailorService
             3) AFTER these two <p>:
             - Responsibilities / achievements MUST be bullet points (<ul><li>)
             - MAXIMUM 5 bullets per role
+
+            BULLET REWRITING RULES (CRITICAL):
+
+            - You ARE allowed to rewrite, refine, and adapt bullet points inside Work Experience.
+            - You SHOULD integrate relevant technologies, tools, and keywords from the job description,
+              but ONLY if they already exist somewhere in the original CV.
+            - You MUST NOT invent new skills or experiences.
+            - You MAY make bullets more specific and achievement-oriented.
+            - If a skill (e.g., PHP) exists in the CV and is relevant to the job,
+              it SHOULD be naturally incorporated into the most appropriate experience bullet.
+            - Do NOT simply add skills to the Skills section without adapting experience.
+            - The goal is semantic alignment, not keyword stuffing.
 
             ====================
             EDUCATION FORMAT (STRICT, DESCRIPTION ALLOWED)
