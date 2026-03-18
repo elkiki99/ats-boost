@@ -74,9 +74,7 @@ class User extends Authenticatable
 
     public function isSubscribed(): bool
     {
-        $subscriber = $this->subscriber;
-
-        return $subscriber && $subscriber->hasActiveSubscription();
+        return $this->hasActiveSubscription();
     }
 
     public function hasActiveSubscription(): bool
