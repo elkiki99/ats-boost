@@ -2,88 +2,48 @@
 
 namespace App\Livewire\Resume;
 
-use App\Services\CoverLetterService;
-use Flux\Flux;
-use Livewire\Attributes\Validate;
+use App\Actions\Documents\StoreDocument;
+use App\Actions\Resume\GenerateCoverLetter;
+use App\Enums\DocumentType;
+use App\Livewire\Concerns\HandlesGenerationFailures;
+use App\Livewire\Forms\CoverLetterForm;
 use Livewire\Component;
+use Livewire\Features\SupportRedirects\Redirector;
 use Livewire\WithFileUploads;
 
 class CoverLetter extends Component
 {
-    use WithFileUploads;
+    use HandlesGenerationFailures, WithFileUploads;
 
-    #[Validate('required|mimes:pdf,txt|max:10240', as: 'curriculum')]
-    public $resume = null;
+    public CoverLetterForm $form;
 
-    #[Validate('nullable|string|min:3', as: 'empresa')]
-    public ?string $company = null;
-
-    #[Validate('required|string|min:50', as: 'descripción')]
-    public string $description = '';
-
-    public string $coverLetter = '';
-
-    /**
-     * Step 1: validate + open progress modal
-     */
-    public function startGeneratingCoverLetter()
+    public function generate(GenerateCoverLetter $generate, StoreDocument $store): ?Redirector
     {
-        $this->validate();
+        $this->form->validate();
 
-        $this->dispatch('cover-letter-started');
-    }
+        $result = $this->attempt(fn () => $generate->handle(
+            $this->form->resume,
+            $this->form->description,
+            $this->form->company,
+        ));
 
-    /**
-     * Step 2: generate cover letter
-     */
-    public function coverLetterResume(CoverLetterService $service)
-    {
-        // Extract CV text (mandatory)
-        $cvText = $service->extractCvText(
-            $this->resume->getRealPath()
+        if ($result === null) {
+            return null;
+        }
+
+        $document = $store->handle(
+            user: auth()->user(),
+            type: DocumentType::CoverLetter,
+            data: $result['letter'],
+            role: $result['job']->role,
+            company: $this->form->company ?? $result['job']->company,
+            jobDescription: $this->form->description,
+            sourceFilename: $this->form->resume->getClientOriginalName(),
         );
 
-        // Generate cover letter (name + role inferred internally)
-        $this->coverLetter = $service->generateCoverLetter(
-            description: $this->description,
-            cvText: $cvText,
-            company: $this->company
-        );
+        $this->succeeded('Tu carta está lista', 'Revisá el texto antes de descargarlo.');
 
-        $this->modal('cover-letter-in-progress')->close();
-        $this->modal('cover-letter-result')->show();
-    }
-
-    /**
-     * Download as PDF
-     */
-    public function downloadPdf(CoverLetterService $service)
-    {
-        $pdfContent = $service->generatePdf($this->coverLetter);
-
-        // Infer profile again only for filename (cheap + safe)
-        $cvText = $service->extractCvText(
-            $this->resume->getRealPath()
-        );
-
-        $profile = $service->inferCandidateProfile($cvText);
-
-        $fileName = $service->buildFileName(
-            name: $profile['name'] ?? null,
-            role: $profile['role'] ?? null,
-            company: $this->company
-        );
-
-        Flux::toast(
-            heading: '¡Pdf listo!',
-            text: 'Tu carta de presentación se descargó correctamente.',
-            variant: 'success',
-        );
-
-        return response()->streamDownload(
-            fn () => print ($pdfContent),
-            $fileName
-        );
+        return $this->redirectRoute('documents.edit', $document, navigate: true);
     }
 
     public function render()

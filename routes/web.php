@@ -1,65 +1,75 @@
 <?php
 
 use App\Http\Controllers\CheckoutController;
-use App\Livewire\Settings\Subscriptions;
-use App\Livewire\Resume\ResumeAnalyzer;
-use App\Livewire\Resume\ResumeTailor;
+use App\Http\Controllers\DocumentController;
+use App\Livewire\Documents;
+use App\Livewire\Resume;
+use App\Livewire\Settings;
 use Illuminate\Support\Facades\Route;
-use App\Livewire\Settings\Appearance;
-use App\Livewire\Settings\TwoFactor;
-use App\Livewire\Resume\CoverLetter;
-use App\Livewire\Settings\Password;
-use App\Livewire\Settings\Profile;
 use Laravel\Fortify\Features;
 
-Route::get('/', function () {
-    return view('homepages.welcome');
-})->name('home');
+/*
+|--------------------------------------------------------------------------
+| Público
+|--------------------------------------------------------------------------
+*/
 
-Route::view('panel', 'dashboard')
-    ->middleware(['auth', 'verified'])
-    ->name('dashboard');
+Route::view('/', 'homepages.welcome')->name('home');
+Route::view('caracteristicas', 'homepages.features')->name('features');
+Route::view('precios', 'homepages.pricing')->name('pricing');
+Route::view('privacidad', 'homepages.privacy')->name('privacy');
+Route::view('terminos', 'homepages.terms')->name('terms');
 
-// Route::view('clientes', 'homepages.customers')
-//     ->name('customers');
+Route::get('checkout/{variant}', [CheckoutController::class, 'start'])->name('checkout.start');
 
-Route::view('caracteristicas', 'homepages.features')
-    ->name('features');
+/*
+|--------------------------------------------------------------------------
+| Cuenta
+|--------------------------------------------------------------------------
+*/
 
-Route::view('precios', 'homepages.pricing')
-    ->name('pricing');
-
-Route::view('privacidad', 'homepages.privacy')
-    ->name('privacy');
-
-Route::view('terminos', 'homepages.terms')
-    ->name('terms');
-
-Route::get('/checkout/start/{variant}', [CheckoutController::class, 'start'])
-    ->name('checkout.start');
-
-Route::middleware(['auth'])->group(function () {
+Route::middleware('auth')->group(function (): void {
     Route::redirect('ajustes', 'ajustes/perfil');
 
-    Route::get('ajustes/perfil', Profile::class)->name('profile.edit');
-    Route::get('ajustes/contraseña', Password::class)->name('user-password.edit');
-    Route::get('ajustes/apariencia', Appearance::class)->name('appearance.edit');
-    Route::get('ajustes/suscripciones', Subscriptions::class)->name('subscriptions.edit');
+    Route::get('ajustes/perfil', Settings\Profile::class)->name('profile.edit');
+    Route::get('ajustes/contrasena', Settings\Password::class)->name('user-password.edit');
+    Route::get('ajustes/apariencia', Settings\Appearance::class)->name('appearance.edit');
+    Route::get('ajustes/suscripciones', Settings\Subscriptions::class)->name('subscriptions.edit');
 
-    Route::get('ajustes/autenticacion-doble', TwoFactor::class)
-        ->middleware(
-            when(
-                Features::canManageTwoFactorAuthentication()
-                    && Features::optionEnabled(Features::twoFactorAuthentication(), 'confirmPassword'),
-                ['password.confirm'],
-                [],
-            ),
-        )
+    Route::get('ajustes/autenticacion-doble', Settings\TwoFactor::class)
+        ->middleware(when(
+            Features::canManageTwoFactorAuthentication()
+                && Features::optionEnabled(Features::twoFactorAuthentication(), 'confirmPassword'),
+            ['password.confirm'],
+            [],
+        ))
         ->name('two-factor.show');
 });
 
-Route::middleware(['auth', 'subscribed'])->group(function () {
-    Route::get('panel/adaptar-cv', ResumeTailor::class)->name('resume.resume-tailor');
-    Route::get('panel/analizar-cv', ResumeAnalyzer::class)->name('resume.resume-analyzer');
-    Route::get('panel/carta-presentacion', CoverLetter::class)->name('resume.cover-letter');
+/*
+|--------------------------------------------------------------------------
+| Panel — requiere suscripción vigente
+|--------------------------------------------------------------------------
+*/
+
+Route::middleware(['auth', 'verified'])->group(function (): void {
+    Route::view('panel', 'dashboard')->name('dashboard');
+
+    Route::middleware('subscribed')->group(function (): void {
+        Route::get('panel/adaptar-cv', Resume\Tailor::class)->name('resume.tailor');
+        Route::get('panel/analizar-cv', Resume\Analyzer::class)->name('resume.analyzer');
+        Route::get('panel/carta-presentacion', Resume\CoverLetter::class)->name('resume.cover-letter');
+
+        Route::get('panel/documentos', Documents\Index::class)->name('documents.index');
+        Route::get('panel/documentos/{document}', Documents\Edit::class)->name('documents.edit');
+
+        // La descarga y la vista previa son rutas HTTP propias, no acciones de
+        // Livewire: así el PDF tiene URL estable, pasa por DocumentPolicy y se
+        // puede volver a abrir desde el historial sin regenerar nada.
+        Route::get('panel/documentos/{document}/descargar', [DocumentController::class, 'download'])
+            ->name('documents.download');
+
+        Route::get('panel/documentos/{document}/vista-previa', [DocumentController::class, 'preview'])
+            ->name('documents.preview');
+    });
 });

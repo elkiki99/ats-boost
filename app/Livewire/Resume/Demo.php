@@ -2,95 +2,104 @@
 
 namespace App\Livewire\Resume;
 
-use App\Services\CvTailorService;
-use Flux\Flux;
-use Illuminate\Support\Facades\Auth;
-use Livewire\Attributes\Validate;
+use App\Actions\Resume\GenerateTailoredResume;
+use App\Data\ResumeData;
+use App\Livewire\Concerns\HandlesGenerationFailures;
+use App\Livewire\Forms\TailorResumeForm;
+use Illuminate\Support\Facades\RateLimiter;
+use Livewire\Attributes\Locked;
 use Livewire\Component;
 use Livewire\WithFileUploads;
 
+/**
+ * Prueba pública desde la landing.
+ *
+ * El límite se cuenta contra el RateLimiter y no contra la sesión. La versión
+ * anterior guardaba `cv_usage_count` en la sesión del navegador, así que
+ * borrar las cookies devolvía las tres pruebas gratis: cada reinicio costaba
+ * siete llamadas a OpenAI pagadas por el producto.
+ */
 class Demo extends Component
 {
-    use WithFileUploads;
+    use HandlesGenerationFailures, WithFileUploads;
 
-    #[Validate('required|mimes:pdf,txt|max:10240', as: 'curriculum')]
-    public $resume = null;
+    public TailorResumeForm $form;
 
-    #[Validate('required|string|min:50', as: 'descripción')]
-    public string $description = '';
+    /**
+     * @var array<string, mixed>|null
+     */
+    public ?array $result = null;
 
-    public string $candidateName = '';
+    #[Locked]
+    public int $remaining = 0;
 
-    public string $tailored = '';
-
-    public int $usageCount = 0;
-
-    public string $cvText = '';
-
-    public function mount()
+    public function mount(): void
     {
-        $this->usageCount = session('cv_usage_count', 0);
+        $this->remaining = $this->remainingAttempts();
     }
 
-    public function startTailoring()
+    public function generate(GenerateTailoredResume $generate): void
     {
-        if ((! Auth::user() || ! Auth::user()->isSubscribed()) && $this->usageCount >= 3) {
-            $this->modal('limit-modal')->show();
+        if ($this->remainingAttempts() < 1) {
+            $this->dispatch('demo-limit-reached');
 
             return;
         }
 
-        $this->validate();
+        $this->form->validate();
 
-        session(['cv_usage_count' => $this->usageCount]);
+        $result = $this->attempt(fn () => $generate->handle(
+            $this->form->resume,
+            $this->form->description,
+        ));
 
-        $this->dispatch('tailoring-demo-started');
+        if ($result === null) {
+            return;
+        }
+
+        // Se consume el cupo recién cuando la generación salió bien: si falla
+        // la API de OpenAI, el intento no se le cobra al visitante.
+        RateLimiter::hit($this->limiterKey(), $this->decaySeconds());
+
+        $this->result = $result['resume']->toArray();
+        $this->remaining = $this->remainingAttempts();
+
+        $this->dispatch('demo-finished');
     }
 
-    /**
-     * Step 2: tailor resume
-     */
-    public function tailorResumeDemo(CvTailorService $service)
+    public function tailored(): ?ResumeData
     {
-        $result = $service->tailorResume(
-            resumePath: $this->resume->getRealPath(),
-            jobDescription: $this->description
-        );
-
-        $this->tailored = $result['html'];
-        $this->cvText = $result['cvText'];
-        $this->candidateName = $result['name'];
-
-        $this->modal('tailoring-demo-in-progress')->close();
-
-        $this->usageCount++;
-        session(['cv_usage_count' => $this->usageCount]);
-
-        $this->modal('tailoring-demo-result')->show();
+        return $this->result === null ? null : ResumeData::from($this->result);
     }
 
-    /**
-     * Download tailored resume as PDF
-     */
-    public function downloadPdf(CvTailorService $service)
+    public function startOver(): void
     {
-        $this->validate();
+        $this->reset('result');
+        $this->form->reset();
+    }
 
-        Flux::toast(
-            heading: '¡Pdf listo!',
-            text: 'Tu currículum adaptado se descargó correctamente.',
-            variant: 'success',
-        );
+    private function remainingAttempts(): int
+    {
+        return RateLimiter::remaining($this->limiterKey(), $this->maxAttempts());
+    }
 
-        return $service->downloadPdf(
-            $this->tailored,
-            $this->candidateName,
-            $this->description
-        );
+    private function maxAttempts(): int
+    {
+        return (int) config('resume.limits.demo_generations', 2);
+    }
+
+    private function decaySeconds(): int
+    {
+        return 24 * 60 * 60;
+    }
+
+    private function limiterKey(): string
+    {
+        return 'resume-demo:'.request()->ip();
     }
 
     public function render()
     {
-        return view('livewire.resume.demo');
+        return view('livewire.resume.demo', ['tailored' => $this->tailored()]);
     }
 }

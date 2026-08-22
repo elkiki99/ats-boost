@@ -5,28 +5,31 @@ namespace App\Livewire\Settings;
 use App\Actions\MercadoPago\HandleSubscriptionPlanChange;
 use App\Actions\MercadoPago\SyncSubscription;
 use App\Services\MercadoPagoService;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Http\Request;
-use Livewire\Component;
 use App\Support\Money;
 use Flux\Flux;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Livewire\Component;
 
 class Subscriptions extends Component
 {
     public $subscription;
+
     public $newPlan;
+
     public array $prices = [];
 
     public function mount(Request $request, MercadoPagoService $mp)
     {
-        if(session('subscription_required')) {
+        // Llega como dato flash desde EnsureSubscribed, así que se consume
+        // solo. La versión anterior lo escribía en la sesión persistente y el
+        // aviso reaparecía en cada visita hasta que alguien lo borrara.
+        if ($request->session()->get('subscription_required')) {
             Flux::toast(
-                heading: 'Plan requerido',
-                text: 'Necesitas una suscripción activa.',
+                heading: 'Necesitás una suscripción',
+                text: 'Elegí un plan para usar las herramientas de currículum.',
                 variant: 'warning',
             );
-
-            session()->forget('subscription_required');
         }
 
         // Sync ONLY when coming back from MercadoPago
@@ -84,7 +87,7 @@ class Subscriptions extends Component
 
     public function changePlan()
     {
-        if (!$this->subscription) {
+        if (! $this->subscription) {
             return;
         }
 
@@ -100,13 +103,13 @@ class Subscriptions extends Component
         $this->modal('update-suscription')->close();
 
         return redirect()->away(
-            'https://www.mercadopago.com.uy/subscriptions/checkout?preapproval_plan_id=' . $this->newPlan
+            'https://www.mercadopago.com.uy/subscriptions/checkout?preapproval_plan_id='.$this->newPlan
         );
     }
 
     public function cancelSubscription()
     {
-        if (!$this->subscription) {
+        if (! $this->subscription) {
             return;
         }
 

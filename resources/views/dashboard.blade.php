@@ -1,72 +1,96 @@
-<x-layouts.app :title="__('Panel de control • ATS Boost')">
-    <div class="relative mb-6 w-full">
-        <flux:heading size="xl" level="1">{{ __('Panel de control') }}</flux:heading>
-        <flux:subheading size="lg" class="mb-6">{{ __('Bienvenido de nuevo') }} {{ auth()->user()->name }}! Vamos a
-            potenciar tus solicitudes de empleo.
+<x-layouts.app :title="__('Panel de control')">
+    @php
+        $user = auth()->user();
+        $subscription = $user->subscription;
+
+        $tools = [
+            [
+                'route' => 'resume.tailor',
+                'icon' => 'sparkles',
+                'title' => __('Adaptar currículum'),
+                'text' => __('Reescribimos tu CV con el vocabulario de una oferta concreta, sin inventar experiencia.'),
+            ],
+            [
+                'route' => 'resume.analyzer',
+                'icon' => 'chart-bar',
+                'title' => __('Analizar currículum'),
+                'text' => __('Puntaje de compatibilidad con ATS y la lista de lo que conviene corregir.'),
+            ],
+            [
+                'route' => 'resume.cover-letter',
+                'icon' => 'envelope-open',
+                'title' => __('Carta de presentación'),
+                'text' => __('Una carta breve construida con hechos reales de tu CV.'),
+            ],
+        ];
+    @endphp
+
+    <div class="mb-6">
+        <flux:heading size="xl" level="1">{{ __('Hola, :name', ['name' => $user->name]) }}</flux:heading>
+        <flux:subheading size="lg">
+            {{ __('Elegí por dónde arrancar.') }}
         </flux:subheading>
-        <flux:separator variant="subtle" />
     </div>
 
-    <div class="flex h-auto w-full flex-1 flex-col gap-4 rounded-xl">
-        <div class="grid gap-4 md:grid-cols-3 items-stretch">
-            {{-- Tailor Your Resume (core feature) --}}
-            <a href="{{ route('resume.resume-tailor') }}">
-                <flux:card
-                    class="h-full group cursor-pointer transition hover:border-neutral-300 dark:hover:border-neutral-600">
+    @unless ($user->isSubscribed())
+        <flux:callout icon="lock-closed" variant="warning" class="mb-6">
+            <flux:callout.heading>{{ __('Necesitás una suscripción activa') }}</flux:callout.heading>
+            <flux:callout.text>
+                {{ __('Las herramientas de currículum están disponibles con cualquiera de los planes.') }}
+            </flux:callout.text>
+            <x-slot name="actions">
+                <flux:button :href="route('subscriptions.edit')" size="sm" variant="primary" wire:navigate>
+                    {{ __('Ver planes') }}
+                </flux:button>
+            </x-slot>
+        </flux:callout>
+    @elseif ($subscription?->onTrial())
+        <flux:callout icon="gift" variant="secondary" class="mb-6">
+            <flux:callout.heading>{{ __('Estás en período de prueba') }}</flux:callout.heading>
+            <flux:callout.text>
+                {{ __('Te quedan :days días de prueba.', ['days' => $subscription->daysRemaining()]) }}
+            </flux:callout.text>
+        </flux:callout>
+    @endunless
 
-                    <div class="mb-2 flex items-center">
-                        <flux:heading>Adapta tu currículum</flux:heading>
-                        <flux:spacer />
-                        <flux:icon.arrow-right variant="micro"
-                            class="text-zinc-500 dark:text-zinc-300 transition-transform duration-300 group-hover:translate-x-1" />
-                    </div>
-
-                    <flux:subheading>
-                        Adapta tu currículum a cualquier descripción de trabajo. Optimízalo para el éxito en ATS.
-                    </flux:subheading>
+    <div class="grid gap-4 md:grid-cols-3">
+        @foreach ($tools as $tool)
+            <a href="{{ route($tool['route']) }}" wire:navigate class="group">
+                <flux:card class="h-full transition group-hover:border-accent">
+                    <flux:icon :name="$tool['icon']" class="mb-3 size-6 text-accent" />
+                    <flux:heading size="sm">{{ $tool['title'] }}</flux:heading>
+                    <flux:text size="sm" class="mt-1 text-zinc-500">{{ $tool['text'] }}</flux:text>
                 </flux:card>
             </a>
+        @endforeach
+    </div>
 
-            {{-- Resume Analyzer --}}
-            <a href="{{ route('resume.resume-analyzer') }}">
-                <flux:card
-                    class="h-full group cursor-pointer transition hover:border-neutral-300 dark:hover:border-neutral-600">
+    @php
+        $recent = $user->documents()->latestFirst()->limit(4)->get();
+    @endphp
 
-                    <div class="mb-2 flex items-center">
-                        <flux:heading>Analizador de currículum</flux:heading>
-                        <flux:spacer />
-                        <flux:icon.arrow-right variant="micro"
-                            class="text-zinc-500 dark:text-zinc-300 transition-transform duration-300 group-hover:translate-x-1" />
-                    </div>
+    @if ($recent->isNotEmpty())
+        <div class="mt-10">
+            <div class="mb-3 flex items-center justify-between">
+                <flux:heading size="lg">{{ __('Lo último que generaste') }}</flux:heading>
+                <flux:link :href="route('documents.index')" wire:navigate>{{ __('Ver todo') }}</flux:link>
+            </div>
 
-                    <flux:subheading>
-                        Obtén retroalimentación instantánea, puntuación de ATS y mejoras accionables para tu currículum.
-                    </flux:subheading>
-                </flux:card>
-            </a>
-
-            {{-- Cover Letter --}}
-            <a href="{{ route('resume.cover-letter') }}">
-                <flux:card
-                    class="h-full group cursor-pointer transition hover:border-neutral-300 dark:hover:border-neutral-600">
-
-                    <div class="mb-2 flex items-center">
-                        <flux:heading>Carta de presentación</flux:heading>
-                        <flux:spacer />
-                        <flux:icon.arrow-right variant="micro"
-                            class="text-zinc-500 dark:text-zinc-300 transition-transform duration-300 group-hover:translate-x-1" />
-                    </div>
-
-                    <flux:subheading>
-                        Genera una carta de presentación basada en estándares profesionales comprobados.
-                    </flux:subheading>
-                </flux:card>
-            </a>
+            <div class="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
+                @foreach ($recent as $document)
+                    <a href="{{ route('documents.edit', $document) }}" wire:navigate class="group">
+                        <flux:card class="h-full transition group-hover:border-accent">
+                            <flux:badge size="sm" color="zinc" :icon="$document->type->icon()" class="mb-2">
+                                {{ $document->type->label() }}
+                            </flux:badge>
+                            <flux:heading size="sm" class="line-clamp-2">{{ $document->title }}</flux:heading>
+                            <flux:text size="sm" class="mt-1 text-zinc-500">
+                                {{ $document->created_at->diffForHumans() }}
+                            </flux:text>
+                        </flux:card>
+                    </a>
+                @endforeach
+            </div>
         </div>
-
-        {{-- <div
-            class="relative h-full flex-1 overflow-hidden rounded-xl border border-neutral-200 dark:border-neutral-700">
-            <x-placeholder-pattern class="absolute inset-0 size-full stroke-gray-900/20 dark:stroke-neutral-100/20" />
-        </div> --}}
-    </div>
+    @endif
 </x-layouts.app>

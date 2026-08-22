@@ -1,106 +1,82 @@
-<div class="w-full py-6">
-    <div class="flex flex-col lg:flex-row gap-6 w-full">
-        <div class="w-full">
-            <flux:file-upload required wire:model="resume" label="Cargar currículum">
-                <flux:file-upload.dropzone heading="Suelta tu CV o haz clic para examinar" text="PDF hasta 10MB"
-                    with-progress inline />
-            </flux:file-upload>
+<div class="mx-auto w-full max-w-5xl">
+    <x-resume.working-overlay target="generate" heading="Adaptando tu currículum" :steps="[
+        'Leemos tu CV y lo pasamos a datos estructurados.',
+        'Extraemos los requisitos del aviso.',
+        'Reescribimos tu experiencia para que responda a lo que piden.',
+    ]" />
 
-            <div class="mt-3 flex flex-col gap-2">
-                @if ($resume)
-                    <flux:file-item heading="{{ $resume->getClientOriginalName() }}">
-                        <x-slot name="actions">
-                            <flux:file-item.remove wire:click="$set('resume', null)" />
-                        </x-slot>
-                    </flux:file-item>
-                @endif
+    @if (! $tailored)
+        <form wire:submit="generate" class="grid gap-6 lg:grid-cols-2">
+            <div class="space-y-4">
+                <x-resume.upload-field :file="$form->resume" />
             </div>
+
+            <div class="flex flex-col justify-between gap-4">
+                <x-resume.job-description-field :value="$form->description" :rows="9" />
+
+                <div class="space-y-2">
+                    <flux:button type="submit" variant="primary" icon="sparkles" class="w-full">
+                        {{ __('Probar gratis') }}
+                    </flux:button>
+
+                    <flux:text size="sm" class="text-center text-zinc-500">
+                        @if ($remaining > 0)
+                            {{ trans_choice('Te queda :count prueba gratis hoy|Te quedan :count pruebas gratis hoy', $remaining, ['count' => $remaining]) }}
+                        @else
+                            {{ __('Usaste tus pruebas gratis de hoy.') }}
+                        @endif
+                    </flux:text>
+                </div>
+            </div>
+        </form>
+    @else
+        <div class="space-y-6">
+            <div class="flex flex-wrap items-center justify-between gap-4">
+                <div>
+                    <flux:heading size="lg">{{ __('Este es tu currículum adaptado') }}</flux:heading>
+                    <flux:subheading>
+                        {{ __('Creá una cuenta para editarlo campo por campo y descargarlo en PDF.') }}
+                    </flux:subheading>
+                </div>
+
+                <div class="flex items-center gap-2">
+                    <flux:button wire:click="startOver" icon="arrow-path" variant="ghost" size="sm">
+                        {{ __('Probar con otro') }}
+                    </flux:button>
+
+                    <flux:button :href="route('register')" icon="arrow-down-tray" variant="primary">
+                        {{ __('Descargar en PDF') }}
+                    </flux:button>
+                </div>
+            </div>
+
+            {{-- Vista en HTML y no el PDF real: la demo no guarda el documento,
+                 así que no hay URL protegida desde donde servirlo. --}}
+            <x-resume.preview :resume="$tailored" />
+
+            <flux:callout icon="lock-closed" variant="secondary">
+                <flux:callout.heading>{{ __('No guardamos este currículum') }}</flux:callout.heading>
+                <flux:callout.text>
+                    {{ __('El resultado de la prueba vive solo en esta pantalla. Si cerrás la pestaña, se pierde.') }}
+                </flux:callout.text>
+            </flux:callout>
         </div>
+    @endif
 
-        <div class="w-full space-y-3">
-            <flux:textarea required autofocus wire:model="description" rows="10" label="Descripción del trabajo"
-                placeholder="Estamos buscando un desarrollador de software para unirse a nuestra empresa.
-
-El candidato ideal debe ser..." />
-
-            <flux:button x-on:click="$wire.startTailoring()" icon="sparkles" class="mt-4 w-full" variant="primary">
-                Personalizar mi CV
-            </flux:button>
-        </div>
-    </div>
-
-    <!-- Progress modal -->
-    <flux:modal class="!max-w-sm flex flex-col items-center space-y-6 p-4" name="tailoring-demo-in-progress"
-        :dismissible="false" :closable="false" variant="floating">
+    <flux:modal name="demo-limit" class="max-w-md space-y-6" x-on:demo-limit-reached.window="$flux.modal('demo-limit').show()">
         <div>
-            <flux:heading size="lg" class="text-center">
-                Adaptando tu currículum
-            </flux:heading>
-            <flux:subheading class="text-center">
-                Adaptando tu experiencia a la descripción del trabajo mientras preservamos el contenido relevante.
-            </flux:subheading>
-        </div>
-
-        <flux:icon.loading />
-    </flux:modal>
-
-    <!-- Result modal -->
-    <flux:modal name="tailoring-demo-result" :dismissible="false" variant="floating"
-        class="w-full! max-w-3xl space-y-6 p-4">
-        <div>
-            <flux:heading size="lg">
-                Tu currículum adaptado está listo
-            </flux:heading>
-
+            <flux:heading size="lg">{{ __('Se te acabaron las pruebas gratis') }}</flux:heading>
             <flux:subheading>
-                Optimizamos tu currículum basándonos en la descripción del trabajo manteniendo tu contenido
-                original intacto.
+                {{ __('Creá una cuenta para adaptar tu CV a todas las ofertas que quieras, editarlo y descargarlo en PDF.') }}
             </flux:subheading>
         </div>
 
-        <flux:editor wire:model.live="tailored"
-            toolbar="heading | bold italic underline | bullet ordered | align ~ undo redo"
-            placeholder="Edita tu currículum adaptado..." class="[&_ [data-slot=content]]:min-h-[350px]!" />
+        <div class="flex justify-end gap-2">
+            <flux:modal.close>
+                <flux:button variant="ghost">{{ __('Ahora no') }}</flux:button>
+            </flux:modal.close>
 
-        <div class="flex justify-end">
-            <flux:button variant="primary" icon="arrow-down-tray" wire:click="downloadPdf">
-                Descargar CV adaptado
-            </flux:button>
-        </div>
-    </flux:modal>
-
-    <flux:modal class="!max-w-sm flex flex-col items-center space-y-6 p-4" name="limit-modal" variant="floating">
-        <div>
-            <flux:heading size="lg" class="text-center">
-                Alcanzaste el límite
-            </flux:heading>
-
-            <flux:subheading class="text-center">
-                Estás comenzando bien. Actualiza para seguir construyendo currículums sin interrupciones.
-            </flux:subheading>
-        </div>
-
-        <div class="flex justify-center gap-2">
-            <flux:button icon-trailing="arrow-right" wire:navigate href="{{ route('register') }}">
-                Crear cuenta
-            </flux:button>
-
-            <flux:button variant="primary" icon-trailing="arrow-right" wire:navigate href="{{ route('pricing') }}">
-                Ver planes
-            </flux:button>
+            <flux:button :href="route('register')" variant="primary">{{ __('Crear cuenta') }}</flux:button>
         </div>
     </flux:modal>
 </div>
-
-@script
-    <script>
-        document.addEventListener('livewire:initialized', () => {
-            Livewire.on('tailoring-demo-started', async () => {
-
-                $flux.modal('tailoring-demo-in-progress').show();
-                await new Promise(resolve => requestAnimationFrame(resolve));
-                $wire.call('tailorResumeDemo');
-            });
-        });
-    </script>
-@endscript

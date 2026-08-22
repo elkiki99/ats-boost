@@ -2,8 +2,10 @@
 
 namespace App\Models;
 
-// use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Str;
@@ -15,8 +17,6 @@ class User extends Authenticatable
     use HasFactory, Notifiable, TwoFactorAuthenticatable;
 
     /**
-     * The attributes that are mass assignable.
-     *
      * @var list<string>
      */
     protected $fillable = [
@@ -26,8 +26,6 @@ class User extends Authenticatable
     ];
 
     /**
-     * The attributes that should be hidden for serialization.
-     *
      * @var list<string>
      */
     protected $hidden = [
@@ -38,8 +36,6 @@ class User extends Authenticatable
     ];
 
     /**
-     * Get the attributes that should be cast.
-     *
      * @return array<string, string>
      */
     protected function casts(): array
@@ -50,39 +46,61 @@ class User extends Authenticatable
         ];
     }
 
-    /**
-     * Get the user's initials
-     */
     public function initials(): string
     {
         return Str::of($this->name)
             ->explode(' ')
             ->take(2)
-            ->map(fn($word) => Str::substr($word, 0, 1))
+            ->map(fn (string $word): string => Str::substr($word, 0, 1))
             ->implode('');
     }
 
-    public function subscriber(): \Illuminate\Database\Eloquent\Relations\HasOne
+    /**
+     * @return HasMany<Document, $this>
+     */
+    public function documents(): HasMany
     {
-        return $this->hasOne(Subscriber::class);
+        return $this->hasMany(Document::class);
     }
 
-    public function subscribers(): \Illuminate\Database\Eloquent\Relations\HasMany
+    /**
+     * @return HasMany<Subscriber, $this>
+     */
+    public function subscribers(): HasMany
     {
         return $this->hasMany(Subscriber::class);
     }
 
-    public function isSubscribed(): bool
+    /**
+     * La suscripción vigente, si hay alguna.
+     *
+     * Se define como relación (y no como método que arma la query a mano)
+     * para poder precargarla con `with('subscription')` y no repetir la
+     * consulta en el middleware, en la política y en la vista.
+     *
+     * @return HasOne<Subscriber, $this>
+     */
+    public function subscription(): HasOne
     {
-        return $this->hasActiveSubscription();
+        return $this->hasOne(Subscriber::class)->ofMany(
+            ['ends_at' => 'max'],
+            fn (Builder $query) => $query->active(),
+        );
     }
 
-    public function hasActiveSubscription(): bool
+    public function isSubscribed(): bool
     {
-        return $this->subscribers()
-            ->where('ends_at', '>', now())
-            ->whereIn('status', ['authorized', 'active'])
-            ->where('active', true)
-            ->exists();
+        // relationLoaded evita una consulta por cada llamada dentro de una
+        // misma petición: el layout pregunta esto varias veces por render.
+        if ($this->relationLoaded('subscription')) {
+            return $this->getRelation('subscription') !== null;
+        }
+
+        return $this->subscribers()->active()->exists();
+    }
+
+    public function onTrial(): bool
+    {
+        return $this->subscription?->onTrial() ?? false;
     }
 }

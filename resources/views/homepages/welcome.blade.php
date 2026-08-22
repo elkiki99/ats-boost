@@ -31,10 +31,10 @@
         <livewire:resume.demo />
 
         <flux:subheading level="2" class="max-w-xl mx-auto text-sm text-center md:text-base lg:text-start lg:mx-0">
-            La plantilla sigue un diseño refinado de estilo Harvard, creada para ayudarte a<br> verte
-            pulido, profesional y memorable para los reclutadores.<br><br>
+            El resultado sale en una plantilla sobria de una sola columna, sin tablas ni gráficos:
+            el formato que los filtros automáticos leen sin perder información.<br><br>
 
-            Disfruta de múltiples descargas gratuitas — y desbloquea aún más con la versión premium.
+            Probalo gratis. Para editarlo campo por campo y descargarlo en PDF, creá una cuenta.
         </flux:subheading>
     </section>
 </x-layouts.main>

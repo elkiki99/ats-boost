@@ -5,9 +5,9 @@ use App\Models\User;
 use Livewire\Livewire;
 
 test('profile page is displayed', function () {
-    $this->actingAs($user = User::factory()->create());
+    $this->actingAs(User::factory()->create());
 
-    $this->get('/settings/profile')->assertOk();
+    $this->get(route('profile.edit'))->assertOk();
 });
 
 test('profile information can be updated', function () {
@@ -15,18 +15,30 @@ test('profile information can be updated', function () {
 
     $this->actingAs($user);
 
-    $response = Livewire::test(Profile::class)
+    Livewire::test(Profile::class)
         ->set('name', 'Test User')
-        ->set('email', 'test@example.com')
-        ->call('updateProfileInformation');
+        ->call('updateProfileInformation')
+        ->assertHasNoErrors();
 
-    $response->assertHasNoErrors();
+    expect($user->refresh()->name)->toEqual('Test User');
+});
 
-    $user->refresh();
+test('the email address is not editable from the profile form', function () {
+    $user = User::factory()->create(['email' => 'original@ejemplo.com']);
 
-    expect($user->name)->toEqual('Test User');
-    expect($user->email)->toEqual('test@example.com');
-    expect($user->email_verified_at)->toBeNull();
+    $this->actingAs($user);
+
+    Livewire::test(Profile::class)
+        ->set('email', 'otro@ejemplo.com')
+        ->set('name', 'Test User')
+        ->call('updateProfileInformation')
+        ->assertHasNoErrors();
+
+    // El correo es la identidad de la cuenta y queda atado al pagador de
+    // Mercado Pago: el campo está deshabilitado en la vista y el componente
+    // tampoco lo valida ni lo guarda.
+    expect($user->refresh()->email)->toEqual('original@ejemplo.com')
+        ->and($user->email_verified_at)->not->toBeNull();
 });
 
 test('email verification status is unchanged when email address is unchanged', function () {

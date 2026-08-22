@@ -23,18 +23,27 @@
 
         <flux:navlist variant="outline">
             <flux:navlist.group :heading="__('Currículum')" class="grid">
-                <flux:navlist.item icon="scissors" :href="route('resume.resume-tailor')"
-                    :current="request()->routeIs('resume.resume-tailor')">{{ __('Adaptar') }}
+                <flux:navlist.item icon="sparkles" :href="route('resume.tailor')"
+                    :current="request()->routeIs('resume.tailor')" wire:navigate>
+                    {{ __('Adaptar') }}
                 </flux:navlist.item>
-                {{-- <flux:navlist.item icon="briefcase" :href="route('resume.resume-builder')"
-                    :current="request()->routeIs('resume.resume-builder')">{{ __('Builder') }}
-                </flux:navlist.item> --}}
-                <flux:navlist.item icon="chart-bar" :href="route('resume.resume-analyzer')"
-                    :current="request()->routeIs('resume.resume-analyzer')">
-                    {{ __('Analizador') }}</flux:navlist.item>
+                <flux:navlist.item icon="chart-bar" :href="route('resume.analyzer')"
+                    :current="request()->routeIs('resume.analyzer')" wire:navigate>
+                    {{ __('Analizar') }}
+                </flux:navlist.item>
                 <flux:navlist.item icon="envelope-open" :href="route('resume.cover-letter')"
-                    :current="request()->routeIs('resume.cover-letter')">
-                    {{ __('Carta de presentación') }}</flux:navlist.item>
+                    :current="request()->routeIs('resume.cover-letter')" wire:navigate>
+                    {{ __('Carta de presentación') }}
+                </flux:navlist.item>
+            </flux:navlist.group>
+        </flux:navlist>
+
+        <flux:navlist variant="outline">
+            <flux:navlist.group :heading="__('Biblioteca')" class="grid">
+                <flux:navlist.item icon="document-text" :href="route('documents.index')"
+                    :current="request()->routeIs('documents.*')" wire:navigate>
+                    {{ __('Mis documentos') }}
+                </flux:navlist.item>
             </flux:navlist.group>
         </flux:navlist>
 

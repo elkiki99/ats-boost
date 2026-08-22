@@ -1,15 +1,10 @@
 <?php
 
-/*
-|--------------------------------------------------------------------------
-| Test Case
-|--------------------------------------------------------------------------
-|
-| The closure you provide to your test functions is always bound to a specific PHPUnit test
-| case class. By default, that class is "PHPUnit\Framework\TestCase". Of course, you may
-| need to change it using the "pest()" function to bind a different classes or traits.
-|
-*/
+use App\Models\Subscriber;
+use App\Models\User;
+use Illuminate\Http\UploadedFile;
+use OpenAI\Laravel\Facades\OpenAI;
+use OpenAI\Responses\Chat\CreateResponse;
 
 pest()->extend(Tests\TestCase::class)
     ->use(Illuminate\Foundation\Testing\RefreshDatabase::class)
@@ -17,31 +12,88 @@ pest()->extend(Tests\TestCase::class)
 
 /*
 |--------------------------------------------------------------------------
-| Expectations
+| Helpers del dominio
 |--------------------------------------------------------------------------
-|
-| When you're writing tests, you often need to check that values meet certain conditions. The
-| "expect()" function gives you access to a set of "expectations" methods that you can use
-| to assert different things. Of course, you may extend the Expectation API at any time.
-|
 */
 
-expect()->extend('toBeOne', function () {
-    return $this->toBe(1);
-});
-
-/*
-|--------------------------------------------------------------------------
-| Functions
-|--------------------------------------------------------------------------
-|
-| While Pest is very powerful out-of-the-box, you may have some testing code specific to your
-| project that you don't want to repeat in every file. Here you can also expose helpers as
-| global functions to help you to reduce the number of lines of code in your test files.
-|
-*/
-
-function something()
+/**
+ * Un usuario con suscripción vigente.
+ */
+function subscribedUser(array $attributes = []): User
 {
-    // ..
+    $user = User::factory()->create($attributes);
+
+    Subscriber::factory()->for($user)->create();
+
+    return $user->refresh();
+}
+
+/**
+ * Encola respuestas del modelo, en orden.
+ *
+ * Cada payload se serializa como JSON en el contenido del mensaje, que es
+ * exactamente lo que devuelve la API cuando se pide salida estructurada.
+ *
+ * @param  array<string, mixed>  ...$payloads
+ */
+function fakeChatResponses(array ...$payloads): void
+{
+    OpenAI::fake(array_map(
+        fn (array $payload): CreateResponse => CreateResponse::fake([
+            'choices' => [
+                ['message' => ['content' => json_encode($payload, JSON_UNESCAPED_UNICODE)]],
+            ],
+        ]),
+        $payloads,
+    ));
+}
+
+/**
+ * Un CV de prueba con texto suficiente para pasar el umbral de extracción.
+ */
+function fakeResumeUpload(string $name = 'cv.txt'): UploadedFile
+{
+    return UploadedFile::fake()->createWithContent($name, <<<'TXT'
+    Bruno Rossani
+    Desarrollador de Software
+    Montevideo, Uruguay · brossani23@gmail.com · +598 91 845 585
+
+    Experiencia
+    Desarrollador de Software, Multiline Contact Center, May 2026 - Presente
+    Desarrollo funcionalidades en PHP y Laravel para los sistemas internos.
+    Mantengo mas de 12 aplicaciones criticas para 5 clientes corporativos.
+
+    Educacion
+    Tecnologo Informatico, Universidad Tecnologica del Uruguay, 2024 - 2027
+
+    Habilidades
+    PHP, Laravel, Livewire, Vue.js, MySQL, PostgreSQL, Docker, Git
+    TXT);
+}
+
+/**
+ * Una oferta lo bastante larga para pasar la validación de 80 caracteres.
+ */
+function fakeJobDescription(): string
+{
+    return 'Buscamos un desarrollador backend con experiencia en PHP y Laravel para sumarse a nuestro '
+        .'equipo de producto. Vas a trabajar con Livewire, MySQL y Docker, participando del ciclo '
+        .'completo de desarrollo, desde el analisis de requerimientos hasta el despliegue.';
+}
+
+/**
+ * Lectura de oferta que devolvería AnalyzeJobPosting.
+ *
+ * @return array<string, mixed>
+ */
+function fakeJobPosting(): array
+{
+    return [
+        'role' => 'Desarrollador Backend',
+        'company' => 'Acme',
+        'seniority' => 'semi senior',
+        'keywords' => ['PHP', 'Laravel', 'Livewire', 'MySQL', 'Docker'],
+        'requirements' => ['Experiencia con PHP y Laravel'],
+        'responsibilities' => ['Desarrollar funcionalidades de producto'],
+    ];
 }

@@ -1,6 +1,6 @@
 <?php
 
-use App\Http\Middleware\SubscribedMiddleware;
+use App\Http\Middleware\EnsureSubscribed;
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
 use Illuminate\Foundation\Configuration\Middleware;
@@ -14,7 +14,7 @@ return Application::configure(basePath: dirname(__DIR__))
     )
     ->withMiddleware(function (Middleware $middleware): void {
         $middleware->alias([
-            'subscribed' => SubscribedMiddleware::class,
+            'subscribed' => EnsureSubscribed::class,
         ]);
     })
     ->withExceptions(function (Exceptions $exceptions): void {

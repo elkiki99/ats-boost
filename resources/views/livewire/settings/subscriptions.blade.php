@@ -4,13 +4,15 @@
     <x-settings.layout :heading="__('Suscripciones')" :subheading="__('Gestiona tu suscripción de cuenta')">
         @if ($subscription)
             @php
+                // La definición de "vigente" vive en el modelo, no acá: es la
+                // misma que usan el middleware y la política del documento.
                 $hasAccess = $subscription->ends_at?->isFuture();
             @endphp
 
             {{-- Status-based callouts with subscription info --}}
             <div class="space-y-6 mb-6">
                 @if ($subscription->status === 'cancelled')
-                    @if(!$hasAccess)
+                    @if (! $hasAccess)
                         <flux:callout icon="shield-exclamation" color="red">
                             <flux:callout.heading>
                                 Suscripción cancelada
@@ -29,13 +31,32 @@
                             </flux:callout.text>
                         </flux:callout>
                     @endif
-                @else ($subscription->status === 'authorized' || $subscription->status === 'active')
+                {{-- Era @else con una condición entre paréntesis, que Blade
+                     descarta: cualquier estado que no fuera 'cancelled'
+                     —incluidos 'pending' y 'paused'— se anunciaba como activo
+                     aunque el usuario no tuviera acceso. --}}
+                @elseif ($subscription->isActive())
                     <flux:callout icon="check-circle" color="green">
                         <flux:callout.heading>
                             Suscripción activa
                         </flux:callout.heading>
                         <flux:callout.text>
-                            Tu suscripción está activa y los beneficios están habilitados.
+                            @if ($subscription->onTrial())
+                                Estás en período de prueba hasta el
+                                {{ $subscription->trial_ends_at->format('d/m/Y') }}.
+                            @else
+                                Tu suscripción está activa y los beneficios están habilitados.
+                            @endif
+                        </flux:callout.text>
+                    </flux:callout>
+                @else
+                    <flux:callout icon="clock" color="amber">
+                        <flux:callout.heading>
+                            Suscripción pendiente
+                        </flux:callout.heading>
+                        <flux:callout.text>
+                            Mercado Pago todavía no confirmó el pago. En cuanto lo haga, las
+                            herramientas se habilitan solas.
                         </flux:callout.text>
                     </flux:callout>
                 @endif

@@ -1,99 +1,33 @@
 <div>
-    <!-- Progress modal -->
-    <flux:modal class="!max-w-sm flex flex-col items-center space-y-6 p-4" name="cover-letter-in-progress"
-        :dismissible="false" :closable="false" variant="floating">
-        <div>
-            <flux:heading size="lg" class="text-center">
-                Generando carta de presentación
-            </flux:heading>
-            <flux:subheading class="text-center">
-                Combinando tu estilo para generar una carta de presentación ganadora...
-            </flux:subheading>
-        </div>
+    <x-resume.page-header title="{{ __('Carta de presentación') }}"
+        description="{{ __('Una carta breve y concreta, escrita a partir de hechos reales de tu CV.') }}" />
 
-        <flux:icon.loading />
-    </flux:modal>
+    <x-resume.working-overlay target="generate" heading="Escribiendo tu carta" :steps="[
+        'Leemos tu CV y la oferta.',
+        'Elegimos los hechos que responden a lo que piden.',
+        'Redactamos la carta con el encabezado de tu CV.',
+    ]" />
 
-    <!-- Result modal -->
-    <flux:modal class="!max-w-sm flex flex-col items-center space-y-6 p-4" name="cover-letter-result"
-        :dismissible="false" variant="floating" class="w-full! max-w-3xl space-y-6 p-4">
-        <div>
-            <flux:heading size="lg">
-                Tu carta de presentación está lista
-            </flux:heading>
+    <form wire:submit="generate" class="grid gap-6 lg:grid-cols-2">
+        <flux:card class="space-y-6">
+            <x-resume.upload-field :file="$form->resume" />
 
-            <flux:subheading>
-                Creamos una carta de presentación personalizada según tus necesidades.
-            </flux:subheading>
-        </div>
+            <flux:field>
+                <flux:label badge="{{ __('Opcional') }}">{{ __('Empresa destinataria') }}</flux:label>
+                <flux:input wire:model.blur="form.company" placeholder="Multiline Contact Center" />
+                <flux:error name="form.company" />
+                <flux:description>
+                    {{ __('Si la completás, la carta se dirige a la empresa por su nombre en lugar de usar un encabezado neutro.') }}
+                </flux:description>
+            </flux:field>
+        </flux:card>
 
-        <flux:editor wire:model.live="coverLetter"
-            toolbar="heading | bold italic underline | bullet ordered | align ~ undo redo"
-            placeholder="Edit your cover letter..." class="[&_ [data-slot=content]]:min-h-[350px]!" />
+        <flux:card class="flex flex-col justify-between gap-6">
+            <x-resume.job-description-field :value="$form->description" />
 
-        <div class="flex justify-end">
-            <flux:button variant="primary" icon="arrow-down-tray" wire:click="downloadPdf">
-                Descargar carta de presentación
+            <flux:button type="submit" variant="primary" icon="envelope" class="w-full">
+                {{ __('Escribir mi carta') }}
             </flux:button>
-        </div>
-    </flux:modal>
-
-    <div class="relative mb-6 w-full">
-        <flux:heading size="xl" level="1">{{ __('Carta de presentación') }}</flux:heading>
-        <flux:subheading size="lg" class="mb-6">{{ __('Genera cartas de presentación en segundos y destaca') }}
-        </flux:subheading>
-        <flux:separator variant="subtle" />
-    </div>
-
-    <div class="flex flex-col lg:flex-row gap-6 w-full">
-        <div class="w-full">
-            <flux:textarea wire:model="company" rows="10" label="Empresa" badge="Opcional"
-                placeholder="La misión de Meta es dar a las personas el poder de construir comunidades y acercar al mundo.
-
-Nuestras tecnologías ayudan a las personas a conectarse, encontrar comunidades y hacer crecer negocios. Cuando Facebook se lanzó en 2004, cambió la..." />
-        </div>
-
-        <div class="w-full">
-            <flux:textarea required autofocus wire:model="description" rows="10" label="Descripción del trabajo"
-                placeholder="Estamos buscando un desarrollador de software para unirse a nuestra empresa.
-
-El candidato ideal debe ser..." />
-
-        </div>
-    </div>
-
-    <div class="w-full lg:w-1/2 mt-6">
-        <flux:file-upload required wire:model="resume" label="Cargar currículum">
-            <flux:file-upload.dropzone heading="Suelta tu CV o haz clic para examinar" text="PDF hasta 10MB"
-                with-progress inline />
-        </flux:file-upload>
-
-        <div class="mt-3 flex flex-col gap-2">
-            @if ($resume)
-                <flux:file-item heading="{{ $resume->getClientOriginalName() }}">
-                    <x-slot name="actions">
-                        <flux:file-item.remove wire:click="$set('resume', null)" />
-                    </x-slot>
-                </flux:file-item>
-            @endif
-        </div>
-    </div>
-
-    <flux:button x-on:click="$wire.startGeneratingCoverLetter()" icon="pencil-square" class="mt-4 w-full"
-        variant="primary">
-        Generar carta de presentación
-    </flux:button>
+        </flux:card>
+    </form>
 </div>
-
-@script
-    <script>
-        document.addEventListener('livewire:initialized', () => {
-            Livewire.on('cover-letter-started', async () => {
-
-                $flux.modal('cover-letter-in-progress').show();
-                await new Promise(resolve => requestAnimationFrame(resolve));
-                $wire.call('coverLetterResume');
-            });
-        });
-    </script>
-@endscript

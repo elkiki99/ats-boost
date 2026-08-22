@@ -15,8 +15,9 @@ class SyncSubscription
 
     public function handle(array $data): void
     {
-        if (!isset($data['id'])) {
+        if (! isset($data['id'])) {
             Log::warning('Mercado Pago: Missing subscription ID');
+
             return;
         }
 
@@ -81,6 +82,7 @@ class SyncSubscription
                     Log::warning('Mercado Pago: Cannot create subscription without authenticated user', [
                         'subscription_id' => $subscriptionId,
                     ]);
+
                     return;
                 }
 
